@@ -9,6 +9,7 @@ include_once('model/SongsModel.php');
 include_once('controller/ToursController.php');
 include_once('controller/SongsController.php');
 include_once('controller/LaBandaController.php');
+include_once('controller/HomeController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 
@@ -34,6 +35,9 @@ class Configuration {
     public function getLaBandaController() {
         return new LaBandaController($this->getRenderer());
     }
+    public function getHomeController(){
+        return new HomeController($this->getRenderer());
+    }
 
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
@@ -55,7 +59,7 @@ class Configuration {
     public function getRouter() {
         return new Router(
             $this,
-            "getLaBandaController",
+            "getHomeController",
             "list");
     }
 }

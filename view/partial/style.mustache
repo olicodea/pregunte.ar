@@ -29,6 +29,7 @@
     }
 
     /*main*/
+
     .contenedor{
         background-color: #4C145D;
         max-width: 1000px;
@@ -36,12 +37,65 @@
         min-width: 300px;
         max-height: 550px;
     }
+    @media (max-width: 360px) {
+        .contenedor{
+            min-width: 250px;
+            width: 85%;
 
-    @media (min-height: 820px) {
-        .altura{
-            height: calc(100vh - 268px);
+        }
+        .texto{
+            font-size: 20px;
+        }
+
+
+    }
+    @media (max-height: 360px) {
+        .main{
+            margin: 150px 0;
+        }
+
+    }
+    /*@media (max-width: 390px) {
+
+
+    }*/
+
+    @media (max-width: 740px) {
+        .login-registro {
+            display: none!important;
+        }
+
+    }
+
+    @media (max-width: 768px) {
+        .main{
+            height: calc(100vh - 228px);
+            width: 90%;
+        }
+
+    }
+
+    @media (max-width: 844px) and (max-height: 390px) {
+        .login-registro {
+            display: none!important;
         }
     }
+
+
+    @media (min-width: 1920px){
+        .main{
+            height: calc(100vh - 228px);
+        }
+    }
+    @media (min-height: 1440px) {
+        .main{
+            height: calc(100vh - 228px);
+        }
+    }
+
+
+
+
 
 
 
@@ -51,11 +105,13 @@
     }
     .medida{
         max-width: 400px;
-        min-width: 240px;
+        /*min-width: 240px;*/
 
     }
     .boton-login-registro{
         background-color: #4C145D;
+        min-width: 140px;
+        max-width: 300px;
     }
 
 

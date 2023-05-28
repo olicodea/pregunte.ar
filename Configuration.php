@@ -35,6 +35,13 @@ class Configuration {
         return new LaBandaController($this->getRenderer());
     }
 
+    public function getMailValidationController() {
+        return new MailValidationController(
+            new MailValidationModel($this->getDatabase()),
+            new UsuarioModel($this->getDatabase()),
+            $this->getRenderer());
+    }
+
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
     }

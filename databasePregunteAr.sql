@@ -1,315 +1,350 @@
-USE [master]
-GO
-/****** Object:  Database [Pregunte.ar]    Script Date: 24/05/2023 11:11:26 ******/
-CREATE DATABASE [Pregunte.ar]
- CONTAINMENT = NONE
- ON  PRIMARY
-( NAME = N'Pregunte.ar', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER01\MSSQL\DATA\Pregunte.ar.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON
-( NAME = N'Pregunte.ar_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER01\MSSQL\DATA\Pregunte.ar_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
-ALTER DATABASE [Pregunte.ar] SET COMPATIBILITY_LEVEL = 150
-GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [Pregunte.ar].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-ALTER DATABASE [Pregunte.ar] SET ANSI_NULL_DEFAULT OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET ANSI_NULLS OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET ANSI_PADDING OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET ANSI_WARNINGS OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET ARITHABORT OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET AUTO_CLOSE OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET AUTO_SHRINK OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET AUTO_UPDATE_STATISTICS ON
-GO
-ALTER DATABASE [Pregunte.ar] SET CURSOR_CLOSE_ON_COMMIT OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET CURSOR_DEFAULT  GLOBAL
-GO
-ALTER DATABASE [Pregunte.ar] SET CONCAT_NULL_YIELDS_NULL OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET NUMERIC_ROUNDABORT OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET QUOTED_IDENTIFIER OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET RECURSIVE_TRIGGERS OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET  DISABLE_BROKER
-GO
-ALTER DATABASE [Pregunte.ar] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET DATE_CORRELATION_OPTIMIZATION OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET TRUSTWORTHY OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET ALLOW_SNAPSHOT_ISOLATION OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET PARAMETERIZATION SIMPLE
-GO
-ALTER DATABASE [Pregunte.ar] SET READ_COMMITTED_SNAPSHOT OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET HONOR_BROKER_PRIORITY OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET RECOVERY FULL
-GO
-ALTER DATABASE [Pregunte.ar] SET  MULTI_USER
-GO
-ALTER DATABASE [Pregunte.ar] SET PAGE_VERIFY CHECKSUM
-GO
-ALTER DATABASE [Pregunte.ar] SET DB_CHAINING OFF
-GO
-ALTER DATABASE [Pregunte.ar] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF )
-GO
-ALTER DATABASE [Pregunte.ar] SET TARGET_RECOVERY_TIME = 60 SECONDS
-GO
-ALTER DATABASE [Pregunte.ar] SET DELAYED_DURABILITY = DISABLED
-GO
-ALTER DATABASE [Pregunte.ar] SET ACCELERATED_DATABASE_RECOVERY = OFF
-GO
-EXEC sys.sp_db_vardecimal_storage_format N'Pregunte.ar', N'ON'
-GO
-ALTER DATABASE [Pregunte.ar] SET QUERY_STORE = OFF
-GO
-USE [Pregunte.ar]
-GO
-/****** Object:  Table [dbo].[Categoria_Preguntas]    Script Date: 24/05/2023 11:11:26 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Categoria_Preguntas](
-    [idCategoria] [int] NOT NULL,
-    [descipcion] [varchar](50) NOT NULL,
-    [color] [varchar](50) NOT NULL,
-    CONSTRAINT [PK_Categoria_Preguntas] PRIMARY KEY CLUSTERED
-(
-[idCategoria] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Dificultad]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Dificultad](
-    [idDificultad] [int] NOT NULL,
-    [descripcion] [varchar](50) NOT NULL,
-    CONSTRAINT [PK_Dificultad] PRIMARY KEY CLUSTERED
-(
-[idDificultad] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Estado_Pregunta]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Estado_Pregunta](
-    [idEstado] [int] NOT NULL,
-    [idPregunta] [int] NOT NULL,
-    [descripcion] [varchar](50) NOT NULL,
-    CONSTRAINT [PK_Estado_Pregunta] PRIMARY KEY CLUSTERED
-(
-[idEstado] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Partida]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Partida](
-    [idPartida] [int] NOT NULL,
-    [idUsuario] [int] NOT NULL,
-    [puntaje] [int] NOT NULL,
-    [idPregunta] [int] NOT NULL,
-    [cantidadDeRespuestasAcertadas] [int] NOT NULL,
-    [duracion] [datetime] NOT NULL,
-     CONSTRAINT [PK_Partida] PRIMARY KEY CLUSTERED
-    (
-[idPartida] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Pregunta]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Pregunta](
-    [idPregunta] [int] NOT NULL,
-    [pregunta] [varchar](100) NULL,
-    [idDificultad] [int] NOT NULL,
-    [idCategoria] [int] NOT NULL,
-    [idUsuario] [int] NOT NULL,
-    [idRespuesta] [int] NOT NULL,
-    CONSTRAINT [PK_Pregunta] PRIMARY KEY CLUSTERED
-(
-[idPregunta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Pregunta_Respondida]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Pregunta_Respondida](
-    [idPreguntaRespondida] [int] NOT NULL,
-    [idPregunta] [int] NOT NULL,
-    [idUsuario] [int] NOT NULL,
-     CONSTRAINT [PK_Pregunta_Respondida] PRIMARY KEY CLUSTERED
-    (
-[idPreguntaRespondida] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Ranking]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Ranking](
-    [idRanking] [int] NOT NULL,
-    [puntaje] [int] NOT NULL,
-    [idUsuario] [int] NOT NULL,
-    [idPartida] [int] NOT NULL,
-     CONSTRAINT [PK_Ranking] PRIMARY KEY CLUSTERED
-    (
-[idRanking] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Respuesta]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Respuesta](
-    [idRespuesta] [int] NOT NULL,
-    [respuestaA] [varchar](100) NULL,
-    [respuestaB] [varchar](100) NULL,
-    [respuestaC] [varchar](100) NULL,
-    [respuestaD] [varchar](100) NULL,
-    [respuestaCorrecta] [bit] NULL,
-    CONSTRAINT [PK_Respuesta] PRIMARY KEY CLUSTERED
-(
-[idRespuesta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Roles](
-    [idRol] [int] NOT NULL,
-    [descripcion] [varchar](50) NOT NULL,
-    CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED
-(
-[idRol] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
-/****** Object:  Table [dbo].[Usuario]    Script Date: 24/05/2023 11:11:26 ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[Usuario](
-    [idUsuario] [int] NOT NULL,
-    [nombre] [varchar](50) NOT NULL,
-    [apellido] [varchar](50) NOT NULL,
-    [fechaDeNacimiento] [date] NOT NULL,
-    [genero] [varchar](50) NOT NULL,
-    [pais] [varchar](50) NOT NULL,
-    [ciudad] [varchar](50) NOT NULL,
-    [mail] [varchar](50) NOT NULL,
-    [nombreDeUsuario] [varchar](50) NOT NULL,
-    [contraseña] [varchar](50) NOT NULL,
-    [fotoDePerfil] [image] NOT NULL,
-    [idRol] [int] NOT NULL,
-    CONSTRAINT [PK_Usuario] PRIMARY KEY CLUSTERED
-(
-[idUsuario] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-    GO
-ALTER TABLE [dbo].[Estado_Pregunta]  WITH CHECK ADD  CONSTRAINT [FK_Estado_Pregunta] FOREIGN KEY([idPregunta])
-    REFERENCES [dbo].[Pregunta] ([idPregunta])
-    GO
-ALTER TABLE [dbo].[Estado_Pregunta] CHECK CONSTRAINT [FK_Estado_Pregunta]
-    GO
-ALTER TABLE [dbo].[Partida]  WITH CHECK ADD  CONSTRAINT [FK_Partida_Pregunta] FOREIGN KEY([idPregunta])
-    REFERENCES [dbo].[Pregunta] ([idPregunta])
-    GO
-ALTER TABLE [dbo].[Partida] CHECK CONSTRAINT [FK_Partida_Pregunta]
-    GO
-ALTER TABLE [dbo].[Partida]  WITH CHECK ADD  CONSTRAINT [FK_Partida_Usuario] FOREIGN KEY([idUsuario])
-    REFERENCES [dbo].[Usuario] ([idUsuario])
-    GO
-ALTER TABLE [dbo].[Partida] CHECK CONSTRAINT [FK_Partida_Usuario]
-    GO
-ALTER TABLE [dbo].[Pregunta]  WITH CHECK ADD  CONSTRAINT [FK_Pregunta_Respuesta] FOREIGN KEY([idRespuesta])
-    REFERENCES [dbo].[Respuesta] ([idRespuesta])
-    GO
-ALTER TABLE [dbo].[Pregunta] CHECK CONSTRAINT [FK_Pregunta_Respuesta]
-    GO
-ALTER TABLE [dbo].[Pregunta]  WITH CHECK ADD  CONSTRAINT [FK_PreguntaCat] FOREIGN KEY([idCategoria])
-    REFERENCES [dbo].[Categoria_Preguntas] ([idCategoria])
-    GO
-ALTER TABLE [dbo].[Pregunta] CHECK CONSTRAINT [FK_PreguntaCat]
-    GO
-ALTER TABLE [dbo].[Pregunta]  WITH CHECK ADD  CONSTRAINT [FK_PreguntaDif] FOREIGN KEY([idDificultad])
-    REFERENCES [dbo].[Dificultad] ([idDificultad])
-    GO
-ALTER TABLE [dbo].[Pregunta] CHECK CONSTRAINT [FK_PreguntaDif]
-    GO
-ALTER TABLE [dbo].[Pregunta]  WITH CHECK ADD  CONSTRAINT [FK_Usuario_Pregunta] FOREIGN KEY([idUsuario])
-    REFERENCES [dbo].[Usuario] ([idUsuario])
-    GO
-ALTER TABLE [dbo].[Pregunta] CHECK CONSTRAINT [FK_Usuario_Pregunta]
-    GO
-ALTER TABLE [dbo].[Pregunta_Respondida]  WITH CHECK ADD  CONSTRAINT [FK_PreguntaRespondida_Pregunta] FOREIGN KEY([idPregunta])
-    REFERENCES [dbo].[Pregunta] ([idPregunta])
-    GO
-ALTER TABLE [dbo].[Pregunta_Respondida] CHECK CONSTRAINT [FK_PreguntaRespondida_Pregunta]
-    GO
-ALTER TABLE [dbo].[Pregunta_Respondida]  WITH CHECK ADD  CONSTRAINT [FK_PreguntaRespondida_Usuario] FOREIGN KEY([idUsuario])
-    REFERENCES [dbo].[Usuario] ([idUsuario])
-    GO
-ALTER TABLE [dbo].[Pregunta_Respondida] CHECK CONSTRAINT [FK_PreguntaRespondida_Usuario]
-    GO
-ALTER TABLE [dbo].[Ranking]  WITH CHECK ADD  CONSTRAINT [FK_Ranking_Partida] FOREIGN KEY([idPartida])
-    REFERENCES [dbo].[Partida] ([idPartida])
-    GO
-ALTER TABLE [dbo].[Ranking] CHECK CONSTRAINT [FK_Ranking_Partida]
-    GO
-ALTER TABLE [dbo].[Ranking]  WITH CHECK ADD  CONSTRAINT [FK_Ranking_Usuario] FOREIGN KEY([idUsuario])
-    REFERENCES [dbo].[Usuario] ([idUsuario])
-    GO
-ALTER TABLE [dbo].[Ranking] CHECK CONSTRAINT [FK_Ranking_Usuario]
-    GO
-ALTER TABLE [dbo].[Usuario]  WITH CHECK ADD  CONSTRAINT [FK_Usuario_Roles] FOREIGN KEY([idRol])
-    REFERENCES [dbo].[Roles] ([idRol])
-    GO
-ALTER TABLE [dbo].[Usuario] CHECK CONSTRAINT [FK_Usuario_Roles]
-    GO
-    USE [master]
-    GO
-ALTER DATABASE [Pregunte.ar] SET  READ_WRITE
-GO
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-05-2023 a las 16:34:55
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `preguntear`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categoria_preguntas`
+--
+
+CREATE TABLE `categoria_preguntas` (
+                                       `idCategoria` int(11) NOT NULL,
+                                       `descipcion` varchar(50) NOT NULL,
+                                       `color` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dificultad`
+--
+
+CREATE TABLE `dificultad` (
+                              `idDificultad` int(11) NOT NULL,
+                              `descripcion` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado_pregunta`
+--
+
+CREATE TABLE `estado_pregunta` (
+                                   `idEstado` int(11) NOT NULL,
+                                   `idPregunta` int(11) NOT NULL,
+                                   `descripcion` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `partida`
+--
+
+CREATE TABLE `partida` (
+                           `idPartida` int(11) NOT NULL,
+                           `idUsuario` int(11) NOT NULL,
+                           `puntaje` int(11) NOT NULL,
+                           `idPregunta` int(11) NOT NULL,
+                           `cantidadDeRespuestasAcertadas` int(11) NOT NULL,
+                           `duracion` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pregunta`
+--
+
+CREATE TABLE `pregunta` (
+                            `idPregunta` int(11) NOT NULL,
+                            `pregunta` varchar(100) DEFAULT NULL,
+                            `idDificultad` int(11) NOT NULL,
+                            `idCategoria` int(11) NOT NULL,
+                            `idUsuario` int(11) NOT NULL,
+                            `idRespuesta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pregunta_respondida`
+--
+
+CREATE TABLE `pregunta_respondida` (
+                                       `idPreguntaRespondida` int(11) NOT NULL,
+                                       `idPregunta` int(11) NOT NULL,
+                                       `idUsuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ranking`
+--
+
+CREATE TABLE `ranking` (
+                           `idRanking` int(11) NOT NULL,
+                           `puntaje` int(11) NOT NULL,
+                           `idUsuario` int(11) NOT NULL,
+                           `idPartida` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta`
+--
+
+CREATE TABLE `respuesta` (
+                             `idRespuesta` int(11) NOT NULL,
+                             `respuestaA` varchar(100) DEFAULT NULL,
+                             `respuestaB` varchar(100) DEFAULT NULL,
+                             `respuestaC` varchar(100) DEFAULT NULL,
+                             `respuestaD` varchar(100) DEFAULT NULL,
+                             `respuestaCorrecta` bit(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+                         `idRol` int(11) NOT NULL,
+                         `descripcion` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+                           `idUsuario` int(11) NOT NULL,
+                           `nombre` varchar(50) NOT NULL,
+                           `apellido` varchar(50) NOT NULL,
+                           `fechaDeNacimiento` date NOT NULL,
+                           `genero` varchar(50) NOT NULL,
+                           `pais` varchar(50) NOT NULL,
+                           `ciudad` varchar(50) NOT NULL,
+                           `mail` varchar(50) NOT NULL,
+                           `nombreDeUsuario` varchar(50) NOT NULL,
+                           `contraseña` varchar(50) NOT NULL,
+                           `fotoDePerfil` blob NOT NULL,
+                           `idRol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `categoria_preguntas`
+--
+ALTER TABLE `categoria_preguntas`
+    ADD PRIMARY KEY (`idCategoria`);
+
+--
+-- Indices de la tabla `dificultad`
+--
+ALTER TABLE `dificultad`
+    ADD PRIMARY KEY (`idDificultad`);
+
+--
+-- Indices de la tabla `estado_pregunta`
+--
+ALTER TABLE `estado_pregunta`
+    ADD PRIMARY KEY (`idEstado`),
+  ADD KEY `FK_Estado_Pregunta` (`idPregunta`);
+
+--
+-- Indices de la tabla `partida`
+--
+ALTER TABLE `partida`
+    ADD PRIMARY KEY (`idPartida`),
+  ADD KEY `FK_Partida_Usuario` (`idUsuario`),
+  ADD KEY `FK_Partida_Pregunta` (`idPregunta`);
+
+--
+-- Indices de la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+    ADD PRIMARY KEY (`idPregunta`),
+  ADD KEY `FK_Pregunta_Dificultad` (`idDificultad`),
+  ADD KEY `FK_Pregunta_Categoria_Preguntas` (`idCategoria`),
+  ADD KEY `FK_Pregunta_Usuario` (`idUsuario`),
+  ADD KEY `FK_Pregunta_Respuesta` (`idRespuesta`);
+
+--
+-- Indices de la tabla `pregunta_respondida`
+--
+ALTER TABLE `pregunta_respondida`
+    ADD PRIMARY KEY (`idPreguntaRespondida`),
+  ADD KEY `FK_Pregunta_Respondida_Pregunta` (`idPregunta`),
+  ADD KEY `FK_Pregunta_Respondida_Usuario` (`idUsuario`);
+
+--
+-- Indices de la tabla `ranking`
+--
+ALTER TABLE `ranking`
+    ADD PRIMARY KEY (`idRanking`),
+  ADD KEY `FK_Ranking_Usuario` (`idUsuario`),
+  ADD KEY `FK_Ranking_Partida` (`idPartida`);
+
+--
+-- Indices de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+    ADD PRIMARY KEY (`idRespuesta`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+    ADD PRIMARY KEY (`idRol`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+    ADD PRIMARY KEY (`idUsuario`),
+  ADD KEY `FK_Usuario_Roles` (`idRol`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `categoria_preguntas`
+--
+ALTER TABLE `categoria_preguntas`
+    MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dificultad`
+--
+ALTER TABLE `dificultad`
+    MODIFY `idDificultad` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `estado_pregunta`
+--
+ALTER TABLE `estado_pregunta`
+    MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `partida`
+--
+ALTER TABLE `partida`
+    MODIFY `idPartida` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+    MODIFY `idPregunta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pregunta_respondida`
+--
+ALTER TABLE `pregunta_respondida`
+    MODIFY `idPreguntaRespondida` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `ranking`
+--
+ALTER TABLE `ranking`
+    MODIFY `idRanking` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+    MODIFY `idRespuesta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+    MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+    MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `estado_pregunta`
+--
+ALTER TABLE `estado_pregunta`
+    ADD CONSTRAINT `FK_Estado_Pregunta` FOREIGN KEY (`idPregunta`) REFERENCES `pregunta` (`idPregunta`);
+
+--
+-- Filtros para la tabla `partida`
+--
+ALTER TABLE `partida`
+    ADD CONSTRAINT `FK_Partida_Pregunta` FOREIGN KEY (`idPregunta`) REFERENCES `pregunta` (`idPregunta`),
+  ADD CONSTRAINT `FK_Partida_Usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+    ADD CONSTRAINT `FK_Pregunta_Categoria_Preguntas` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_preguntas` (`idCategoria`),
+  ADD CONSTRAINT `FK_Pregunta_Dificultad` FOREIGN KEY (`idDificultad`) REFERENCES `dificultad` (`idDificultad`),
+  ADD CONSTRAINT `FK_Pregunta_Respuesta` FOREIGN KEY (`idRespuesta`) REFERENCES `respuesta` (`idRespuesta`),
+  ADD CONSTRAINT `FK_Pregunta_Usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `pregunta_respondida`
+--
+ALTER TABLE `pregunta_respondida`
+    ADD CONSTRAINT `FK_Pregunta_Respondida_Pregunta` FOREIGN KEY (`idPregunta`) REFERENCES `pregunta` (`idPregunta`),
+  ADD CONSTRAINT `FK_Pregunta_Respondida_Usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `ranking`
+--
+ALTER TABLE `ranking`
+    ADD CONSTRAINT `FK_Ranking_Partida` FOREIGN KEY (`idPartida`) REFERENCES `partida` (`idPartida`),
+  ADD CONSTRAINT `FK_Ranking_Usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+    ADD CONSTRAINT `FK_Usuario_Roles` FOREIGN KEY (`idRol`) REFERENCES `roles` (`idRol`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

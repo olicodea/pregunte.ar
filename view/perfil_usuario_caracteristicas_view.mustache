@@ -1,0 +1,25 @@
+{{> header}}
+<!-- The Band Section -->
+<main class="main-perfil-usuario mx-auto">
+    <div class="contenedor-perfil-usuario">
+        <section class="flex gap-16 justify-center items-center ">
+            <div class="flex flex-col justify-center items-center">
+            {{#perfil}}
+                <p class="texto-izq-usuario text-white">{{nombreDeUsuario}}</p>
+                <p class="texto-izq-usuario text-white">{{nombreCompleto}}</p>
+                <p class="texto-izq-usuario text-white">{{puntaje}}</p>
+                <p class="texto-izq-usuario text-white">{{idEstadisticas}}</p>
+            </div>
+            <div class="flex  justify-center items-center">
+                <p><img src="{{fotoDePerfil}}" width="300" height="200"></p>
+            {{/perfil}}
+            </div>
+        </section>
+        <section class="codigo-qr flex  justify-center items-center">
+            <p><img src="/public/img/qr.png"></p>
+        </section>
+    </div>
+</main>
+<!-- End Page Content -->
+
+{{> footer}}

@@ -2,6 +2,7 @@
 include_once('helpers/MySqlDatabase.php');
 include_once("helpers/MustacheRender.php");
 include_once('helpers/Router.php');
+include_once('helpers/FileManager.php');
 
 include_once ("model/ToursModel.php");
 include_once('model/SongsModel.php');
@@ -46,7 +47,7 @@ class Configuration {
     }
 
     public function getDatosLoginController() {
-        return new DatosLoginController(new DatosLoginModel(), $this->getRenderer());
+        return new DatosLoginController(new DatosLoginModel(), $this->getRenderer(), $this->getFileManager());
     }
 
     public function getDatosUsuarioController() {
@@ -59,6 +60,10 @@ class Configuration {
 
     private function getRenderer() {
         return new MustacheRender('view/partial');
+    }
+
+    private function getFileManager() {
+        return new FileManager();
     }
 
     public function getDatabase() {

@@ -4,15 +4,18 @@ class DatosLoginController
 {
     private $renderer;
     private $datosLoginModel;
+
+    private $fileManager;
     private $mailREGEX = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
     private $nombreUsuarioREGEX = '/^[a-zA-Z0-9]+$/';
     private $passwordREGEX = '/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/';
 
     private $extensionImagenREGEX = '/^.*\.(png|jpg)$/i';
-    public function __construct($datosLoginModel, $renderer)
+    public function __construct($datosLoginModel, $renderer, $fileManager)
     {
         $this->renderer = $renderer;
         $this->datosLoginModel = $datosLoginModel;
+        $this->fileManager = $fileManager;
     }
 
     public function list()
@@ -30,8 +33,6 @@ class DatosLoginController
     }
 
     public function validar() {
-        //TODO: Falta validar Imagen/Foto de Perfil
-
         $error = "";
 
         if(isset($_POST["Mail"]) && isset($_POST["NombreUsuario"]) && isset($_POST["Password"]) && isset($_POST["ConfirmarPassword"])) {
@@ -64,8 +65,7 @@ class DatosLoginController
         $_SESSION["NombreUsuario"] = $_POST["NombreUsuario"];
         $_SESSION["Password"] = $_POST["Password"];
         $_SESSION["ConfirmarPassword"] = $_POST["ConfirmarPassword"];
-        //TODO: Agregar logica de imagenes
-        $_SESSION["ImagenURL"] = "TEST";
+        $_SESSION["FotoPerfil"] = $this->fileManager->guardarImagen($_FILES["FotoPerfil"], $_SESSION["NombreUsuario"]);
 
         header("Location: /registro");
     }

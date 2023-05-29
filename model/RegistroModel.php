@@ -11,5 +11,6 @@ class RegistroModel {
         $sql = "INSERT INTO `usuario` (`nombreCompleto`, `fechaDeNacimiento`, `genero`, `pais`, `ciudad`, `mail`, `nombreDeUsuario`, `contrasenia`, `fotoDePerfil`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $typesParams = "sssssssss";
         $this->database->save($typesParams, $datosRegistro, $sql);
+        return true;
     }
 }

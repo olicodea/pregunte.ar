@@ -19,7 +19,6 @@ class RegistroController
     public function guardar()
     {
         list($pais, $ciudad) = explode(", ", $_SESSION["PaisCiudad"]);
-
         $datosRegistro = [
             $_SESSION["NombreCompleto"],
             $_SESSION["FechaNacimiento"],
@@ -29,7 +28,7 @@ class RegistroController
             $_SESSION["Mail"],
             $_SESSION["NombreUsuario"],
             $_SESSION["Password"],
-            "TEST",
+            $_SESSION["FotoPerfil"],
         ];
 
         $result = $this->registroModel->guardar($datosRegistro);
@@ -40,10 +39,5 @@ class RegistroController
         }
 
         echo "PROBLEMA AL GUARDAR";
-    }
-
-    public function delete()
-    {
-        die('llame a delete');
     }
 }

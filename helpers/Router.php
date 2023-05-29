@@ -1,6 +1,6 @@
 <?php
 
-class Router {
+class   Router {
 
     private $configuration;
     private $defaultController;

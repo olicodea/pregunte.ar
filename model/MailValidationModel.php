@@ -9,7 +9,7 @@ class MailValidationModel
     }
 
     public function getValidation($validationCode) {
-        return $this->database->queryWthParameters('SELECT * FROM validations where validationCode = ?', $validationCode);
+        return $this->database->queryWthParameters('SELECT * FROM validaciones where codigoValidacion = ?', $validationCode);
 
     }
 }

@@ -8,9 +8,8 @@ class UsuarioModel
         $this->database = $database;
     }
 
-    public function validateUserMail($usuaername) {
-        //todo actualizar el usuario de la tabla
-        die("Actualizar campo validar del mail");
+    public function validateUserMail($idUser) {
+        $this->database->queryWthParameters("UPDATE usuario SET mailValidado = TRUE WHERE idUsuario = ?", $idUser);
 
     }
 }

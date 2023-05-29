@@ -11,7 +11,12 @@
 
 <script>
     function initMap() {
-        let map = new google.maps.Map(document.getElementById('map'), {
+        let googleMap = document.getElementById('map');
+
+        if(!googleMap)
+            return;
+
+        let map = new google.maps.Map(googleMap, {
             center: { lat: 0, lng: 0 },
             zoom: 2
         });

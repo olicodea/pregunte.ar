@@ -18,11 +18,14 @@ class RegistroController
 
     public function guardar()
     {
+        list($pais, $ciudad) = explode(", ", $_SESSION["PaisCiudad"]);
+
         $datosRegistro = [
             $_SESSION["NombreCompleto"],
             $_SESSION["FechaNacimiento"],
             $_SESSION["Sexo"],
-            $_SESSION["PaisCiudad"],
+            $pais,
+            $ciudad,
             $_SESSION["Mail"],
             $_SESSION["NombreUsuario"],
             $_SESSION["Password"],

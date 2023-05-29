@@ -8,8 +8,8 @@ class RegistroModel {
     }
 
     public function guardar($datosRegistro) {
-        $sql = "INSERT INTO `usuario` (`nombreCompleto`, `fechaDeNacimiento`, `genero`, `paisCiudad`, `mail`, `nombreDeUsuario`, `pass`, `fotoDePerfil`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $typesParams = "ssssssss";
+        $sql = "INSERT INTO `usuario` (`nombreCompleto`, `fechaDeNacimiento`, `genero`, `pais`, `ciudad`, `mail`, `nombreDeUsuario`, `contrasenia`, `fotoDePerfil`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $typesParams = "sssssssss";
         $this->database->save($typesParams, $datosRegistro, $sql);
     }
 }

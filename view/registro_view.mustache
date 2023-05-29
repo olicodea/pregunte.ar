@@ -1,0 +1,22 @@
+{{> header}}
+<div class='flex flex-col p-4 h-full justify-between mx-auto' style='max-width:500px' id='registroInicio'>
+    <div>
+        <h4 class="text-2xl mb-8">Completa los datos para crear tu cuenta</h4>
+        <a class="flex items-center justify-between mb-4 btn-purple flex w-full justify-center rounded-md px-6 py-1.5 text-sm font-semibold leading-6 text-white btn-purple h-14 shadow-lg" href='/datosUsuario'>
+            Datos de Usuario
+            <span class="material-symbols-rounded">arrow_forward_ios</span>
+        </a>
+        <a class="flex items-center justify-between btn-purple flex w-full justify-center rounded-md px-6 py-1.5 text-sm font-semibold leading-6 text-white btn-purple h-14 shadow-lg" href='/datosLogin'>
+            Datos de Login
+            <span class="material-symbols-rounded">arrow_forward_ios</span>
+        </a>
+    </div>
+
+    <div class="flex flex-col items-center">
+        <form class="w-full" action="/registro/guardar" enctype="multipart/form-data" method="POST" name="RegistroForm" id="RegistroForm">
+            <button type="submit" class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white btn-purple shadow-lg">Registrarse</button>
+        </form>
+        <p class="pt-2">Ya tengo cuenta</p>
+    </div>
+</div>
+{{> footer}}

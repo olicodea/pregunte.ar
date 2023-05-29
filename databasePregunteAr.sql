@@ -230,19 +230,19 @@ CREATE TABLE [dbo].[Roles](
     GO
     SET QUOTED_IDENTIFIER ON
     GO
-CREATE TABLE [dbo].[Usuario](
-    [idUsuario] [int] NOT NULL,
-    [nombre] [varchar](50) NOT NULL,
-    [apellido] [varchar](50) NOT NULL,
-    [fechaDeNacimiento] [date] NOT NULL,
-    [genero] [varchar](50) NOT NULL,
-    [pais] [varchar](50) NOT NULL,
-    [ciudad] [varchar](50) NOT NULL,
-    [mail] [varchar](50) NOT NULL,
-    [nombreDeUsuario] [varchar](50) NOT NULL,
-    [contraseña] [varchar](50) NOT NULL,
-    [fotoDePerfil] [image] NOT NULL,
-    [idRol] [int] NOT NULL,
+CREATE TABLE dbo.Usuario(
+    idUsuario int NOT NULL,
+    nombre varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
+    fechaDeNacimiento date NOT NULL,
+    genero varchar(50) NOT NULL,
+    pais varchar(50) NOT NULL,
+    ciudad varchar(50) NOT NULL,
+    mail varchar(50) NOT NULL,
+    nombreDeUsuario varchar(50) NOT NULL,
+    contraseña varchar(50) NOT NULL,
+    fotoDePerfil image NOT NULL,
+    idRol int NOT NULL,
     CONSTRAINT [PK_Usuario] PRIMARY KEY CLUSTERED
 (
 [idUsuario] ASC

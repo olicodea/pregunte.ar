@@ -1,0 +1,30 @@
+{{> header}}
+<form id='DatosLogin' name="DatosLogin" action="/datosLogin/validar" method="POST" enctype="multipart/form-data" class='flex flex-col p-4 h-full justify-between mx-auto' style='max-width:500px' >
+    <div class="flex flex-col gap-2">
+        <h4 class="text-2xl mb-2">Datos de Login</h4>
+        <div class="flex flex-col">
+            <label for="Mail">Mail</label>
+            <input type="text" name="Mail" id="Mail" class="input-type-1 bg-transparent border rounded" value="{{Mail}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="NombreUsuario">Nombre de Usuario</label>
+            <input type="text" name="NombreUsuario" id="NombreUsuario" class="input-type-1 bg-transparent border rounded" value="{{NombreUsuario}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="Password">Contraseña</label>
+            <input type="text" name="Password" id="Password" class="input-type-1 bg-transparent border rounded" value="{{Password}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="ConfirmarPassword">Confirmar Contraseña</label>
+            <input type="text" name="ConfirmarPassword" id="ConfirmarPassword" class="input-type-1 bg-transparent border rounded" value="{{ConfirmarPassword}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="FotoPerfil">Foto de perfil</label>
+            <input type="file" name="FotoPerfil" id="FotoPerfil" class="input-type-1 bg-transparent border rounded px-0">
+        </div>
+        <div class="w-full mt-4">
+            <button type="submit" class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white btn-purple shadow-lg">Continuar</button>
+        </div>
+    </div>
+</form>
+{{> footer}}

@@ -23,4 +23,12 @@ class MySqlDatabase {
         $result = mysqli_query($this->connection, $sql);
         return mysqli_fetch_all($result, MYSQLI_BOTH);
     }
+
+    public function save($types, $values, $sql) {
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bind_param($types, ...$values);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
 }

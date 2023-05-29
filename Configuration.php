@@ -7,6 +7,8 @@ include_once('helpers/GeneradorQr.php');
 
 include_once ("model/ToursModel.php");
 include_once('model/SongsModel.php');
+include_once('model/UsuarioModel.php');
+include_once('model/MailValidationModel.php');
 include_once('model/DatosUsuarioModel.php');
 include_once('model/DatosLoginModel.php');
 include_once('model/RegistroModel.php');
@@ -15,6 +17,7 @@ include_once('model/PerfilModel.php');
 include_once('controller/ToursController.php');
 include_once('controller/SongsController.php');
 include_once('controller/LaBandaController.php');
+include_once('controller/MailValidationController.php');
 include_once('controller/RegistroController.php');
 include_once('controller/DatosLoginController.php');
 include_once('controller/DatosUsuarioController.php');
@@ -44,6 +47,13 @@ class Configuration {
 
     public function getLaBandaController() {
         return new LaBandaController($this->getRenderer());
+    }
+
+    public function getMailValidationController() {
+        return new MailValidationController(
+            new MailValidationModel($this->getDatabase()),
+            new UsuarioModel($this->getDatabase()),
+            $this->getRenderer());
     }
 
     public function getRegistroController() {

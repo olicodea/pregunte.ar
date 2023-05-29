@@ -5,7 +5,7 @@ include_once('helpers/Router.php');
 
 include_once ("model/ToursModel.php");
 include_once('model/SongsModel.php');
-include_once('model/loginModel.php');
+include_once('model/LoginModel.php');
 
 include_once('controller/ToursController.php');
 include_once('controller/SongsController.php');
@@ -35,6 +35,10 @@ class Configuration {
 
     public function getLaBandaController() {
         return new LaBandaController($this->getRenderer());
+    }
+
+    public function getLoginController() {
+        return new LoginController(new LoginModel(), $this->getRenderer());
     }
 
     private function getArrayConfig() {

@@ -1,13 +1,11 @@
 <?php
 
-class LoginModel¨{
-    private $databasde;
+class LoginModel{
+    private $database;
 
-    publi function __contructor($database){
-    $this->databasde = $database;
-}
-public function GetLogin() {
-        return $this->databasde->query('SELECT * FROM usuarios');
+    public function __contructor($database){
+        $this->database = $database;
+    }
 
-}
+    //TODO: Consulta para traer el usuario por nombreDeUsuario
 }

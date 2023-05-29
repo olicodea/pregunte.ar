@@ -20,15 +20,12 @@ class DatosLoginController
 
     public function list()
     {
-        $mail = $_SESSION["Mail"] ?? "";
-        $nombreUsuario = $_SESSION["NombreUsuario"] ?? "";
-        $password = $_SESSION["Password"] ?? "";
-        $confirmarPassword = $_SESSION["ConfirmarPassword"] ?? "";
+        $data["Mail"] = $_SESSION["Mail"] ?? "";
+        $data["NombreUsuario"] = $_SESSION["NombreUsuario"] ?? "";
+        $data["Password"] = $_SESSION["Password"] ?? "";
+        $data["ConfirmarPassword"] = $_SESSION["ConfirmarPassword"] ?? "";
+        $data["errorMsgLogin"] = $_SESSION["errorMsgLogin"] ?? null;
 
-        $data["Mail"] = $mail;
-        $data["NombreUsuario"] = $nombreUsuario;
-        $data["Password"] = $password;
-        $data["ConfirmarPassword"] = $confirmarPassword;
         $this->renderer->render("datosLogin", $data);
     }
 
@@ -57,15 +54,18 @@ class DatosLoginController
             }
         }
 
-        if($error != "") {
-            die($error);
-        }
-
         $_SESSION["Mail"] = $_POST["Mail"];
         $_SESSION["NombreUsuario"] = $_POST["NombreUsuario"];
         $_SESSION["Password"] = $_POST["Password"];
         $_SESSION["ConfirmarPassword"] = $_POST["ConfirmarPassword"];
         $_SESSION["FotoPerfil"] = $this->fileManager->guardarImagen($_FILES["FotoPerfil"], $_SESSION["NombreUsuario"]);
+        //TODO: Hacer que la notificacion desaparezca despues de "x" segundos
+
+        if(strlen($error) > 0) {
+            $_SESSION["errorMsgLogin"] = $error != "" ? $error : null;
+            header("Location: /datosLogin");
+            return;
+        }
 
         header("Location: /registro");
     }

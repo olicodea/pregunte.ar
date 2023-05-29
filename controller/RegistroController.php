@@ -33,11 +33,9 @@ class RegistroController
 
         $result = $this->registroModel->guardar($datosRegistro);
         if($result) {
-            echo "GUARDADO";
+            header("Location: /registro");
             session_destroy();
             exit();
         }
-
-        echo "PROBLEMA AL GUARDAR";
     }
 }

@@ -1,5 +1,11 @@
 {{> header}}
-<form id='DatosLogin' name="DatosLogin" action="/datosLogin/validar" method="POST" enctype="multipart/form-data" class='flex flex-col p-4 h-full justify-between mx-auto' style='max-width:500px' >
+
+<form id='DatosLogin' name="DatosLogin" action="/datosLogin/validar" method="POST" enctype="multipart/form-data" class='flex flex-col p-4 h-full mx-auto' style='max-width:500px' >
+    {{#errorMsgLogin}}
+        <div class="bg-red-500 text-white py-2 px-4 rounded-md my-2 w-full">
+            {{errorMsgLogin}}
+        </div>
+    {{/errorMsgLogin}}
     <div class="flex flex-col gap-2">
         <h4 class="text-2xl mb-2">Datos de Login</h4>
         <div class="flex flex-col">

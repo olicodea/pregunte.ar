@@ -1,0 +1,36 @@
+{{> header}}
+<form id='DatosUsuario' name="DatosUsuario" action="/datosUsuario/validar" method="POST" enctype="application/x-www-form-urlencoded" class='flex flex-col p-4 h-full mx-auto' style='max-width:500px' >
+    {{#errorMsgUsuario}}
+        <div class="bg-red-500 text-white py-2 px-4 rounded-md my-2 w-full">
+            {{errorMsgUsuario}}
+        </div>
+    {{/errorMsgUsuario}}
+    <div class="flex flex-col gap-2">
+        <h4 class="text-2xl mb-2">Datos de Usuario</h4>
+        <div class="flex flex-col">
+            <label for="NombreCompleto">Nombre completo</label>
+            <input type="text" name="NombreCompleto" id="NombreCompleto" class="input-type-1 bg-transparent border rounded" value="{{NombreCompleto}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="FechaNacimiento">Fecha de nacimiento</label>
+            <input type="date" name="FechaNacimiento" id="FechaNacimiento" class="input-type-1 bg-transparent border rounded" value="{{FechaNacimiento}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="Sexo">Sexo</label>
+            <select type="text" name="Sexo" id="Sexo" class="input-type-1 bg-transparent border rounded">
+                {{#sexos}}
+                    <option value="{{sexo}}" {{selected}}>{{sexo}}</option>
+                {{/sexos}}
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="PaisCiudad">Pais, Ciudad</label>
+            <input type="text" name="PaisCiudad" id="PaisCiudad" class="input-type-1 bg-transparent border rounded" value="{{PaisCiudad}}" placeholder="Haga click en el mapa para seleccionar Pais y ciudad" readonly>
+            <div id="map" class="w-full h-52 lg:h-96 mt-3 rounded"></div>
+        </div>
+        <div class="w-full mt-4">
+            <button type="submit" class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white btn-purple shadow-lg">Continuar</button>
+        </div>
+    </div>
+</form>
+{{> footer}}

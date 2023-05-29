@@ -8,14 +8,14 @@ class PerfilController{
 
     private $generadorQr;
 
-    public function __construct($perfilModel, $renderer, $generadorQr){
+    public function __construct($perfilModel, $renderer, $generadorQr) {
         $this->perfilModel = $perfilModel;
         $this->renderer = $renderer;
         $this->generadorQr = $generadorQr;
     }
 
-    public function list(){
-        $data["perfil"] = $this->perfilModel->getPerfil("sebacavs95");
+    public function list() {
+        $data["perfil"] = $this->perfilModel->getPerfil("joliva");
         // Se sobreescribe siempre el qr en la imagen qr.png de public
         $this->generadorQr->getQrById("http://localhost/user/?id=2");
         $this->renderer->render("perfil_usuario_caracteristicas",$data);

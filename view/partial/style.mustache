@@ -12,6 +12,7 @@
     .body{
         background-color: #9248D9;
         font-family: 'Ubuntu', sans-serif;
+
     }
     .header{
         background-color: #4C145D;
@@ -27,71 +28,117 @@
         color: #AD5CF7;
         font-size: 25px;
     }
+    .boton-login-registro-1{
+        background-color: #4C145D;
+        width: 50%;
+    }
 
     /*main*/
 
     .contenedor{
         background-color: #4C145D;
-        max-width: 1000px;
-        margin: 0 auto;
-        min-width: 300px;
-        max-height: 550px;
     }
     @media (max-width: 360px) {
-        .contenedor{
-            min-width: 250px;
-            width: 85%;
 
-        }
         .texto{
             font-size: 20px;
         }
-
-
+        .header-texto{
+            padding: 10px 0!important;
+        }
+        .login-registro{
+            margin: 5px 0!important;
+        }
     }
-    @media (max-height: 360px) {
-        .main{
-            margin: 150px 0;
+    @media (max-width: 390px) {
+        .medida{
+            width: 100%!important;
+        }
+        .contenedor{
+            width: 95%;
+        }
+
+        .login-registro{
+            margin: 20px 0!important;
         }
 
     }
-    /*@media (max-width: 390px) {
 
 
-    }*/
-
-    @media (max-width: 740px) {
-        .login-registro {
-            display: none!important;
+    @media (min-height: 768px) and (min-width: 1024px) {
+        .login-registro{
+            flex-direction: row!important;
         }
-
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 844px) {
         .main{
-            height: calc(100vh - 228px);
+            height: auto!important;
+        }
+        .boton-login-registro{
+            width: 50%;
+        }
+    }
+    @media (min-height: 1024px){
+        .main{
+            height: calc(100vh - 228px)!important;
+            width: 90%;
+            /*height: calc(100vh - 228px);*/
+        }
+        .boton-login-registro{
+            width: 50%;
+        }
+    }
+    @media (min-height: 845px) {
+        .main-home{
+            height: calc(100vh - 228px)!important;
             width: 90%;
         }
-
     }
 
-    @media (max-width: 844px) and (max-height: 390px) {
-        .login-registro {
-            display: none!important;
+
+
+
+        @media (min-width: 900px) {
+        .contenedor {
+           width: 800px;
         }
-    }
-
-
-    @media (min-width: 1920px){
         .main{
-            height: calc(100vh - 228px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .boton-login-registro{
+            width: 80%;
         }
     }
-    @media (min-height: 1440px) {
-        .main{
-            height: calc(100vh - 228px);
+
+    .main-login{
+        height: calc(100vh - 228px)!important;
+        width: 90%;
+    }
+
+    .caja-form{
+        display: flex;
+        flex-direction: column;
+    }
+    .boton-login{
+
+    }
+    @media (max-width: 360px) {
+        .main-login{
+            margin: 30px 0;
         }
     }
+    @media (max-width: 390px) {
+        .main-login{
+            height: calc(100vh - 228px)!important;
+            width: 90%;
+        }
+    }
+
+
 
 
 
@@ -108,12 +155,98 @@
         /*min-width: 240px;*/
 
     }
-    .boton-login-registro{
+    .boton-login{
         background-color: #4C145D;
-        min-width: 140px;
-        max-width: 300px;
+    }
+    .tamano-form-input{
+        background-color: inherit;
+        border: 1px solid rgba(255,255,255,.5);
     }
 
+    .main-perfil{
+        height: calc(100vh - 228px)!important;
+        width: 90%;
+    }
+
+    /*--------------------------------------*/
+    .alto-perfil{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .boton-ranking{
+        background-color: #4C145D;
+        padding: 2px 15px;
+    }
+    .boton-crearPartida{
+        background-color: #AD5CF7;
+        padding: 5px 50px;
+        font-size: 20px;
+    }
+    .contenedor-crearpartida{
+        height: 100px;
+    }
+    .caja-partidas{
+        background-color: #4C145D;
+        width: 40%;
+        margin: 0 auto;
+        padding: 5px 20px;
+        max-width: 500px;
+    }
+    .texto-izq{
+        width: 100%;
+        text-align: left;
+        padding: 10px 0;
+        border-bottom: 1px solid #6D27A3;
+        color: #AD5CF7;
+    }
+    .partidas{
+        height: 250px;
+    }
+    @media (max-width: 360px) {
+        .main-perfil{
+            height: calc(100vh - 168px)!important;
+            width: 90%;
+        }
+    }
+    @media (max-width: 390px) {
+
+        .caja-partidas{
+            width: 80%;
+        }
+    }
+    /*---------------------------------------*/
+    .main-perfil-usuario{
+        height: calc(100vh - 228px)!important;
+        width: 90%;
+    }
+    .contenedor-perfil-usuario{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column!important;
+        height: 100%;
+        gap: 20px;
+    }
+    .texto-izq-usuario{
+        text-align: left;
+        width: 100%;
+
+    }
+    .codigo-qr{
+        height: 100px;
+        width: 100px;
+        background-color: #4C145D;
+        color: white;
+    }
+    @media (max-width: 360px) {
+        .main-perfil-usuario{
+            height: calc(100vh - 168px)!important;
+            width: 90%;
+        }
+    }
 
     /*Footer*/
     .footer{

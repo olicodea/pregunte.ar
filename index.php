@@ -3,7 +3,7 @@ include_once('Configuration.php');
 $configuration = new Configuration();
 $router = $configuration->getRouter();
 
-$module = $_GET['module'] ?? 'labanda';
+$module = $_GET['module'] ?? 'registro';
 $method = $_GET['action'] ?? 'list';
 
 

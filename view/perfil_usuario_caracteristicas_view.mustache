@@ -4,16 +4,19 @@
     <div class="contenedor-perfil-usuario">
         <section class="flex gap-16 justify-center items-center ">
             <div class="flex flex-col justify-center items-center">
-                <p class="texto-izq-usuario text-white">UsuarioX</p>
-                <p class="texto-izq-usuario text-white">Puntaje: 999</p>
-                <p class="texto-izq-usuario text-white">Partidas Jugadas: 7000</p>
+            {{#perfil}}
+                <p class="texto-izq-usuario text-white">{{nombreDeUsuario}}</p>
+                <p class="texto-izq-usuario text-white">{{nombreCompleto}}</p>
+                <p class="texto-izq-usuario text-white">{{puntaje}}</p>
+                <p class="texto-izq-usuario text-white">{{idEstadisticas}}</p>
             </div>
             <div class="flex  justify-center items-center">
-                <p>FOTO</p>
+                <p><img src="{{fotoDePerfil}}" width="300" height="200"></p>
+            {{/perfil}}
             </div>
         </section>
         <section class="codigo-qr flex  justify-center items-center">
-            <p>codigo QR</p>
+            <p><img src="/public/img/qr.png"></p>
         </section>
     </div>
 </main>

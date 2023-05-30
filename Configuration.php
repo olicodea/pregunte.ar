@@ -5,8 +5,6 @@ include_once('helpers/Router.php');
 include_once('helpers/FileManager.php');
 include_once('helpers/GeneradorQr.php');
 
-include_once ("model/ToursModel.php");
-include_once('model/SongsModel.php');
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
 include_once('model/MailValidationModel.php');
@@ -15,9 +13,6 @@ include_once('model/DatosLoginModel.php');
 include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 
-include_once('controller/ToursController.php');
-include_once('controller/SongsController.php');
-include_once('controller/LaBandaController.php');
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
 include_once('controller/RegistroController.php');
@@ -33,22 +28,6 @@ class Configuration {
     private $configFile = 'config/config.ini';
 
     public function __construct() {
-    }
-
-    public function getToursController() {
-        return new ToursController(
-            new ToursModel($this->getDatabase()),
-            $this->getRenderer());
-    }
-
-    public function getSongsController() {
-        return new SongsController(
-            new SongsModel($this->getDatabase()),
-            $this->getRenderer());
-    }
-
-    public function getLaBandaController() {
-        return new LaBandaController($this->getRenderer());
     }
 
     public function getLoginController() {

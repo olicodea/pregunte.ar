@@ -27,7 +27,7 @@ class MySqlDatabase {
     public function queryWthParameters($query, $value) {
         $stmt = mysqli_prepare($this->connection, $query);
 
-// Vincular el parámetro
+        // Vincular el parámetro
         mysqli_stmt_bind_param($stmt, "s", $value);
         mysqli_stmt_execute($stmt);
         return mysqli_stmt_get_result($stmt);

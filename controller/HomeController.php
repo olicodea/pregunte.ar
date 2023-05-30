@@ -9,6 +9,10 @@ class HomeController
         $this->renderer = $renderer;
     }
     public function list(){
-        $this->renderer->render('home');
+        if(isset($_SESSION["usuario"])) {
+            $this->renderer->render("lobby");
+        } else {
+            $this->renderer->render('home');
+        }
     }
 }

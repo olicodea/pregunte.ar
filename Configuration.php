@@ -31,7 +31,7 @@ class Configuration {
     }
 
     public function getLoginController() {
-        return new LoginController(new LoginModel(), $this->getRenderer());
+        return new LoginController(new LoginModel($this->getDatabase()), $this->getRenderer());
     }
 
     public function getMailValidationController() {

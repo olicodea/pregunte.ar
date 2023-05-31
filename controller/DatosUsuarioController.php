@@ -14,13 +14,14 @@ class DatosUsuarioController
 
     public function list()
     {
-        $data["NombreCompleto"] = $_SESSION["NombreCompleto"] ?? "";
-        $data["FechaNacimiento"] = $_SESSION["FechaNacimiento"] ?? "";
-        $data["Sexo"] = $_SESSION["Sexo"] ?? "";
-        $data["PaisCiudad"] = $_SESSION["PaisCiudad"] ?? "";
+        $data["NombreCompleto"] = $_SESSION["DatosUsuario"]["NombreCompleto"] ?? "";
+        $data["FechaNacimiento"] = $_SESSION["DatosUsuario"]["FechaNacimiento"] ?? "";
+        $data["Sexo"] = $_SESSION["DatosUsuario"]["Sexo"] ?? "";
+        $data["PaisCiudad"] = $_SESSION["DatosUsuario"]["PaisCiudad"] ?? "";
         $data["sexos"] = $this->datosUsuarioModel->getSexos($data["Sexo"]);
         $data["errorMsgUsuario"] = $_SESSION["errorMsgUsuario"] ?? null;
         $this->renderer->render("datosUsuario", $data);
+        unset($_SESSION["errorMsgUsuario"]);
     }
 
     public function validar() {
@@ -45,17 +46,19 @@ class DatosUsuarioController
             }
         }
 
-        $_SESSION["NombreCompleto"] = $_POST["NombreCompleto"];
-        $_SESSION["FechaNacimiento"] = $_POST["FechaNacimiento"];
-        $_SESSION["Sexo"] = $_POST["Sexo"];
-        $_SESSION["PaisCiudad"] = $_POST["PaisCiudad"];
+        $_SESSION["DatosUsuario"] = [
+            "NombreCompleto" => $_POST["NombreCompleto"],
+            "FechaNacimiento" => $_POST["FechaNacimiento"],
+            "Sexo" => $_POST["Sexo"],
+            "PaisCiudad" => $_POST["PaisCiudad"]
+        ];
 
         if(strlen($error) > 0) {
             $_SESSION["errorMsgUsuario"] = $error != "" ? $error : null;
             header("Location: /datosUsuario");
-            return;
+            exit();
         }
-
+        $_SESSION["errorMsgUsuario"] = null;
         header("Location: /datosLogin");
     }
 }

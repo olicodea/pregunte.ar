@@ -13,27 +13,40 @@ class RegistroController
 
     public function list()
     {
-        $this->renderer->render("registro");
+        $data["errorMsgRegistro"] = $_SESSION["errorMsgRegistro"] ?? null;
+        $this->renderer->render("registro", $data);
+        unset($_SESSION["errorMsgRegistro"]);
     }
 
     public function guardar()
     {
-        list($pais, $ciudad) = explode(", ", $_SESSION["PaisCiudad"]);
+        if(!isset($_SESSION["DatosUsuario"]) || !isset($_SESSION["DatosLogin"])) {
+            $_SESSION["errorMsgRegistro"] = "Para registrarse es necesario completar todos los datos";
+            header("Location: /registro");
+            exit();
+        }
+        unset($_SESSION["errorMsgRegistro"]);
+
+        list($pais, $ciudad) = explode(", ", $_SESSION["DatosUsuario"]["PaisCiudad"]);
+
+        $passwordHasheada = md5($_SESSION["DatosLogin"]["Password"]);
+
         $datosRegistro = [
-            $_SESSION["NombreCompleto"],
-            $_SESSION["FechaNacimiento"],
-            $_SESSION["Sexo"],
+            $_SESSION["DatosUsuario"]["NombreCompleto"],
+            $_SESSION["DatosUsuario"]["FechaNacimiento"],
+            $_SESSION["DatosUsuario"]["Sexo"],
             $pais,
             $ciudad,
-            $_SESSION["Mail"],
-            $_SESSION["NombreUsuario"],
-            $_SESSION["Password"],
-            $_SESSION["FotoPerfil"],
+            $_SESSION["DatosLogin"]["Mail"],
+            $_SESSION["DatosLogin"]["NombreUsuario"],
+            $passwordHasheada,
+            $_SESSION["DatosLogin"]["FotoPerfil"],
         ];
 
         $result = $this->registroModel->guardar($datosRegistro);
+
         if($result) {
-            header("Location: /registro");
+            header("Location: /");
             session_destroy();
             exit();
         }

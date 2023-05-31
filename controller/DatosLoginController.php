@@ -3,18 +3,15 @@
 class DatosLoginController
 {
     private $renderer;
-    private $datosLoginModel;
-
     private $fileManager;
     private $mailREGEX = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
     private $nombreUsuarioREGEX = '/^[a-zA-Z0-9]+$/';
     private $passwordREGEX = '/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/';
 
     private $extensionImagenREGEX = '/^.*\.(png|jpg)$/i';
-    public function __construct($datosLoginModel, $renderer, $fileManager)
+    public function __construct($renderer, $fileManager)
     {
         $this->renderer = $renderer;
-        $this->datosLoginModel = $datosLoginModel;
         $this->fileManager = $fileManager;
     }
 

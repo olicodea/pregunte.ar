@@ -9,7 +9,6 @@ include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
 include_once('model/MailValidationModel.php');
 include_once('model/DatosUsuarioModel.php');
-include_once('model/DatosLoginModel.php');
 include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 
@@ -51,7 +50,7 @@ class Configuration {
     }
 
     public function getDatosLoginController() {
-        return new DatosLoginController(new DatosLoginModel(), $this->getRenderer(), $this->getFileManager());
+        return new DatosLoginController($this->getRenderer(), $this->getFileManager());
     }
 
     public function getDatosUsuarioController() {

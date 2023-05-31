@@ -45,20 +45,6 @@ body {
     font-weight: bold;
 }
 
-.boton-login-registro-1 {
-    background-color: #4C145D;
-    width: 50%;
-}
-
-.btn-purple {
-    background-color: #4C145D;
-    transition: background-color 0.1s ease-in;
-}
-
-.btn-purple:hover {
-    background-color: #521865;
-}
-
 .input-type-1{
     padding-inline: 5px;
     outline: none;
@@ -90,6 +76,15 @@ option {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
+.btn-purple {
+    background-color: #4C145D !important;
+    transition: background-color 0.1s ease-in;
+}
+
+.btn-purple:hover {
+    background-color: #521865 !important;
+}
+
 @media (max-width: 360px) {
 
 }
@@ -110,9 +105,6 @@ option {
 @media (min-height: 845px) {
 
 }
-
-
-
 
 @media (min-width: 900px) {
 

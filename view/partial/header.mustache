@@ -4,39 +4,32 @@
     <title>W3.CSS Template</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
-    <!-- Permanent market font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-    <!-- Permanent market font -->
 
+    <!-- GOOGLE APIS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,0,0" />
+
+    <!-- CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/public/styles/style.css">
 
+    <!-- JS LIBS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {{>responsive}}
-    {{>style}}
 </head>
 
-<body class="body h-full">
+<body class="h-full flex flex-col items-center">
 <!-- Navbar -->
-<header class="header">
-    <h1 class="header-texto py-10 text-center text-white logo-texto">PREGUNTE.<span class="logo-letra">AR</span></h1>
-    <!--<span class="icono material-symbols-outlined">menu</span>-->
+<header class="w-full flex justify-center items-center">
+    <h1 class="text-center text-white logo-texto text-4xl">PREGUNTE.<span class="logo-letra">AR</span></h1>
 </header>
-<!--<a href="/" class="w3-bar-item w3-button w3-padding-large">La banda</a>
-        <a href="/songs/list" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Canciones</a>
-        <a href="/tours/list" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Presentaciones</a>-->
 
-
-
-<!-- Page content -->
-<div class="w3-content" style="max-width:2000px;margin-top:46px">
+<main class="container">

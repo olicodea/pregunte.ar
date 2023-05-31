@@ -1,26 +1,23 @@
 {{> header}}
 <!-- The Band Section -->
-<div class="altura">
-    <main class="main-home mx-auto py-10 flex flex-col justify-center items-center">
-        <section class="contenedor rounded px-10">
+    <section class="card-container mx-auto my-10 flex flex-col justify-center items-center px-4">
+        <div class="sombra-container contenedor rounded-lg p-4 w-full pb-6">
             <div>
-                <p class="texto p-2 text-center ">PON A PRUEBA TUS CONOCIMIENTOS</p>
-                <p class="text-white p-2 text-center ">Elegí una categoría y comienza a jugar</p>
+                <p class="texto text-center mb-3">PON A PRUEBA TUS CONOCIMIENTOS</p>
+                <p class="text-white text-center mb-5">Elegí una categoría y comienza a jugar</p>
             </div>
-            <div class="flex flex-col gap-3 py-10 botones-flex">
-                <button class="medida mx-auto py-3 rounded w-4/5 text-white bg-blue-500">Ciencia</button>
-                <button class="medida mx-auto py-3 rounded w-4/5 text-white bg-green-500">Historia</button>
-                <button class="medida mx-auto py-3 rounded w-4/5 text-white bg-pink-500">Deportes</button>
-                <button class="medida mx-auto py-3 rounded w-4/5 text-white bg-orange-500">Geografía</button>
+            <div class="flex flex-col gap-3">
+                <button class="medida mx-auto py-2 rounded text-white text-lg bg-blue-500 hover:bg-blue-600 w-full">Ciencia</button>
+                <button class="medida mx-auto py-2 rounded text-white text-lg bg-green-500 hover:bg-green-600 w-full">Historia</button>
+                <button class="medida mx-auto py-2 rounded text-white text-lg bg-pink-500 hover:bg-pink-600 w-full">Deportes</button>
+                <button class="medida mx-auto py-2 rounded text-white text-lg bg-orange-500 hover:bg-orange-600 w-full">Geografía</button>
             </div>
-        </section>
-        <div class="login-registro my-10 mx-auto flex flex-col gap-3">
-            <a href="/registro" class="boton-login-registro-1 mx-auto py-2  rounded  text-white text-center">Registrarse</a>
-            <a href="/login" class="boton-login-registro-1 mx-auto py-2  rounded  text-white text-center">Iniciar Sesión</a>
         </div>
-    </main>
-</div>
-
+        <div class="login-registro mt-10 mx-auto flex flex-col gap-3 w-full">
+            <a href="/registro" class="sombra-container btn-purple mx-auto py-2 rounded text-white text-center w-full">Registrarse</a>
+            <a href="/login" class="sombra-container btn-purple mx-auto py-2 rounded text-white text-center w-full">Iniciar Sesión</a>
+        </div>
+    </section>
 <!-- End Page Content -->
 
 {{> footer}}

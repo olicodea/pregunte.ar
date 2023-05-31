@@ -4,18 +4,18 @@
     padding: 0;
 }
 
-html {
-    /*font-size: 62.5%; 1 rem = 10px*/
-    height: 100vh;
-}
-
 *, *:before, *:after{
     box-sizing: inherit;
 }
 
 header{
     background-color: #4C145D;
-    height: 60px;
+    height: 70px;
+}
+
+footer{
+    height: 70px;
+    background-color: #5D1E80;
 }
 
 body {
@@ -23,6 +23,10 @@ body {
     background-color: #6D27A3;
     color: #fff;
     overflow-y: auto;
+}
+
+.container {
+    min-height: calc(100vh - 140px);
 }
 
 .logo-texto {
@@ -36,7 +40,9 @@ body {
 
 .texto {
     color: #AD5CF7;
-    font-size: 25px;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: bold;
 }
 
 .boton-login-registro-1 {
@@ -44,33 +50,28 @@ body {
     width: 50%;
 }
 
-.container {
-    height: calc(100vh - 60px) !important;
-}
-
 .btn-purple {
-    background-color: #4C145D !important;
+    background-color: #4C145D;
     transition: background-color 0.1s ease-in;
 }
 
 .btn-purple:hover {
-    background-color: #521865 !important;
+    background-color: #521865;
 }
 
 .input-type-1{
     padding-inline: 5px;
     outline: none;
-    border: 2px solid !important;
-    border-color: #9248D9 !important;
+    border: 2px solid #9248D9;
     transition: border-color 0.2s ease;
 }
 
 .input-type-1:hover{
-    border-color: #C382FF !important;
+    border-color: #C382FF;
 }
 
 .input-type-1:focus{
-    border-color: #C382FF !important;
+    border-color: #C382FF;
 }
 
 option {
@@ -80,104 +81,59 @@ option {
 .contenedor{
     background-color: #4C145D;
 }
+
+.card-container{
+    max-width: 600px;
+}
+
+.sombra-container {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
 @media (max-width: 360px) {
 
-    .texto{
-        font-size: 20px;
-    }
-    .header-texto{
-        padding: 10px 0!important;
-    }
-    .login-registro{
-        margin: 5px 0!important;
-    }
 }
 @media (max-width: 390px) {
-    .medida{
-        width: 100%!important;
-    }
-    .contenedor{
-        width: 95%;
-    }
-
-    .login-registro{
-        margin: 20px 0!important;
-    }
 
 }
 
-
 @media (min-height: 768px) and (min-width: 1024px) {
-    .login-registro{
-        flex-direction: row!important;
-    }
+
 }
 
 @media (max-width: 844px) {
-    .main{
-        height: auto!important;
-    }
-    .boton-login-registro{
-        width: 50%;
-    }
+
 }
 @media (min-height: 1024px){
-    .main{
-        height: calc(100vh - 228px)!important;
-        width: 90%;
-        /*height: calc(100vh - 228px);*/
-    }
-    .boton-login-registro{
-        width: 50%;
-    }
+
 }
 @media (min-height: 845px) {
-    .main-home{
-        height: calc(100vh - 228px)!important;
-        width: 90%;
-    }
+
 }
 
 
 
 
 @media (min-width: 900px) {
-    .contenedor {
-        width: 800px;
-    }
-    .main{
-        display: flex;
-        justify-content: center;
-        align-items: center;
 
-    }
-    .boton-login-registro{
-        width: 80%;
-    }
 }
 
 .main-login{
-    height: calc(100vh - 228px)!important;
-    width: 90%;
+
 }
 
 .caja-form{
-    display: flex;
-    flex-direction: column;
+
 }
 .boton-login{
 
 }
+
 @media (max-width: 360px) {
-    .main-login{
-        margin: 30px 0;
-    }
+
 }
 @media (max-width: 390px) {
-    .main-login{
-        height: calc(100vh - 228px)!important;
-        width: 90%;
-    }
+
 }
 
 

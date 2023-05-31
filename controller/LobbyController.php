@@ -1,6 +1,6 @@
 <?php
 
-class HomeController
+class LobbyController
 {
     private $renderer;
 
@@ -9,6 +9,6 @@ class HomeController
         $this->renderer = $renderer;
     }
     public function list(){
-            $this->renderer->render('home');
+        $this->renderer->render('lobby');
     }
 }

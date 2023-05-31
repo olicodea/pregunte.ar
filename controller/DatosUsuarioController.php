@@ -1,5 +1,4 @@
 <?php
-session_start();
 class DatosUsuarioController
 {
     private $renderer;

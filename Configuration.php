@@ -20,6 +20,7 @@ include_once('controller/DatosLoginController.php');
 include_once('controller/DatosUsuarioController.php');
 include_once('controller/PerfilController.php');
 include_once('controller/HomeController.php');
+include_once('controller/LobbyController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 
@@ -32,6 +33,10 @@ class Configuration {
 
     public function getLoginController() {
         return new LoginController(new LoginModel($this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getLobbyController() {
+        return new LobbyController($this->getRenderer());
     }
 
     public function getMailValidationController() {

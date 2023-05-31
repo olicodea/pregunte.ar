@@ -17,6 +17,7 @@ class loginController
 
     public function loguearse() {
         $_SESSION["usuario"] = $this->loginModel->autenticarUsuario($_POST["usuario"], $_POST["password"]);
-        header("Location: /");
+        header("Location: /lobby");
+        exit();
     }
 }

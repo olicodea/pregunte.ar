@@ -24,27 +24,37 @@ class DatosUsuarioController
         unset($_SESSION["errorMsgUsuario"]);
     }
 
-    public function validar() {
+    private function validarCamposREGEX(&$error) {
+        if(!preg_match($this->nombreCompletoREGEX, $_POST["NombreCompleto"])){
+            $error .= "El nombre no es válido. ";
+        }
+
+        if(!strtotime($_POST["FechaNacimiento"])) {
+            $error .= "La fecha no es válida. ";
+        }
+
+        if(!preg_match($this->sexoREGEX, $_POST["Sexo"])) {
+            $error .= "El sexo no es válido. ";
+        }
+
+        if(!preg_match($this->paisCiudadREGEX, $_POST["PaisCiudad"])) {
+            echo $_POST["PaisCiudad"];
+            $error .= "País/ciudad no es válido.";
+        }
+    }
+
+    private function validarCamposPOST() {
         $error = "";
 
         if(isset($_POST["NombreCompleto"]) && isset($_POST["FechaNacimiento"]) && isset($_POST["Sexo"]) && isset($_POST["PaisCiudad"])) {
-            if(!preg_match($this->nombreCompletoREGEX, $_POST["NombreCompleto"])){
-                $error .= "El nombre no es válido. ";
-            }
-
-            if(!strtotime($_POST["FechaNacimiento"])) {
-                $error .= "La fecha no es válida. ";
-            }
-
-            if(!preg_match($this->sexoREGEX, $_POST["Sexo"])) {
-                $error .= "El sexo no es válido. ";
-            }
-
-            if(!preg_match($this->paisCiudadREGEX, $_POST["PaisCiudad"])) {
-                echo $_POST["PaisCiudad"];
-                $error .= "País/ciudad no es válido.";
-            }
+            $this->validarCamposREGEX($error);
         }
+
+        return $error;
+    }
+
+    public function validar() {
+        $error = $this->validarCamposPOST();
 
         $_SESSION["DatosUsuario"] = [
             "NombreCompleto" => $_POST["NombreCompleto"],

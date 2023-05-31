@@ -44,6 +44,15 @@
             });
         });
     }
+
+    window.onload = () => {
+        let notif = document.querySelector(".notif");
+        if(notif) {
+            setTimeout(() => {
+                notif.remove();
+            }, 4000);
+        }
+    }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1yOaskcBzd3PAWVtsKsPWberGfhpI6fE&callback=initMap" async defer></script>
 

@@ -14,8 +14,14 @@ class RegistroController
     public function list()
     {
         $data["errorMsgRegistro"] = $_SESSION["errorMsgRegistro"] ?? null;
+        $data["NotifMailEnviado"] = $_SESSION["NotifMailEnviado"] ?? null;
+
         $this->renderer->render("registro", $data);
         unset($_SESSION["errorMsgRegistro"]);
+
+        if(isset($_SESSION["NotifMailEnviado"])) {
+            session_destroy();
+        }
     }
 
     public function guardar()
@@ -46,9 +52,8 @@ class RegistroController
         $result = $this->registroModel->guardar($datosRegistro);
 
         if($result) {
-            header("Location: /");
-            session_destroy();
-            exit();
+            $_SESSION["NotifMailEnviado"] = "El registro se realizó con éxito. Te enviamos un mail para validar la cuenta";
+            header("Location: /registro");
         }
     }
 }

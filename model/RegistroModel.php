@@ -13,4 +13,12 @@ class RegistroModel {
         $this->database->save($typesParams, $datosRegistro, $sql);
         return true;
     }
+
+    public function getMailValidacionSubject() {
+        return "Validación de cuenta";
+    }
+
+    public function getMailValidacionMessage() {
+        return "¡Gracias por registrarte! Haz click en el siguiente enlace para validar la cuenta: <a href='localhost/validarCuenta/validar&token=1234'>Validar cuenta</a>";
+    }
 }

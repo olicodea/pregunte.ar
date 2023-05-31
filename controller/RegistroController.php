@@ -5,10 +5,13 @@ class RegistroController
     private $registroModel;
     private $renderer;
 
-    public function __construct($registroModel, $renderer)
+    private $mailer;
+
+    public function __construct($registroModel, $renderer, $mailer)
     {
         $this->renderer = $renderer;
         $this->registroModel = $registroModel;
+        $this->mailer = $mailer;
     }
 
     public function list()
@@ -51,9 +54,19 @@ class RegistroController
 
         $result = $this->registroModel->guardar($datosRegistro);
 
-        if($result) {
-            $_SESSION["NotifMailEnviado"] = "El registro se realizó con éxito. Te enviamos un mail para validar la cuenta";
-            header("Location: /registro");
+        $datosCorreo = [
+            "address" => $_SESSION["DatosLogin"]["Mail"],
+            "addressName" => $_SESSION["DatosUsuario"]["NombreCompleto"],
+            "subject" => $this->registroModel->getMailValidacionSubject(),
+            "body" => $this->registroModel->getMailValidacionMessage()
+        ];
+
+        $mail = $this->mailer->enviarCorreoValidacion($datosCorreo["address"], $datosCorreo["addressName"], $datosCorreo["subject"], $datosCorreo["body"]);
+
+        if($result && $mail) {
+            $_SESSION["NotifMailEnviado"] = "El registro se realizó con éxito. Te enviamos un mail a " . $_SESSION["DatosLogin"]["Mail"] . " para validar la cuenta";
         }
+
+        header("Location: /registro");
     }
 }

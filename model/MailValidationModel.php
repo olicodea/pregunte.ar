@@ -10,6 +10,9 @@ class MailValidationModel
 
     public function getValidation($validationCode) {
         return $this->database->queryWthParameters('SELECT * FROM validaciones where codigoValidacion = ?', $validationCode);
+    }
 
+    public function deleteValidation($idUser) {
+        return $this->database->queryWthParameters("DELETE FROM validaciones WHERE idUsuario = ?", $idUser);
     }
 }

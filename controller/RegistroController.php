@@ -5,17 +5,26 @@ class RegistroController
     private $registroModel;
     private $renderer;
 
-    public function __construct($registroModel, $renderer)
+    private $mailer;
+
+    public function __construct($registroModel, $renderer, $mailer)
     {
         $this->renderer = $renderer;
         $this->registroModel = $registroModel;
+        $this->mailer = $mailer;
     }
 
     public function list()
     {
         $data["errorMsgRegistro"] = $_SESSION["errorMsgRegistro"] ?? null;
+        $data["NotifMailEnviado"] = $_SESSION["NotifMailEnviado"] ?? null;
+
         $this->renderer->render("registro", $data);
         unset($_SESSION["errorMsgRegistro"]);
+
+        if(isset($_SESSION["NotifMailEnviado"])) {
+            session_destroy();
+        }
     }
 
     public function guardar()
@@ -41,14 +50,24 @@ class RegistroController
             $_SESSION["DatosLogin"]["NombreUsuario"],
             $passwordHasheada,
             $_SESSION["DatosLogin"]["FotoPerfil"],
+            4 //Rol: NoValidado
         ];
 
-        $result = $this->registroModel->guardar($datosRegistro);
+        $codigoValidacion = $this->registroModel->guardar($datosRegistro, $_SESSION["DatosLogin"]["NombreUsuario"]);
 
-        if($result) {
-            header("Location: /");
-            session_destroy();
-            exit();
+        $datosCorreo = [
+            "address" => $_SESSION["DatosLogin"]["Mail"],
+            "addressName" => $_SESSION["DatosUsuario"]["NombreCompleto"],
+            "subject" => $this->registroModel->getMailValidacionSubject(),
+            "body" => $this->registroModel->getMailValidacionMessage($codigoValidacion)
+        ];
+
+        $mail = $this->mailer->enviarCorreoValidacion($datosCorreo["address"], $datosCorreo["addressName"], $datosCorreo["subject"], $datosCorreo["body"]);
+
+        if($codigoValidacion && $mail) {
+            $_SESSION["NotifMailEnviado"] = "El registro se realizó con éxito. Te enviamos un mail a " . $_SESSION["DatosLogin"]["Mail"] . " para validar la cuenta";
         }
+
+        header("Location: /registro");
     }
 }

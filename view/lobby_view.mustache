@@ -4,14 +4,16 @@
     <section class="alto-perfil">
         <div class=" contenedor-perfil flex justify-center items-center gap-16 ">
             <div>
+                {{#lobby}}
                 <div>
-                    <p class="text-white">UsuarioX</p>
+                    <p class="text-white">Usuario: {{nombreDeUsuario}}</p>
                 </div>
                 <div>
-                    <p class="text-white">Puntaje: 999</p>
-                    <p class="text-white">Puesto: 33</p>
+                    <p class="text-white">Puntaje: {{puntajeTotal}}</p>
+                    <p class="text-white">Puesto: {{puesto}}</p>
                 </div>
             </div>
+                {{/lobby}}
             <div class="flex flex-col gap-3">
                 <button class="boton-ranking rounded text-white">Ranking</button>
                 <button class="boton-ranking rounded  text-white">Crear Pregunta</button>
@@ -19,6 +21,7 @@
         </div>
         <div class="contenedor-crearpartida flex justify-center items-center">
             <button class=" text-white boton-crearPartida rounded">Crear Partida</button>
+            <a href="/perfil"><button class=" text-white boton-crearPartida rounded">Mi Perfil</button></a>
         </div>
         <div class="caja-partidas rounded flex justify-center items-center flex-col">
             <p class="texto-izq">Partidas Jugadas</p>

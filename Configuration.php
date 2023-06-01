@@ -12,6 +12,7 @@ include_once('model/DatosUsuarioModel.php');
 include_once('model/DatosLoginModel.php');
 include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
+include_once('model/LobbyModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -36,7 +37,7 @@ class Configuration {
     }
 
     public function getLobbyController() {
-        return new LobbyController($this->getRenderer());
+        return new LobbyController(new LobbyModel($this->getDatabase()),$this->getRenderer());
     }
 
     public function getMailValidationController() {

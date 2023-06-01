@@ -10,13 +10,23 @@ class loginController
         $this->render = $render;
         $this->loginModel = $loginModel;
     }
+
+
     public function list()
+
     {
-        $this->render->render("login");
+    $data["errorlogin"]=$_SESSION["errorlogin"]??null;
+        $this->render->render("login",$data);
     }
 
     public function loguearse() {
-        $_SESSION["usuario"] = $this->loginModel->autenticarUsuario($_POST["usuario"], $_POST["password"]);
+        $autenticacion = $this->loginModel->autenticarUsuario($_POST["usuario"], $_POST["password"]);
+        if(!$autenticacion){
+            $_SESSION["errorlogin"]="usuario o contraseña incorrectos";
+            header("location: /login");
+            exit();
+        }
+        $_SESSION["usuario"]=$autenticacion;
         header("Location: /lobby");
         exit();
     }

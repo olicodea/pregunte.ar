@@ -12,7 +12,10 @@ class LoginModel{
         $sql = "SELECT * FROM usuario WHERE nombreDeUsuario = ?";
         $resultado = $this->database->queryWthParameters($sql, $usuario);
         $usuarioBD = mysqli_fetch_assoc($resultado);
+        $passwordhasheadea = md5($password);
 
-        return $password == $usuarioBD["contrasenia"] ? $usuarioBD : "Usuario o contraseña incorrecto/s";
+
+        return  $passwordhasheadea  == $usuarioBD["contrasenia"] ? $usuarioBD : false;
+
     }
 }

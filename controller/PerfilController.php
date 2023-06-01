@@ -1,6 +1,6 @@
 <?php
 include_once ('third-party/phpqrcode/qrlib.php');
-class PerfilController{
+class PerfilController {
 
     private $perfilModel;
 
@@ -15,19 +15,13 @@ class PerfilController{
     }
 
     public function list() {
-        // Esto se uso para hardcodear y probar, pero asi deberia funcionar con el session del login
-      /*  $_SESSION["usuario"][0] = [
-          "nombreDeUsuario" => "sebacavs95",
-          "idUsuario" => "2"
-        ];*/
-
-        if($_SESSION["usuario"]){
-            $user = $_SESSION["usuario"][0]['nombreDeUsuario'];
-            $data["perfil"] = $this->perfilModel->getPerfil($user);
+        if(isset($_SESSION["usuario"])){
+            $user = $_SESSION["usuario"];
+            $data["perfil"] = $this->perfilModel->getPerfil($user["nombreDeUsuario"]);
 
             // Se sobreescribe siempre el qr en la imagen qr.png de public
-            $idUsuario = $_SESSION["usuario"][0]['idUsuario'];
-            $this->generadorQr->getQrById("http://localhost/perfil/?id=$idUsuario");
+            $idUsuario = $user["idUsuario"];
+            $this->generadorQr->getQrById("http://localhost/perfil/lista&id=$idUsuario");
             $this->renderer->render("perfil_usuario_caracteristicas",$data);
         } else{
             header("location: /home");

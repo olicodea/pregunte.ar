@@ -13,9 +13,4 @@ class LobbyController
     public function list(){
         $this->renderer->render('lobby');
     }
-
-    public function perfilLobby(){
-        $data["lobby"] = $this->lobbyModel->getLobby('sebacavs95');
-        $this->renderer->render("lobby",$data);
-    }
 }

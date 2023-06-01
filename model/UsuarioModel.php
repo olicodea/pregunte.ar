@@ -9,7 +9,6 @@ class UsuarioModel
     }
 
     public function validateUserMail($idUser) {
-        $this->database->queryWthParameters("UPDATE usuario SET mailValidado = TRUE WHERE idUsuario = ?", $idUser);
-
+        $this->database->queryWthParameters("UPDATE usuario SET idRol = 1 WHERE idUsuario = ?", $idUser);
     }
 }

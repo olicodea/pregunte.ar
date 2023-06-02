@@ -1,15 +1,18 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 include_once('helpers/MySqlDatabase.php');
 include_once("helpers/MustacheRender.php");
 include_once('helpers/Router.php');
 include_once('helpers/FileManager.php');
 include_once('helpers/GeneradorQr.php');
+include_once('helpers/Mailer.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
 include_once('model/MailValidationModel.php');
 include_once('model/DatosUsuarioModel.php');
-include_once('model/DatosLoginModel.php');
 include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 include_once('model/LobbyModel.php');
@@ -24,10 +27,14 @@ include_once('controller/HomeController.php');
 include_once('controller/LobbyController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
+include_once('third-party/PHPMailer-master/src/PHPMailer.php');
+include_once('third-party/PHPMailer-master/src/Exception.php');
+include_once('third-party/PHPMailer-master/src/SMTP.php');
 
 
 class Configuration {
     private $configFile = 'config/config.ini';
+    private $configMail = 'config/configMail.ini';
 
     public function __construct() {
     }
@@ -48,11 +55,11 @@ class Configuration {
     }
 
     public function getRegistroController() {
-        return new RegistroController(new RegistroModel($this->getDatabase()), $this->getRenderer());
+        return new RegistroController(new RegistroModel($this->getDatabase()), $this->getRenderer(), $this->getMailer());
     }
 
     public function getDatosLoginController() {
-        return new DatosLoginController(new DatosLoginModel(), $this->getRenderer(), $this->getFileManager());
+        return new DatosLoginController($this->getRenderer(), $this->getFileManager());
     }
 
     public function getDatosUsuarioController() {
@@ -99,5 +106,27 @@ class Configuration {
 
     public function getGeneradorQr(){
         return new GeneradorQr();
+    }
+
+    private function getConfigMail() {
+        return parse_ini_file($this->configMail);
+    }
+
+    private function getPHPMailer() {
+        return new PHPMailer(true);
+    }
+
+    private function getMailer() {
+        $configMail = $this->getConfigMail();
+        return new Mailer(
+            $this->getPHPMailer(),
+            $configMail["Host"],
+            $configMail["SMTPAuth"],
+            $configMail["Username"],
+            $configMail["Password"],
+            $configMail["Port"],
+            $configMail["From"],
+            $configMail["FromName"]
+        );
     }
 }

@@ -18,11 +18,12 @@ class PerfilController {
         if(isset($_SESSION["usuario"])){
             $user = $_SESSION["usuario"];
             $data["perfil"] = $this->perfilModel->getPerfil($user["nombreDeUsuario"]);
+            $data["usuarioLogeado"] = $_SESSION["usuario"];
 
             // Se sobreescribe siempre el qr en la imagen qr.png de public
             $idUsuario = $user["idUsuario"];
             $this->generadorQr->getQrById("http://localhost/perfil/lista&id=$idUsuario");
-            $this->renderer->render("perfil_usuario_caracteristicas",$data);
+            $this->renderer->render("perfil_usuario_caracteristicas", $data);
         } else{
             header("location: /home");
             exit();

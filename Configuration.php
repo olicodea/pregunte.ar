@@ -35,6 +35,7 @@ include_once('third-party/PHPMailer-master/src/SMTP.php');
 class Configuration {
     private $configFile = 'config/config.ini';
     private $configMail = 'config/configMail.ini';
+    private $configAPIS = 'config/configAPIS.ini';
 
     public function __construct() {
     }
@@ -63,7 +64,7 @@ class Configuration {
     }
 
     public function getDatosUsuarioController() {
-        return new DatosUsuarioController(new DatosUsuarioModel(), $this->getRenderer());
+        return new DatosUsuarioController(new DatosUsuarioModel(), $this->getRenderer(), $this->getApiGoogleMaps());
     }
 
     public function getPerfilController(){
@@ -110,6 +111,15 @@ class Configuration {
 
     private function getConfigMail() {
         return parse_ini_file($this->configMail);
+    }
+
+    private function getConfigAPIS() {
+        return parse_ini_file($this->configAPIS);
+    }
+
+    private function getApiGoogleMaps() {
+        $apis = $this->getConfigAPIS();
+        return $apis["ApiGoogleMaps"];
     }
 
     private function getPHPMailer() {

@@ -54,7 +54,10 @@
         }
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1yOaskcBzd3PAWVtsKsPWberGfhpI6fE&callback=initMap" async defer></script>
+
+{{#ApiGoogleMaps}}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMaps}}&callback=initMap" async defer></script>
+{{/ApiGoogleMaps}}
 
 </body>
 </html>

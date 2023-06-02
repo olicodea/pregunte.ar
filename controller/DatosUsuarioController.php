@@ -3,17 +3,21 @@ class DatosUsuarioController
 {
     private $renderer;
     private $datosUsuarioModel;
+
+    private $apiGoogleMaps;
     private $nombreCompletoREGEX = "/^[A-Za-z\s]+$/";
     private $sexoREGEX = "/^(Masculino|Femenino|No binario)$/";
     private $paisCiudadREGEX = "/^[a-zA-Z\s,áéíóúÁÉÍÓÚñÑ]+$/";
-    public function __construct($datosUsuarioModel, $renderer)
+    public function __construct($datosUsuarioModel, $renderer, $ApiGoogleMaps)
     {
         $this->renderer = $renderer;
         $this->datosUsuarioModel = $datosUsuarioModel;
+        $this->apiGoogleMaps = $ApiGoogleMaps;
     }
 
     public function list()
     {
+        $data["ApiGoogleMaps"] = $this->apiGoogleMaps;
         $data["NombreCompleto"] = $_SESSION["DatosUsuario"]["NombreCompleto"] ?? "";
         $data["FechaNacimiento"] = $_SESSION["DatosUsuario"]["FechaNacimiento"] ?? "";
         $data["Sexo"] = $_SESSION["DatosUsuario"]["Sexo"] ?? "";

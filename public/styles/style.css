@@ -129,26 +129,21 @@ option {
 
 }
 
-
-
-
-
-
-
-
-
 .login-registro{
     width: 80%;
     max-width: 750px;
 }
+
 .medida{
     max-width: 400px;
     /*min-width: 240px;*/
 
 }
+
 .boton-login{
     background-color: #4C145D;
 }
+
 .tamano-form-input{
     background-color: inherit;
     border: 1px solid rgba(255,255,255,.5);
@@ -212,22 +207,15 @@ option {
     height: calc(100vh - 228px)!important;
     width: 90%;
 }
-.contenedor-perfil-usuario{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column!important;
-    height: 100%;
-    gap: 20px;
-}
+
 .texto-izq-usuario{
     text-align: left;
     width: 100%;
 
 }
 .codigo-qr{
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
     background-color: #4C145D;
     color: white;
 }
@@ -241,4 +229,9 @@ option {
 /*Footer*/
 .footer{
     background-color: #6D27A3;
+}
+
+.img-container {
+    width: 150px;
+    height: 150px;
 }

@@ -9,7 +9,7 @@ class PerfilModel{
     }
 
     public function getPerfil($user) {
-        $query = "SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, r.puntajeTotal, COUNT(ej.idUsuario)
+        $query = "SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, r.puntaje, COUNT(ej.idUsuario)
                                         FROM usuario u
                                         LEFT JOIN ranking r
                                         ON r.idUsuario = u.idUsuario

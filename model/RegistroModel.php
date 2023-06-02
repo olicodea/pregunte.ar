@@ -12,7 +12,7 @@ class RegistroModel {
         $usuario = $this->getIdUsuarioByNombreDeUsuario($nombreUsuario);
         $this->crearCodigoValidacion($usuario["idUsuario"]);
         $validacion = $this->getCodigoValidacionByIdUsuario($usuario["idUsuario"]);
-        return $validacion["codigoValidacion"];
+        return $validacion["codigo"];
     }
 
     public function getMailValidacionSubject() {
@@ -24,7 +24,7 @@ class RegistroModel {
     }
 
     private function crearCodigoValidacion($idUsuario) {
-        $sql = "INSERT INTO `validaciones` (`idValidacion`, `codigoValidacion`, `idUsuario`) VALUES (NULL, ?, ?)";
+        $sql = "INSERT INTO `validaciones` (`idValidacion`, `codigo`, `idUsuario`) VALUES (NULL, ?, ?)";
 
         $random_string = uniqid(time(), true);
         $validation_code = md5($random_string);
@@ -42,7 +42,7 @@ class RegistroModel {
     }
 
     public function getCodigoValidacionByIdUsuario($idUsuario) {
-        $sql = "SELECT codigoValidacion FROM validaciones WHERE idUsuario = ?";
+        $sql = "SELECT codigo FROM validaciones WHERE idUsuario = ?";
         $resultado = $this->database->queryWthParameters($sql, $idUsuario);
         return mysqli_fetch_assoc($resultado);
     }

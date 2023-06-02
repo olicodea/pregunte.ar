@@ -12,7 +12,8 @@ if(!isset($_SESSION["usuario"])) {
         : ($module == 'registro' ? 'registro'
             : ($module == 'datosLogin' ? 'datosLogin'
                 : ($module == 'datosUsuario' ? 'datosUsuario'
-                    : 'home')));
+                    : ($module == 'mailValidation' ? 'mailValidation'
+                        : 'home' ))));
 } else {
     if($module == 'login' || $module == 'home' || $module == 'registro' || $module == 'datosLogin' || $module == 'datosUsuario') {
         $module = 'lobby';

@@ -25,10 +25,11 @@ class MailValidationController
             if($validations && mysqli_num_rows($validations) > 0) {
                 $validation = mysqli_fetch_assoc($validations);
                 $this->userModel->validateUserMail($validation["idUsuario"]);
-                $validationConfirmed = $this->mailValidationModel->deleteValidation($validation["idUsuario"]);
-                $_SESSION["validationConfirmed"] = $validationConfirmed;
+                $this->mailValidationModel->deleteValidation($validation["idUsuario"]);
+                $_SESSION["validationConfirmed"] = true;
+                header("Location: /mailValidation");
+                exit();
             }
-            header("Location: /mailValidation");
         }
     }
 }

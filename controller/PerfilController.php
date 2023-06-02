@@ -22,7 +22,7 @@ class PerfilController {
 
             // Se sobreescribe siempre el qr en la imagen qr.png de public
             $idUsuario = $user["idUsuario"];
-            $this->generadorQr->getQrById("http://localhost/perfil/lista&id=$idUsuario");
+            $this->generadorQr->getQrById("/perfil/list&id=$idUsuario");
             $this->renderer->render("perfil_usuario_caracteristicas", $data);
         } else{
             header("location: /home");

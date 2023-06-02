@@ -30,7 +30,12 @@
 <!-- Navbar -->
 <header class="w-full flex justify-around items-center">
     <h1 class="text-center text-white logo-texto text-4xl">PREGUNTE.<span class="logo-letra">AR</span></h1>
-    <a href="/perfil" class="text-white boton-crearPartida rounded h-8 flex items-center px-6">Mi Perfil</a>
+    {{#usuarioLogeado}}
+        <div class="flex gap-3">
+            <a href="/perfil" class="text-white boton-crearPartida rounded h-8 flex items-center px-6">Mi Perfil</a>
+            <a href="/home/cerrarSesion" class="text-white boton-crearPartida rounded h-8 flex items-center px-6">Cerrar sesión</a>
+        </div>
+    {{/usuarioLogeado}}
 </header>
 
 <main class="container">

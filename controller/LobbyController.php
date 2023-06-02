@@ -11,6 +11,8 @@ class LobbyController
         $this->lobbyModel = $lobbyModel;
     }
     public function list(){
-        $this->renderer->render('lobby');
+        $usuario = $_SESSION["usuario"];
+        $data["lobbyData"] = $this->lobbyModel->getLobbyData($usuario["nombreDeUsuario"]);
+        $this->renderer->render('lobby', $data);
     }
 }

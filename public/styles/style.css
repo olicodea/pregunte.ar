@@ -27,6 +27,7 @@ body {
 
 .container {
     min-height: calc(100vh - 140px);
+    max-width: 600px;
 }
 
 .logo-texto {
@@ -172,8 +173,7 @@ option {
 }
 .boton-crearPartida{
     background-color: #AD5CF7;
-    padding: 5px 50px;
-    font-size: 20px;
+    font-size: 18px;
 }
 .contenedor-crearpartida{
     height: 100px;

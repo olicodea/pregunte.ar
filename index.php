@@ -4,15 +4,20 @@ include_once('Configuration.php');
 $configuration = new Configuration();
 $router = $configuration->getRouter();
 
-$module = '';
-$method = '';
+$module = $_GET['module'] ?: 'home';
+$method = $_GET['action'] ?: 'list';
 
 if(!isset($_SESSION["usuario"])) {
-    $module = $_GET['module'] ?? 'home';
-    $method = $_GET['action'] ?? 'list';
+    $module = $module == 'login' ? 'login'
+        : ($module == 'registro' ? 'registro'
+            : ($module == 'datosLogin' ? 'datosLogin'
+                : ($module == 'datosUsuario' ? 'datosUsuario'
+                    : ($module == 'mailValidation' ? 'mailValidation'
+                        : 'home' ))));
 } else {
-    $module = $_GET['module'] ?? 'lobby';
-    $method = $_GET['action'] ?? 'list';
+    if($module == 'login' || $module == 'home' || $module == 'registro' || $module == 'datosLogin' || $module == 'datosUsuario') {
+        $module = 'lobby';
+    }
 }
 
 $router->route($module, $method);

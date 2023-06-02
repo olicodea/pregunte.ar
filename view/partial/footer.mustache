@@ -1,4 +1,5 @@
-<footer class="footer py-8 text-white">
+</main>
+<footer class="text-white flex items-center justify-center w-full">
     <p class="text-center">2023 - Pregunte.ar - Programación Web 2</p>
 </footer>
 
@@ -42,6 +43,15 @@
                 }
             });
         });
+    }
+
+    window.onload = () => {
+        let notif = document.querySelector(".notif");
+        if(notif) {
+            setTimeout(() => {
+                notif.remove();
+            }, 4000);
+        }
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1yOaskcBzd3PAWVtsKsPWberGfhpI6fE&callback=initMap" async defer></script>

@@ -4,18 +4,18 @@
     padding: 0;
 }
 
-html {
-    /*font-size: 62.5%; 1 rem = 10px*/
-    height: 100vh;
-}
-
 *, *:before, *:after{
     box-sizing: inherit;
 }
 
 header{
     background-color: #4C145D;
-    height: 60px;
+    height: 70px;
+}
+
+footer{
+    height: 70px;
+    background-color: #5D1E80;
 }
 
 body {
@@ -23,6 +23,11 @@ body {
     background-color: #6D27A3;
     color: #fff;
     overflow-y: auto;
+}
+
+.container {
+    min-height: calc(100vh - 140px);
+    max-width: 600px;
 }
 
 .logo-texto {
@@ -36,16 +41,40 @@ body {
 
 .texto {
     color: #AD5CF7;
-    font-size: 25px;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: bold;
 }
 
-.boton-login-registro-1 {
+.input-type-1{
+    padding-inline: 5px;
+    outline: none;
+    border: 2px solid #9248D9;
+    transition: border-color 0.2s ease;
+}
+
+.input-type-1:hover{
+    border-color: #C382FF;
+}
+
+.input-type-1:focus{
+    border-color: #C382FF;
+}
+
+option {
+    background-color: #5D1E80;
+}
+
+.contenedor{
     background-color: #4C145D;
-    width: 50%;
 }
 
-.container {
-    height: calc(100vh - 60px) !important;
+.card-container{
+    max-width: 600px;
+}
+
+.sombra-container {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 .btn-purple {
@@ -57,149 +86,64 @@ body {
     background-color: #521865 !important;
 }
 
-.input-type-1{
-    padding-inline: 5px;
-    outline: none;
-    border: 2px solid !important;
-    border-color: #9248D9 !important;
-    transition: border-color 0.2s ease;
-}
-
-.input-type-1:hover{
-    border-color: #C382FF !important;
-}
-
-.input-type-1:focus{
-    border-color: #C382FF !important;
-}
-
-option {
-    background-color: #5D1E80;
-}
-
-.contenedor{
-    background-color: #4C145D;
-}
 @media (max-width: 360px) {
 
-    .texto{
-        font-size: 20px;
-    }
-    .header-texto{
-        padding: 10px 0!important;
-    }
-    .login-registro{
-        margin: 5px 0!important;
-    }
 }
 @media (max-width: 390px) {
-    .medida{
-        width: 100%!important;
-    }
-    .contenedor{
-        width: 95%;
-    }
-
-    .login-registro{
-        margin: 20px 0!important;
-    }
 
 }
 
-
 @media (min-height: 768px) and (min-width: 1024px) {
-    .login-registro{
-        flex-direction: row!important;
-    }
+
 }
 
 @media (max-width: 844px) {
-    .main{
-        height: auto!important;
-    }
-    .boton-login-registro{
-        width: 50%;
-    }
+
 }
 @media (min-height: 1024px){
-    .main{
-        height: calc(100vh - 228px)!important;
-        width: 90%;
-        /*height: calc(100vh - 228px);*/
-    }
-    .boton-login-registro{
-        width: 50%;
-    }
+
 }
 @media (min-height: 845px) {
-    .main-home{
-        height: calc(100vh - 228px)!important;
-        width: 90%;
-    }
+
 }
 
-
-
-
 @media (min-width: 900px) {
-    .contenedor {
-        width: 800px;
-    }
-    .main{
-        display: flex;
-        justify-content: center;
-        align-items: center;
 
-    }
-    .boton-login-registro{
-        width: 80%;
-    }
 }
 
 .main-login{
-    height: calc(100vh - 228px)!important;
-    width: 90%;
+
 }
 
 .caja-form{
-    display: flex;
-    flex-direction: column;
+
 }
 .boton-login{
 
 }
+
 @media (max-width: 360px) {
-    .main-login{
-        margin: 30px 0;
-    }
+
 }
 @media (max-width: 390px) {
-    .main-login{
-        height: calc(100vh - 228px)!important;
-        width: 90%;
-    }
+
 }
-
-
-
-
-
-
-
-
 
 .login-registro{
     width: 80%;
     max-width: 750px;
 }
+
 .medida{
     max-width: 400px;
     /*min-width: 240px;*/
 
 }
+
 .boton-login{
     background-color: #4C145D;
 }
+
 .tamano-form-input{
     background-color: inherit;
     border: 1px solid rgba(255,255,255,.5);
@@ -224,8 +168,7 @@ option {
 }
 .boton-crearPartida{
     background-color: #AD5CF7;
-    padding: 5px 50px;
-    font-size: 20px;
+    font-size: 18px;
 }
 .contenedor-crearpartida{
     height: 100px;
@@ -264,22 +207,15 @@ option {
     height: calc(100vh - 228px)!important;
     width: 90%;
 }
-.contenedor-perfil-usuario{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column!important;
-    height: 100%;
-    gap: 20px;
-}
+
 .texto-izq-usuario{
     text-align: left;
     width: 100%;
 
 }
 .codigo-qr{
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
     background-color: #4C145D;
     color: white;
 }
@@ -293,4 +229,9 @@ option {
 /*Footer*/
 .footer{
     background-color: #6D27A3;
+}
+
+.img-container {
+    width: 150px;
+    height: 150px;
 }

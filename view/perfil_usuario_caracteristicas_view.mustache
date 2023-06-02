@@ -1,22 +1,24 @@
 {{> header}}
 <!-- The Band Section -->
 <main class="main-perfil-usuario mx-auto">
-    <div class="contenedor-perfil-usuario">
+    <div class="flex flex-col items-center pt-10 gap-20">
         <section class="flex gap-16 justify-center items-center ">
-            <div class="flex flex-col justify-center items-center">
+            <div class="flex flex-col justify-center items-center gap-3">
             {{#perfil}}
-                <p class="texto-izq-usuario text-white">{{nombreDeUsuario}}</p>
-                <p class="texto-izq-usuario text-white">{{nombreCompleto}}</p>
-                <p class="texto-izq-usuario text-white">{{puntaje}}</p>
-                <p class="texto-izq-usuario text-white">{{idEstadisticas}}</p>
+                <p class="texto-izq-usuario text-white font-bold text-3xl">{{nombreDeUsuario}}</p>
+                <div class="flex flex-col gap-1">
+                    <p class="texto-izq-usuario text-white"><b>Nombre:</b> {{nombreCompleto}}</p>
+                    <p class="texto-izq-usuario text-white"><b>Puntaje:</b> {{puntaje}}</p>
+                    <p class="texto-izq-usuario text-white"><b>Partidas jugadas:</b> {{idEstadisticas}}</p>
+                </div>
             </div>
-            <div class="flex  justify-center items-center">
-                <p><img src="/{{fotoDePerfil}}" width="300" height="200"></p>
+            <div class="img-container flex justify-center items-center">
+                <img src="/{{fotoDePerfil}}" class="img-perfil" alt="foto-perfil">
             {{/perfil}}
             </div>
         </section>
-        <section class="codigo-qr flex  justify-center items-center">
-            <p><img src="/public/img/qr.png"></p>
+        <section class="codigo-qr flex justify-center items-center rounded-lg p-3 border-3">
+            <img src="/public/img/qr.png" class="w-full">
         </section>
     </div>
 </main>

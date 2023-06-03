@@ -16,6 +16,7 @@ include_once('model/DatosUsuarioModel.php');
 include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 include_once('model/LobbyModel.php');
+include_once('model/PartidaModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -79,7 +80,7 @@ class Configuration {
     }
 
     public function getPartidaController() {
-        return new PartidaController($this->getRenderer());
+        return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer());
     }
 
     private function getArrayConfig() {

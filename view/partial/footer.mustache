@@ -53,6 +53,22 @@
             }, 4000);
         }
     }
+
+        {{#respuestaMALMessage}}
+        window.onload = () => {
+            setTimeout(() => {
+                window.location = "/lobby";
+            }, 4000);
+        }
+        {{/respuestaMALMessage}}
+
+        {{#respuestaOKMessage}}
+        window.onload = () => {
+            setTimeout(() => {
+                window.location = "/partida";
+            }, 4000);
+        }
+        {{/respuestaOKMessage}}
 </script>
 
 {{#ApiGoogleMaps}}

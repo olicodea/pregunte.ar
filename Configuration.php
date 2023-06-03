@@ -16,6 +16,7 @@ include_once('model/DatosUsuarioModel.php');
 include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 include_once('model/LobbyModel.php');
+include_once('model/PartidaModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -25,6 +26,7 @@ include_once('controller/DatosUsuarioController.php');
 include_once('controller/PerfilController.php');
 include_once('controller/HomeController.php');
 include_once('controller/LobbyController.php');
+include_once('controller/PartidaController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -75,6 +77,10 @@ class Configuration {
 
     public function getHomeController(){
         return new HomeController($this->getRenderer());
+    }
+
+    public function getPartidaController() {
+        return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer());
     }
 
     private function getArrayConfig() {

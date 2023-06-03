@@ -86,49 +86,6 @@ option {
     background-color: #521865 !important;
 }
 
-@media (max-width: 360px) {
-
-}
-@media (max-width: 390px) {
-
-}
-
-@media (min-height: 768px) and (min-width: 1024px) {
-
-}
-
-@media (max-width: 844px) {
-
-}
-@media (min-height: 1024px){
-
-}
-@media (min-height: 845px) {
-
-}
-
-@media (min-width: 900px) {
-
-}
-
-.main-login{
-
-}
-
-.caja-form{
-
-}
-.boton-login{
-
-}
-
-@media (max-width: 360px) {
-
-}
-@media (max-width: 390px) {
-
-}
-
 .login-registro{
     width: 80%;
     max-width: 750px;
@@ -136,8 +93,6 @@ option {
 
 .medida{
     max-width: 400px;
-    /*min-width: 240px;*/
-
 }
 
 .boton-login{
@@ -234,4 +189,26 @@ option {
 .img-container {
     width: 150px;
     height: 150px;
+}
+
+.contador-texto {
+    text-shadow: 0 4px 8px rgb(0,0,0,0.35) !important;
+}
+
+.toggle-checkbox{
+    border-color: #eddbff;
+    background-color: rgb(190, 78, 250);
+}
+
+.toggle-checkbox:checked {
+    right: 0;
+    background-color: #eddbff;
+    border-color: rgb(190, 78, 250);
+}
+.toggle-checkbox:checked + .toggle-label {
+    background-color: rgb(190, 78, 250);
+}
+
+.respuesta-bg {
+    background-color: #9248D9 !important;
 }

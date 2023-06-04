@@ -11,9 +11,9 @@ class PartidaController
         $this->partidaModel = $partidaModel;
     }
     public function list() {
-        $data["jugando"] = $this->estaJugando();
+        $data["jugando"] = $this->estaJugando() && !isset($_SESSION["respuestaOKMessage"]);
         $data["pregunta"] =  $_SESSION["pregunta"] ?? $this->generarPregunta();
-        $data["respuestas"] = $_SESSION["respuestas"];
+        $data["respuestas"] = $_SESSION["respuestas"] ?? [];
         $data["respuestaOKMessage"] = $_SESSION["respuestaOKMessage"] ?? null;
         $data["respuestaMALMessage"] = $_SESSION["respuestaMALMessage"] ?? null;
 
@@ -21,10 +21,9 @@ class PartidaController
 
         if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
             unset($_SESSION["pregunta"]);
+            unset($_SESSION["respuestaOKMessage"]);
+            unset($_SESSION["respuestaMALMessage"]);
         }
-
-        unset($_SESSION["respuestaOKMessage"]);
-        unset($_SESSION["respuestaMALMessage"]);
     }
 
     public function responder() {
@@ -52,17 +51,13 @@ class PartidaController
 
     private function verificarRespuesta($respuestaSeleccionada) {
         if( ! isset($_SESSION["partida"]) ) {
-            $_SESSION["partida"] = [
-                "puntaje" => 0,
-                "respuestasAcertadas" => 0
-            ];
+            $_SESSION["partida"] = $this->partidaModel->createPartidaInicial();
         }
 
         //TODO: Cambiar el PartidaModel para no tener que accede a ["respuestas"][0]
         if($respuestaSeleccionada == $_SESSION["respuestas"][0]["respuestaCorrecta"]) {
             $_SESSION["respuestaOKMessage"] = "¡CORRECTO!";
-            $_SESSION["partida"]["puntaje"] += 5;
-            $_SESSION["partida"]["respuestasAcertadas"] += 1;
+            $this->partidaModel->updatePartidaActual($_SESSION["partida"]);
         } else {
             $_SESSION["respuestaMALMessage"] = "LA PARTIDA TERMINO";
         }
@@ -79,11 +74,7 @@ class PartidaController
         if( isset($_SESSION["categorias"]) ) {
             $preguntaSiguiente = $this->generarPreguntaPorCategoria();
 
-            //TODO: Cambiar el PartidaModel para no tener que accede a ["respuestas"][0]
             $respuestas = $this->partidaModel->findRespuestaPorId($preguntaSiguiente["idRespuesta"]);
-
-            // Mezcla los elementos al azar
-            shuffle($respuestas);
 
             $_SESSION["pregunta"] = $preguntaSiguiente;
             $_SESSION["respuestas"] = $respuestas;

@@ -14,8 +14,9 @@ class PartidaModel
 
     public function findCategoriasAlAzar() {
         $categorias = $this->findCategorias();
-        $categoriasAlAzar = shuffle($categorias);
-        return $categoriasAlAzar;
+        // Esta linea mezcla al azar el array categorias
+        shuffle($categorias);
+        return $categorias;
     }
 
     private function findPreguntasDisponiblesPorIdCategoria($idCategoria) {
@@ -52,24 +53,34 @@ class PartidaModel
         $this->database->save($typesParams, $datosPreguntaRespondida, $sql);
     }
 
-
-    private function guardarReporte($datosReporte){
-        $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
-        $typesParams = "is";
-        $this->database->save($typesParams, $datosReporte, $sql);
-    }
-
     public function getCategoriaSiguiente(&$categorias) {
         return array_shift($categorias);
     }
 
     public function getPreguntaSiguiente($idCategoria) {
         $preguntasDisponibles = $this->findPreguntasDisponiblesPorIdCategoria($idCategoria);
-
         //TODO: Hay que ver despues el tema de la dificultad
         $indiceAleatorio = array_rand($preguntasDisponibles);
         $preguntaSiguiente = $preguntasDisponibles[$indiceAleatorio];
-
         return $preguntaSiguiente;
+    }
+
+    public function createPartidaInicial() {
+        $partidaInicial = [
+            "puntaje" => 0,
+            "respuestasAcertadas" => 0
+        ];
+        return $partidaInicial;
+    }
+
+    public function updatePartidaActual(&$partida) {
+        $partida["puntaje"] += 5;
+        $partida["respuestasAcertadas"] ++;
+    }
+
+    public function guardarReporte($datosReporte){
+        $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
+        $typesParams = "is";
+        $this->database->save($typesParams, $datosReporte, $sql);
     }
 }

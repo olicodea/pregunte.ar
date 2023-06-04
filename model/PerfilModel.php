@@ -9,7 +9,7 @@ class PerfilModel{
     }
 
     public function getPerfil($user) {
-        $query = "SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, r.puntaje, COUNT(ej.idUsuario)
+        $query = "SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, r.puntaje, COUNT(ej.idUsuario) as 'partidasJugadas'
                                         FROM usuario u
                                         LEFT JOIN ranking r
                                         ON r.idUsuario = u.idUsuario
@@ -19,6 +19,4 @@ class PerfilModel{
 
         return $this->database->queryWthParameters($query, $user);
     }
-
-
 }

@@ -25,4 +25,17 @@ class PartidaModel
     }
 
     //TODO: Hay que ver de hacer el metodo findPreguntasDisponiblesPorIdCategoria teniendo en cuenta la dificultad
+
+    private function guardarReporte($datosReporte){
+        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`) VALUES (?,?)";
+        $typesParams = "ii";
+        $this->database->save($typesParams, $datosReporte, $sql);
+    }
+
+
+    private function guardarPreguntaRespondida($datosPartida){
+        $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
+        $typesParams = "is";
+        $this->database->save($typesParams, $datosPartida, $sql);
+    }
 }

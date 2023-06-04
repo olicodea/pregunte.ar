@@ -4,16 +4,19 @@
     <section class="mx-auto my-10 flex flex-col justify-center items-center px-4 card-container">
         <div class="w-full rounded-lg w-full gap-6 flex justify-around">
             {{#lobbyData}}
-            <div>
-                <div>
-                    <p class="text-white">{{nombreDeUsuario}}</p>
-                </div>
-                <div>
-                    <p class="text-white">Puntaje: {{puntaje}}</p>
-                    <p class="text-white">Puesto: {{puesto}}</p>
-                </div>
-            </div>
+
+
+                <div class="flex flex-col justify-center items-center gap-3">
+
+                        <p class="texto-izq-usuario text-white font-bold text-3xl">{{nombreDeUsuario}}</p>
+                        <div class="flex flex-col gap-1">
+
+                            <p class="texto-izq-usuario text-white"><b>Puntaje:</b> {{puntaje}}</p>
+                            <p class="texto-izq-usuario text-white"><b>puesto:</b> {{puesto}}</p>
+                        </div>
+                    </div>
             {{/lobbyData}}
+
             <div class="flex flex-col gap-3">
                 <button class="boton-ranking rounded text-white">Ranking</button>
                 <button class="boton-ranking rounded  text-white">Crear Pregunta</button>

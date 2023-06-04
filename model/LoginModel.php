@@ -15,6 +15,16 @@ class LoginModel{
         //TODO: validar el rol del usuario que sea diferente a NoValidado
 
         return  $passwordhasheadea  == $usuarioBD["contrasenia"] ? $usuarioBD : false;
+    }
 
+    public function validarRolUsuario($usuario){
+        $sql = "SELECT US.idUsuario
+                FROM usuario US inner join 
+                     rol RO on US.idRol = RO.idRol
+                where RO.descripcion = 'NoValidado'
+                and US.nombreDeUsuario = ?";
+        $resultado = $this->database->queryWthParameters($sql, $usuario);
+        $usuarioBD = mysqli_fetch_assoc($resultado);
+        return $usuarioBD;
     }
 }

@@ -28,16 +28,17 @@ class PartidaController
     }
 
     public function responder() {
+        $this->partidaModel->guardarPreguntaRespondida($_SESSION["pregunta"]["idPregunta"], $_SESSION["usuario"]["idUsuario"]);
         $this->verificarRespuesta($_GET["respuesta"]);
 
-        $datosPartida = [
-            $_SESSION["usuario"]["idUsuario"],
-            $_SESSION["partida"]["puntaje"],
-            $_SESSION["partida"]["respuestasAcertadas"],
-            10 //TODO: Se hardcodea por ahora la duracion de partida
-        ];
-
         if( ! $this->estaJugando() ) {
+            $datosPartida = [
+                $_SESSION["usuario"]["idUsuario"],
+                $_SESSION["partida"]["puntaje"],
+                $_SESSION["partida"]["respuestasAcertadas"],
+                10 //TODO: Se hardcodea por ahora la duracion de partida
+            ];
+
             unset($_SESSION["partida"]);
             $this->partidaModel->guardar($datosPartida);
         }
@@ -93,23 +94,14 @@ class PartidaController
 
     private function generarArrayCategorias()
     {
-        $categorias = $this->partidaModel->findCategorias();
-
-        // Mezcla los elementos al azar
-        shuffle($categorias);
-
+        $categorias = $this->partidaModel->findCategoriasAlAzar();
         return $categorias;
     }
 
     private function generarPreguntaPorCategoria()
     {
-        //Agarra el primer item, lo retorno y lo borra del array
-        $categoriaSiguiente = array_shift($_SESSION["categorias"]);
-
-        $preguntasDisponibles = $this->partidaModel->findPreguntasDisponiblesPorIdCategoria($categoriaSiguiente["idCategoria"]);
-        //TODO: Hay que ver despues el tema de la dificultad
-        $indiceAleatorio = array_rand($preguntasDisponibles);
-        $preguntaSiguiente = $preguntasDisponibles[$indiceAleatorio];
+        $categoriaSiguiente = $this->partidaModel->getCategoriaSiguiente($_SESSION["categorias"]);
+        $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"]);
 
         return $preguntaSiguiente;
     }

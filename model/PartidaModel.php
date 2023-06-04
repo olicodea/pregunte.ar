@@ -12,7 +12,13 @@ class PartidaModel
         return $this->database->query("SELECT idCategoria, descripcion FROM categoria_preguntas");
     }
 
-    public function findPreguntasDisponiblesPorIdCategoria($idCategoria) {
+    public function findCategoriasAlAzar() {
+        $categorias = $this->findCategorias();
+        $categoriasAlAzar = shuffle($categorias);
+        return $categoriasAlAzar;
+    }
+
+    private function findPreguntasDisponiblesPorIdCategoria($idCategoria) {
         $sql = "SELECT p.* FROM pregunta p WHERE idPregunta NOT IN ( SELECT idPregunta FROM pregunta_respondida ) AND p.idCategoria = $idCategoria";
         $resultado = $this->database->query($sql);
         return $resultado;
@@ -39,16 +45,31 @@ class PartidaModel
         $this->database->save($typesParams, $datosPartida, $sql);
     }
 
-    private function guardarPreguntaRespondida($datosReporte){
+    public function guardarPreguntaRespondida($idPregunta, $idusuario) {
+        $datosPreguntaRespondida = [ $idPregunta, $idusuario ];
         $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`) VALUES (?,?)";
         $typesParams = "ii";
-        $this->database->save($typesParams, $datosReporte, $sql);
+        $this->database->save($typesParams, $datosPreguntaRespondida, $sql);
     }
 
 
-    private function guardarReporte($datosPartida){
+    private function guardarReporte($datosReporte){
         $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
         $typesParams = "is";
-        $this->database->save($typesParams, $datosPartida, $sql);
+        $this->database->save($typesParams, $datosReporte, $sql);
+    }
+
+    public function getCategoriaSiguiente(&$categorias) {
+        return array_shift($categorias);
+    }
+
+    public function getPreguntaSiguiente($idCategoria) {
+        $preguntasDisponibles = $this->findPreguntasDisponiblesPorIdCategoria($idCategoria);
+
+        //TODO: Hay que ver despues el tema de la dificultad
+        $indiceAleatorio = array_rand($preguntasDisponibles);
+        $preguntaSiguiente = $preguntasDisponibles[$indiceAleatorio];
+
+        return $preguntaSiguiente;
     }
 }

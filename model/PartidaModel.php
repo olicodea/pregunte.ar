@@ -78,9 +78,15 @@ class PartidaModel
         $partida["respuestasAcertadas"] ++;
     }
 
-    public function guardarReporte($datosReporte){
-        $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
-        $typesParams = "is";
-        $this->database->save($typesParams, $datosReporte, $sql);
+    public function guardarReporte($reportado, $idPregunta){
+        if($reportado == "on") {
+            $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
+            $typesParams = "is";
+            $datosReporte = [
+                $idPregunta,
+                "Pregunta reportada" //TODO: por ahora se hardcodea el comentario. Luego se agregara la funcionalidad de comentar un reporte
+            ];
+            $this->database->save($typesParams, $datosReporte, $sql);
+        }
     }
 }

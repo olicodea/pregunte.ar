@@ -27,6 +27,9 @@ class PartidaController
     }
 
     public function responder() {
+        $reportado = $_GET["toggleReportar"] ?? null;
+        $this->partidaModel->guardarReporte($reportado, $_SESSION["pregunta"]["idPregunta"]);
+
         $this->partidaModel->guardarPreguntaRespondida($_SESSION["pregunta"]["idPregunta"], $_SESSION["usuario"]["idUsuario"]);
         $this->verificarRespuesta($_GET["respuesta"]);
 

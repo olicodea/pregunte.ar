@@ -26,14 +26,27 @@ class PartidaModel
 
     //TODO: Hay que ver de hacer el metodo findPreguntasDisponiblesPorIdCategoria teniendo en cuenta la dificultad
 
-    private function guardarReporte($datosReporte){
+    // PERSISTENCIA DE PARTIDA
+
+    public function guardar($datosPartida) {
+        $this->guardarPartida($datosPartida);
+    }
+
+    private function guardarPartida($datosPartida)
+    {
+        $sql = "INSERT INTO partida (idUsuario, puntaje, cantidadDeRespuestasAcertadas, duracion) VALUES (?, ?, ?, ?)";
+        $typesParams = "iiis";
+        $this->database->save($typesParams, $datosPartida, $sql);
+    }
+
+    private function guardarPreguntaRespondida($datosReporte){
         $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`) VALUES (?,?)";
         $typesParams = "ii";
         $this->database->save($typesParams, $datosReporte, $sql);
     }
 
 
-    private function guardarPreguntaRespondida($datosPartida){
+    private function guardarReporte($datosPartida){
         $sql = "INSERT INTO `reporte`(`idPregunta`, `Comentario`) VALUES (?,?)";
         $typesParams = "is";
         $this->database->save($typesParams, $datosPartida, $sql);

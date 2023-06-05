@@ -13,6 +13,7 @@ class PartidaController
     public function list() {
         $data["jugando"] = $this->estaJugando() && !isset($_SESSION["respuestaOKMessage"]);
         $data["pregunta"] =  $_SESSION["pregunta"] ?? $this->generarPregunta();
+        $data["categoria"] = $_SESSION["categoria"] ?? null;
         $data["respuestas"] = isset($_SESSION["respuestas"]) ? $this->getRespuestas() : [];
         $data["respuestaOKMessage"] = $_SESSION["respuestaOKMessage"] ?? null;
         $data["respuestaMALMessage"] = $_SESSION["respuestaMALMessage"] ?? null;
@@ -93,6 +94,7 @@ class PartidaController
     private function generarPreguntaPorCategoria()
     {
         $categoriaSiguiente = $this->partidaModel->getCategoriaSiguiente($_SESSION["categorias"]);
+        $_SESSION["categoria"] = $categoriaSiguiente;
         $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"]);
 
         return $preguntaSiguiente;
@@ -121,6 +123,7 @@ class PartidaController
             unset($_SESSION["respuestaMALMessage"]);
             unset($_SESSION["respuestaElegida"]);
             unset($_SESSION["respuestas"]);
+            unset($_SESSION["categoria"]);
         }
     }
 

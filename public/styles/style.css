@@ -225,3 +225,16 @@ option {
     background-color: #5D1E80 !important;
     color: #9A9A9A !important;
 }
+
+.card-pregunta {
+    position: relative;
+}
+
+.tag-categoria {
+    position: absolute;
+    height: 25px;
+    min-width: 95px;
+    padding-inline: 6px;
+    top: -15px;
+    font-family: 'Permanent Marker', cursive;
+}

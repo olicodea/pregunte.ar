@@ -9,7 +9,7 @@ class PartidaModel
     }
 
     public function findCategorias() {
-        return $this->database->query("SELECT idCategoria, descripcion FROM categoria_preguntas");
+        return $this->database->query("SELECT idCategoria, descripcion, color FROM categoria_preguntas");
     }
 
     public function findCategoriasAlAzar() {

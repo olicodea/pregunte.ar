@@ -17,7 +17,8 @@
     </div>
 {{/jugando}}
 
-<div class="sombra-container contenedor rounded-lg p-4 w-full pb-6">
+<div class="card-pregunta sombra-container contenedor rounded-lg p-4 w-full pb-6" {{#categoria}} style="box-shadow: inset 0 0 10px {{color}};" {{/categoria}}>
+    {{#categoria}}<span class="tag-categoria rounded-md flex justify-center align-center font-light" style="background-color: {{color}};">{{descripcion}}</span>{{/categoria}}
     {{#pregunta}}
         <div class="flex justify-center">
             <p class="medida text-white text-left text-lg md:text-2xl mb-5">{{pregunta}}</p>

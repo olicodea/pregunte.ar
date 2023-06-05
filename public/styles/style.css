@@ -212,3 +212,16 @@ option {
 .respuesta-bg {
     background-color: #9248D9 !important;
 }
+
+.respuesta-correcta {
+    background-color: #19A875 !important;
+}
+
+.respuesta-incorrecta {
+    background-color: #F34949 !important;
+}
+
+.respuesta-disabled {
+    background-color: #5D1E80 !important;
+    color: #9A9A9A !important;
+}

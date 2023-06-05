@@ -1,18 +1,19 @@
+
 {{#respuestaOKMessage}}
-    <div class="bg-blue-500 text-white py-2 px-4 rounded-md my-2 w-full">
+    <div class="bg-blue-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
         {{respuestaOKMessage}}
     </div>
 {{/respuestaOKMessage}}
 
 {{#respuestaMALMessage}}
-    <div class="bg-red-500 text-white py-2 px-4 rounded-md my-2 w-full">
+    <div class="bg-red-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
         {{respuestaMALMessage}}
     </div>
 {{/respuestaMALMessage}}
 
 {{#jugando}}
     <div class="mb-7">
-        <p class="text-5xl font-bold contador-texto">10</p>
+        <p class="text-4xl font-bold contador-texto">Tiempo Ilimitado</p> <!-- ACA IRA EL TEMPORIZADOR -->
     </div>
 {{/jugando}}
 
@@ -23,10 +24,17 @@
         </div>
     <div class="flex flex-col gap-3">
         {{#respuestas}}
-            <button type="submit" name="respuesta" value="{{respuestaA}}" class="respuesta-bg medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100">{{respuestaA}}</button>
-            <button type="submit" name="respuesta" value="{{respuestaB}}" class="respuesta-bg medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100">{{respuestaB}}</button>
-            <button type="submit" name="respuesta" value="{{respuestaC}}" class="respuesta-bg medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100">{{respuestaC}}</button>
-            <button type="submit" name="respuesta" value="{{respuestaD}}" class="respuesta-bg medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100">{{respuestaD}}</button>
+            {{#respuesta}}
+            <button
+                type="submit" name="respuesta" value="{{respuesta}}" class="respuesta medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                {{#jugando}} respuesta-bg hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100 {{/jugando}}
+                {{#esCorrecta}} respuesta-correcta shadow-lg scale-105 font-bold {{/esCorrecta}}
+                {{#esIncorrecta}} respuesta-incorrecta{{/esIncorrecta}}
+                {{#esDisabled}} respuesta-disabled {{/esDisabled}}
+            ">
+                    {{respuesta}}
+            </button>
+            {{/respuesta}}
         {{/respuestas}}
     {{/pregunta}}
     </div>

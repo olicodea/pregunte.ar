@@ -26,14 +26,13 @@ class PartidaModel
     }
 
     public function findRespuestaPorId($idRespuesta) {
-        $sql = "SELECT * FROM respuesta r JOIN pregunta p ON p.idRespuesta = r.idRespuesta WHERE p.idRespuesta = $idRespuesta";
+        $sql = "SELECT r.respuestaA, r.respuestaB, r.respuestaC, r.respuestaD, r.respuestaCorrecta FROM respuesta r JOIN pregunta p ON p.idRespuesta = r.idRespuesta WHERE p.idRespuesta = $idRespuesta";
         $resultado = $this->database->query($sql);
+
         return $resultado;
     }
 
     //TODO: Hay que ver de hacer el metodo findPreguntasDisponiblesPorIdCategoria teniendo en cuenta la dificultad
-
-    // PERSISTENCIA DE PARTIDA
 
     public function guardar($datosPartida) {
         $this->guardarPartida($datosPartida);
@@ -88,5 +87,78 @@ class PartidaModel
             ];
             $this->database->save($typesParams, $datosReporte, $sql);
         }
+    }
+
+    public function getRespuestasAMostrar($respuestas) {
+        $respuestasAMostrar = [];
+
+        foreach($respuestas as $clave => $respuesta) {
+            if($clave != "respuestaCorrecta") {
+                $respuestasAMostrar[] = [
+                    "respuesta" => [
+                        "respuesta" => $respuesta,
+                        "esCorrecta" => false,
+                        "esIncorrecta" => false,
+                        "esDisabled" => false
+                    ]
+                ];
+            }
+        }
+
+        return $respuestasAMostrar;
+    }
+
+    public function getRespuestasAMarcarComoCorrectaIncorrectaYDisabled($respuestas, $respuestaElegida, $respuestaCorrecta) {
+        $respuestasAMotrarMarcadas = [];
+
+        foreach($respuestas as $clave => $respuesta) {
+            if($clave != "respuestaCorrecta") {
+                $respuestasAMotrarMarcadas[] = [
+                    "respuesta" => [
+                        "respuesta" => $respuesta,
+                        "esCorrecta" =>  $this->verificarRespuestaCorrecta($respuesta, $respuestaCorrecta, $respuestaElegida),
+                        "esIncorrecta" => $this->verificarRespuestaIncorrecta($respuesta, $respuestaElegida, $respuestaCorrecta),
+                        "esDisabled" => $this->verificarRespuestaDisabled($respuesta, $respuestaElegida, $respuestaCorrecta)
+                    ]
+                ];
+            }
+        }
+
+        return $respuestasAMotrarMarcadas;
+    }
+
+    private function verificarRespuestaCorrecta($respuesta, $respuestaCorrecta, $respuestaElegida)
+    {
+        if($respuesta == $respuestaCorrecta && $respuestaCorrecta == $respuestaElegida) {
+            return true;
+        }
+
+        if($respuesta == $respuestaCorrecta) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function verificarRespuestaIncorrecta($respuesta, $respuestaElegida, $respuestaCorrecta)
+    {
+        if ($respuesta == $respuestaElegida && $respuestaElegida != $respuestaCorrecta) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function verificarRespuestaDisabled($respuesta, $respuestaElegida, $respuestaCorrecta)
+    {
+        if($respuesta != $respuestaCorrecta && $respuestaElegida != $respuestaCorrecta && $respuesta != $respuestaElegida) {
+            return true;
+        }
+
+        if($respuesta != $respuestaCorrecta && $respuesta != $respuestaElegida) {
+            return true;
+        }
+
+        return false;
     }
 }

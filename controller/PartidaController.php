@@ -13,17 +13,14 @@ class PartidaController
     public function list() {
         $data["jugando"] = $this->estaJugando() && !isset($_SESSION["respuestaOKMessage"]);
         $data["pregunta"] =  $_SESSION["pregunta"] ?? $this->generarPregunta();
-        $data["respuestas"] = $_SESSION["respuestas"] ?? [];
+        $data["respuestas"] = isset($_SESSION["respuestas"]) ? $this->getRespuestas() : [];
         $data["respuestaOKMessage"] = $_SESSION["respuestaOKMessage"] ?? null;
         $data["respuestaMALMessage"] = $_SESSION["respuestaMALMessage"] ?? null;
+        $data["respondio"] = $this->hayRespuestaEnSesion();
 
         $this->renderer->render('partida', $data);
 
-        if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
-            unset($_SESSION["pregunta"]);
-            unset($_SESSION["respuestaOKMessage"]);
-            unset($_SESSION["respuestaMALMessage"]);
-        }
+        $this->unsetVariablesSESSION();
     }
 
     public function responder() {
@@ -53,16 +50,18 @@ class PartidaController
     }
 
     private function verificarRespuesta($respuestaSeleccionada) {
+        $_SESSION["respuestaElegida"] = $respuestaSeleccionada;
+
         if( ! isset($_SESSION["partida"]) ) {
             $_SESSION["partida"] = $this->partidaModel->createPartidaInicial();
         }
 
-        //TODO: Cambiar el PartidaModel para no tener que accede a ["respuestas"][0]
+        //TODO: Cambiar el PartidaModel para no tener que acceder a ["respuestas"][0]
         if($respuestaSeleccionada == $_SESSION["respuestas"][0]["respuestaCorrecta"]) {
-            $_SESSION["respuestaOKMessage"] = "¡CORRECTO!";
             $this->partidaModel->updatePartidaActual($_SESSION["partida"]);
+            $_SESSION["respuestaOKMessage"] = "¡CORRECTO! Puntaje de partida: " . $_SESSION["partida"]["puntaje"];
         } else {
-            $_SESSION["respuestaMALMessage"] = "LA PARTIDA TERMINO";
+            $_SESSION["respuestaMALMessage"] = "¡LA PARTIDA TERMINO! Puntaje de partida: " . $_SESSION["partida"]["puntaje"];
         }
     }
 
@@ -78,7 +77,6 @@ class PartidaController
             $preguntaSiguiente = $this->generarPreguntaPorCategoria();
 
             $respuestas = $this->partidaModel->findRespuestaPorId($preguntaSiguiente["idRespuesta"]);
-
             $_SESSION["pregunta"] = $preguntaSiguiente;
             $_SESSION["respuestas"] = $respuestas;
         }
@@ -104,5 +102,30 @@ class PartidaController
         if(empty($_SESSION["categorias"])) {
             unset($_SESSION["categorias"]);
         }
+    }
+
+    private function getRespuestas() {
+        if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
+            $respuestasCorrecta = $_SESSION["respuestas"][0]["respuestaCorrecta"];
+            return $this->partidaModel->getRespuestasAMarcarComoCorrectaIncorrectaYDisabled($_SESSION["respuestas"][0], $_SESSION["respuestaElegida"], $respuestasCorrecta);
+        } else {
+            return $this->partidaModel->getRespuestasAMostrar($_SESSION["respuestas"][0]);
+        }
+    }
+
+    private function unsetVariablesSESSION()
+    {
+        if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
+            unset($_SESSION["pregunta"]);
+            unset($_SESSION["respuestaOKMessage"]);
+            unset($_SESSION["respuestaMALMessage"]);
+            unset($_SESSION["respuestaElegida"]);
+            unset($_SESSION["respuestas"]);
+        }
+    }
+
+    private function hayRespuestaEnSesion()
+    {
+        return isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"]);
     }
 }

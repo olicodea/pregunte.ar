@@ -4,7 +4,7 @@ include_once('Configuration.php');
 $configuration = new Configuration();
 $router = $configuration->getRouter();
 
-$noLoginUserSites = ["login","registro","datosLogin","datosUsuario","mailValidation"];
+$noLoginUserSites = ["home","login","registro","datosLogin","datosUsuario","mailValidation"];
 
 $module = $_GET['module'] ?: 'home';
 $method = $_GET['action'] ?: 'list';

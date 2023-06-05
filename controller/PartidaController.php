@@ -11,38 +11,58 @@ class PartidaController
         $this->partidaModel = $partidaModel;
     }
     public function list() {
-        $data["jugando"] = $this->estaJugando();
+        $data["jugando"] = $this->estaJugando() && !isset($_SESSION["respuestaOKMessage"]);
         $data["pregunta"] =  $_SESSION["pregunta"] ?? $this->generarPregunta();
-        $data["respuestas"] = $_SESSION["respuestas"];
+        $data["categoria"] = $_SESSION["categoria"] ?? null;
+        $data["respuestas"] = isset($_SESSION["respuestas"]) ? $this->getRespuestas() : [];
         $data["respuestaOKMessage"] = $_SESSION["respuestaOKMessage"] ?? null;
         $data["respuestaMALMessage"] = $_SESSION["respuestaMALMessage"] ?? null;
+        $data["respondio"] = $this->hayRespuestaEnSesion();
 
         $this->renderer->render('partida', $data);
 
-        if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
-            unset($_SESSION["pregunta"]);
-        }
-
-        unset($_SESSION["respuestaOKMessage"]);
-        unset($_SESSION["respuestaMALMessage"]);
+        $this->unsetVariablesSESSION();
     }
 
     public function responder() {
+        $reportado = $_GET["toggleReportar"] ?? null;
+        $this->partidaModel->guardarReporte($reportado, $_SESSION["pregunta"]["idPregunta"]);
+
+        $this->partidaModel->guardarPreguntaRespondida($_SESSION["pregunta"]["idPregunta"], $_SESSION["usuario"]["idUsuario"]);
         $this->verificarRespuesta($_GET["respuesta"]);
+
+        if( ! $this->estaJugando() ) {
+            $datosPartida = [
+                $_SESSION["usuario"]["idUsuario"],
+                $_SESSION["partida"]["puntaje"],
+                $_SESSION["partida"]["respuestasAcertadas"],
+                10 //TODO: Se hardcodea por ahora la duracion de partida
+            ];
+
+            unset($_SESSION["partida"]);
+            $this->partidaModel->guardar($datosPartida);
+        }
 
         header("Location: /partida");
     }
 
     private function estaJugando() {
-        return ! ( ( isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"]) ) );
+        return ! ( (isset($_SESSION["respuestaMALMessage"])) );
     }
 
     private function verificarRespuesta($respuestaSeleccionada) {
-        //TODO: Cambiar el PartidaModel para no tener que accede a ["respuestas"][0]
+        $_SESSION["respuestaElegida"] = $respuestaSeleccionada;
+
+        if( ! isset($_SESSION["partida"]) ) {
+            $_SESSION["partida"] = $this->partidaModel->createPartidaInicial();
+        }
+
+        //TODO: Cambiar el PartidaModel para no tener que acceder a ["respuestas"][0]
         if($respuestaSeleccionada == $_SESSION["respuestas"][0]["respuestaCorrecta"]) {
-            $_SESSION["respuestaOKMessage"] = "¡CORRECTO!";
+            $this->partidaModel->updatePartidaActual($_SESSION["partida"]);
+            $_SESSION["respuestaOKMessage"] = "¡CORRECTO! Puntaje de partida: " . $_SESSION["partida"]["puntaje"];
         } else {
-            $_SESSION["respuestaMALMessage"] = "LA PARTIDA TERMINO";
+            $_SESSION["respuestaMALMessage"] = "¡LA PARTIDA TERMINO! Puntaje de partida: " . $_SESSION["partida"]["puntaje"];
         }
     }
 
@@ -50,19 +70,14 @@ class PartidaController
     {
         $this->chequearArrayCategorias();
 
-        if( ! isset($_SESSION["categorias"] ) ) {
+        if( ! isset($_SESSION["categorias"]) ) {
             $_SESSION["categorias"] = $this->generarArrayCategorias();
         }
 
         if( isset($_SESSION["categorias"]) ) {
             $preguntaSiguiente = $this->generarPreguntaPorCategoria();
 
-            //TODO: Cambiar el PartidaModel para no tener que accede a ["respuestas"][0]
             $respuestas = $this->partidaModel->findRespuestaPorId($preguntaSiguiente["idRespuesta"]);
-
-            // Mezcla los elementos al azar
-            shuffle($respuestas);
-
             $_SESSION["pregunta"] = $preguntaSiguiente;
             $_SESSION["respuestas"] = $respuestas;
         }
@@ -72,23 +87,15 @@ class PartidaController
 
     private function generarArrayCategorias()
     {
-        $categorias = $this->partidaModel->findCategorias();
-
-        // Mezcla los elementos al azar
-        shuffle($categorias);
-
+        $categorias = $this->partidaModel->findCategoriasAlAzar();
         return $categorias;
     }
 
     private function generarPreguntaPorCategoria()
     {
-        //Agarra el primer item, lo retorno y lo borra del array
-        $categoriaSiguiente = array_shift($_SESSION["categorias"]);
-
-        $preguntasDisponibles = $this->partidaModel->findPreguntasDisponiblesPorIdCategoria($categoriaSiguiente["idCategoria"]);
-        //TODO: Hay que ver despues el tema de la dificultad
-        $indiceAleatorio = array_rand($preguntasDisponibles);
-        $preguntaSiguiente = $preguntasDisponibles[$indiceAleatorio];
+        $categoriaSiguiente = $this->partidaModel->getCategoriaSiguiente($_SESSION["categorias"]);
+        $_SESSION["categoria"] = $categoriaSiguiente;
+        $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"]);
 
         return $preguntaSiguiente;
     }
@@ -97,5 +104,31 @@ class PartidaController
         if(empty($_SESSION["categorias"])) {
             unset($_SESSION["categorias"]);
         }
+    }
+
+    private function getRespuestas() {
+        if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
+            $respuestasCorrecta = $_SESSION["respuestas"][0]["respuestaCorrecta"];
+            return $this->partidaModel->getRespuestasAMarcarComoCorrectaIncorrectaYDisabled($_SESSION["respuestas"][0], $_SESSION["respuestaElegida"], $respuestasCorrecta);
+        } else {
+            return $this->partidaModel->getRespuestasAMostrar($_SESSION["respuestas"][0]);
+        }
+    }
+
+    private function unsetVariablesSESSION()
+    {
+        if(isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"])) {
+            unset($_SESSION["pregunta"]);
+            unset($_SESSION["respuestaOKMessage"]);
+            unset($_SESSION["respuestaMALMessage"]);
+            unset($_SESSION["respuestaElegida"]);
+            unset($_SESSION["respuestas"]);
+            unset($_SESSION["categoria"]);
+        }
+    }
+
+    private function hayRespuestaEnSesion()
+    {
+        return isset($_SESSION["respuestaOKMessage"]) || isset($_SESSION["respuestaMALMessage"]);
     }
 }

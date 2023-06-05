@@ -190,3 +190,10 @@ CREATE TABLE validaciones (
     idUsuario int NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
 );
+
+CREATE TABLE reporte (
+    idReporte int PRIMARY KEY AUTO_INCREMENT,
+    idPregunta int NOT NULL,
+    comentario varchar(255),
+    FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta)
+);

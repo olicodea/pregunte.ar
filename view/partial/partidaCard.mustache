@@ -1,0 +1,49 @@
+
+{{#respuestaOKMessage}}
+    <div class="bg-blue-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
+        {{respuestaOKMessage}}
+    </div>
+{{/respuestaOKMessage}}
+
+{{#respuestaMALMessage}}
+    <div class="bg-red-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
+        {{respuestaMALMessage}}
+    </div>
+{{/respuestaMALMessage}}
+
+{{#jugando}}
+    <div class="mb-7">
+        <p class="text-4xl font-bold contador-texto">Tiempo Ilimitado</p> <!-- ACA IRA EL TEMPORIZADOR -->
+    </div>
+{{/jugando}}
+
+<div class="card-pregunta sombra-container contenedor rounded-lg p-4 w-full pb-6" {{#categoria}} style="box-shadow: inset 0 0 10px {{color}};" {{/categoria}}>
+    {{#categoria}}<span class="tag-categoria rounded-md flex justify-center align-center font-light" style="background-color: {{color}};">{{descripcion}}</span>{{/categoria}}
+    {{#pregunta}}
+        <div class="flex justify-center">
+            <p class="medida text-white text-left text-lg md:text-2xl mb-5">{{pregunta}}</p>
+        </div>
+    <div class="flex flex-col gap-3">
+        {{#respuestas}}
+            {{#respuesta}}
+            <button
+                type="submit" name="respuesta" value="{{respuesta}}" class="respuesta medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                {{#jugando}} respuesta-bg hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100 {{/jugando}}
+                {{#esCorrecta}} respuesta-correcta shadow-lg scale-105 font-bold {{/esCorrecta}}
+                {{#esIncorrecta}} respuesta-incorrecta{{/esIncorrecta}}
+                {{#esDisabled}} respuesta-disabled {{/esDisabled}}
+            ">
+                    {{respuesta}}
+            </button>
+            {{/respuesta}}
+        {{/respuestas}}
+    {{/pregunta}}
+    </div>
+</div>
+<div class="flex justify-center items-center mt-9">
+    <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-500 ease-in">
+        <input type="checkbox" name="toggleReportar" id="toggleReportar" class="toggle-checkbox absolute block w-6 h-6 rounded-full border-4 appearance-none cursor-pointer"/>
+        <label for="toggleReportar" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-400 cursor-pointer"></label>
+    </div>
+    <label for="toggleReportar" class="text-md md:text-lg">Reportar pregunta</label>
+</div>

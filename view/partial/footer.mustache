@@ -55,20 +55,27 @@
     }
 
         {{#respuestaMALMessage}}
-        window.onload = () => {
-            setTimeout(() => {
-                window.location = "/lobby";
-            }, 4000);
-        }
+            window.onload = () => {
+                setTimeout(() => {
+                    window.location = "/lobby";
+                }, 4000);
+            }
         {{/respuestaMALMessage}}
 
         {{#respuestaOKMessage}}
-        window.onload = () => {
-            setTimeout(() => {
-                window.location = "/partida";
-            }, 4000);
-        }
+            window.onload = () => {
+                setTimeout(() => {
+                    window.location = "/partida";
+                }, 4000);
+            }
         {{/respuestaOKMessage}}
+
+        {{#respondio}}
+            const respuestas = document.querySelectorAll(".respuesta");
+            respuestas.forEach(respuesta => {
+                respuesta.disabled = true;
+            })
+        {{/respondio}}
 </script>
 
 {{#ApiGoogleMaps}}

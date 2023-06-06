@@ -28,7 +28,9 @@
         <div class="w-full caja-partidas rounded flex justify-center items-center flex-col">
             <p class="texto-izq">Partidas Jugadas</p>
             <div class="partidas flex justify-center items-center flex-col">
-                <p class="text-white">sin partidas encontradas</p>
+              {{#lobbyPartidasJugadas}}
+                <p class="text-white">ID Partida: {{Partidas Jugadas}} &ndash;&gt; Puntaje: {{puntaje}}</p>
+              {{/lobbyPartidasJugadas}}
             </div>
         </div>
     </section>

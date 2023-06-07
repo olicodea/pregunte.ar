@@ -62,7 +62,7 @@ class RegistroModel {
     }
 
     public function asegurarPassword($password) {
-        return md5($_SESSION["DatosLogin"]["Password"]);
+        return md5($password);
     }
 
     public function getRolInicial() {

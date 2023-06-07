@@ -17,6 +17,7 @@ include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 include_once('model/LobbyModel.php');
 include_once('model/PartidaModel.php');
+include_once ('model/DatosLoginModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -62,7 +63,7 @@ class Configuration {
     }
 
     public function getDatosLoginController() {
-        return new DatosLoginController($this->getRenderer(), $this->getFileManager());
+        return new DatosLoginController(new DatosLoginModel($this->getDatabase()), $this->getRenderer(), $this->getFileManager());
     }
 
     public function getDatosUsuarioController() {

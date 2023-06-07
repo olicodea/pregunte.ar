@@ -2,15 +2,13 @@
 
 class DatosLoginController
 {
+    private $datosLoginModel;
     private $renderer;
     private $fileManager;
-    private $mailREGEX = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-    private $nombreUsuarioREGEX = '/^[a-zA-Z0-9]+$/';
-    private $passwordREGEX = '/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/';
 
-    private $extensionImagenREGEX = '/^.*\.(png|jpg)$/i';
-    public function __construct($renderer, $fileManager)
+    public function __construct($datosLoginModel, $renderer, $fileManager)
     {
+        $this->datosLoginModel = $datosLoginModel;
         $this->renderer = $renderer;
         $this->fileManager = $fileManager;
     }
@@ -27,37 +25,17 @@ class DatosLoginController
         unset($_SESSION["errorMsgLogin"]);
     }
 
-    private function validarCamposREGEX(&$error) {
-        if(!preg_match($this->mailREGEX, $_POST["Mail"])) {
-            $error .= "El mail no es válido. ";
-        }
-
-        if(!preg_match($this->nombreUsuarioREGEX, $_POST["NombreUsuario"])) {
-            $error .= "El nombre de usuario no es válida. ";
-        }
-
-        if(!preg_match($this->passwordREGEX, $_POST["Password"])) {
-            $error .= "El password no es válido. ";
-        }
-
-        if(!preg_match($this->passwordREGEX, $_POST["ConfirmarPassword"])) {
-            $error .= "La confirmación de password no es válida. ";
-        }
-
-        if($_POST["Password"] != $_POST["ConfirmarPassword"]) {
-            $error .= "Las contraseñas no coinciden.";
-        }
-
-        if(!preg_match($this->extensionImagenREGEX, $_FILES["FotoPerfil"]["name"])){
-            $error .= "La imagen no es válida. Debe ser .jpg o .png";
-        }
+    private function validarCampos(&$error) {
+        $error .= $this->datosLoginModel->validarCamposConCriterios($_POST["Mail"], $_POST["NombreUsuario"], $_POST["Password"], $_POST["ConfirmarPassword"], $_FILES["FotoPerfil"]["name"]);
     }
 
     private function validarCamposPOST() {
         $error = "";
 
         if(isset($_POST["Mail"]) && isset($_POST["NombreUsuario"]) && isset($_POST["Password"]) && isset($_POST["ConfirmarPassword"]) && isset($_FILES["FotoPerfil"])) {
-            $this->validarCamposREGEX($error);
+            $this->validarCampos($error);
+            $this->validarNombreUsuarioQueNoSeaRepetido($_POST["NombreUsuario"], $error);
+            $this->validarMailQueNoSeaRepetido($_POST["Mail"], $error);
         }
 
         return $error;
@@ -82,5 +60,15 @@ class DatosLoginController
 
         $_SESSION["errorMsgLogin"] = null;
         header("Location: /registro");
+    }
+
+    private function validarNombreUsuarioQueNoSeaRepetido($NombreUsuario, &$error)
+    {
+        $error .= $this->datosLoginModel->getErrorSiNombreDeUsuarioEsRepetido($NombreUsuario);
+    }
+
+    private function validarMailQueNoSeaRepetido($Mail, &$error)
+    {
+        $error .= $this->datosLoginModel->getErrorSiMailEsRepetido($Mail);
     }
 }

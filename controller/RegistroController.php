@@ -23,22 +23,23 @@ class RegistroController
         unset($_SESSION["errorMsgRegistro"]);
 
         if(isset($_SESSION["NotifMailEnviado"])) {
-            session_destroy();
+            session_unset();
         }
     }
 
     public function guardar()
     {
         if(!isset($_SESSION["DatosUsuario"]) || !isset($_SESSION["DatosLogin"])) {
-            $_SESSION["errorMsgRegistro"] = "Para registrarse es necesario completar todos los datos";
+            $_SESSION["errorMsgRegistro"] = $this->registroModel->getMensajeErrorRegistro();
             header("Location: /registro");
             exit();
         }
         unset($_SESSION["errorMsgRegistro"]);
 
-        list($pais, $ciudad) = explode(", ", $_SESSION["DatosUsuario"]["PaisCiudad"]);
+        list($pais, $ciudad) = $this->registroModel->getPaisCiudadPorSeparado($_SESSION["DatosUsuario"]["PaisCiudad"]);
 
-        $passwordHasheada = md5($_SESSION["DatosLogin"]["Password"]);
+        $passwordHasheada = $this->registroModel->asegurarPassword($_SESSION["DatosLogin"]["Password"]);
+        $rolInicial = $this->registroModel->getRolInicial();
 
         $datosRegistro = [
             $_SESSION["DatosUsuario"]["NombreCompleto"],
@@ -50,10 +51,10 @@ class RegistroController
             $_SESSION["DatosLogin"]["NombreUsuario"],
             $passwordHasheada,
             $_SESSION["DatosLogin"]["FotoPerfil"],
-            4 //Rol: NoValidado
+            $rolInicial
         ];
 
-        $codigoValidacion = $this->registroModel->guardar($datosRegistro, $_SESSION["DatosLogin"]["NombreUsuario"]);
+        $codigoValidacion = $this->registroModel->guardarYRetornarCodigoDeValidacion($datosRegistro, $_SESSION["DatosLogin"]["NombreUsuario"]);
 
         $datosCorreo = [
             "address" => $_SESSION["DatosLogin"]["Mail"],
@@ -65,7 +66,7 @@ class RegistroController
         $mail = $this->mailer->enviarCorreoValidacion($datosCorreo["address"], $datosCorreo["addressName"], $datosCorreo["subject"], $datosCorreo["body"]);
 
         if($codigoValidacion && $mail) {
-            $_SESSION["NotifMailEnviado"] = "El registro se realizó con éxito. Te enviamos un mail a " . $_SESSION["DatosLogin"]["Mail"] . " para validar la cuenta";
+            $_SESSION["NotifMailEnviado"] = $this->registroModel->getMensajeMailEnviado();
         }
 
         header("Location: /registro");

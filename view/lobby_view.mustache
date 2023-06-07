@@ -1,7 +1,7 @@
 {{> header}}
 <!-- The Band Section -->
 
-    <section class="mx-auto my-10 flex flex-col justify-center items-center px-4 card-container">
+    <section class="mx-auto my-10 flex flex-col justify-center items-center px-4 pb-2 card-container">
         <div class="w-full rounded-lg w-full gap-6 flex justify-around">
             {{#lobbyData}}
 
@@ -25,14 +25,16 @@
         <div class="w-full contenedor-crearpartida flex justify-center items-center">
             <a href="/partida" class="text-white boton-crearPartida rounded px-6 py-2 font-bold hover:bg-purple-500 hover:shadow-lg">CREAR PARTIDA</a>
         </div>
-        <div class="w-full caja-partidas rounded flex justify-center items-center flex-col">
-            <p class="texto-izq">Partidas Jugadas</p>
-            <div class="partidas flex justify-center items-center flex-col">
-              {{#lobbyPartidasJugadas}}
-                  <p class="text-white">Partida nro: {{nroPartida}} </p>
-                  <p class="text-white">Puntaje: {{puntaje}} </p>
-                  <p class="text-white">Respuestas correctas: {{cantidadDeRespuestasAcertadas}} </p>
-              {{/lobbyPartidasJugadas}}
+        <div class="w-full caja-partidas rounded flex gap-3 justify-center items-center flex-col pb-6">
+            <p class="texto-izq font-bold text-xl">Partidas Jugadas</p>
+            <div class="contenedor-partidas overflow-auto w-full flex flex-col gap-[10px]">
+                {{#lobbyPartidasJugadas}}
+                    <div class="partidas card-partidas flex justify-center flex-col w-full rounded-md p-2">
+                        <p class="text-white"><b>Partida nro:</b> {{nroPartida}} </p>
+                        <p class="text-white"><b>Puntaje:</b> {{puntaje}} </p>
+                        <p class="text-white"><b>Respuestas correctas:</b> {{cantidadDeRespuestasAcertadas}} </p>
+                    </div>
+                {{/lobbyPartidasJugadas}}
             </div>
         </div>
     </section>

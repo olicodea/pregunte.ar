@@ -14,6 +14,7 @@ class LobbyController
         $usuario = $_SESSION["usuario"];
         $data["lobbyData"] = $this->lobbyModel->getLobbyData($usuario["nombreDeUsuario"]);
         $data["usuarioLogeado"] = $_SESSION["usuario"];
+        $data["lobbyPartidasJugadas"] = $this->lobbyModel->getLobbyPartidasJugadas($usuario["nombreDeUsuario"]);
         $this->renderer->render('lobby', $data);
     }
 

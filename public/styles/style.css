@@ -128,14 +128,24 @@ option {
 .contenedor-crearpartida{
     height: 100px;
 }
-.caja-partidas{
+.caja-partidas {
     background-color: #4C145D;
     width: 40%;
     margin: 0 auto;
     padding: 5px 20px;
     max-width: 500px;
 }
-.texto-izq{
+
+.contenedor-partidas {
+    max-height: 500px;
+}
+
+.card-partidas {
+    background-color: #6D27A3;
+    box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+.texto-izq {
     width: 100%;
     text-align: left;
     padding: 10px 0;
@@ -143,7 +153,7 @@ option {
     color: #AD5CF7;
 }
 .partidas{
-    height: 250px;
+    height: 80px;
 }
 @media (max-width: 360px) {
     .main-perfil{
@@ -237,4 +247,29 @@ option {
     padding-inline: 6px;
     top: -15px;
     font-family: 'Permanent Marker', cursive;
+}
+
+.contenedor-partidas::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.contenedor-partidas::-webkit-scrollbar:vertical {
+    width:6px;
+}
+
+.contenedor-partidas::-webkit-scrollbar-button:increment,.contenedor-partidas::-webkit-scrollbar-button {
+    display: none;
+}
+
+.contenedor-partidas::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.contenedor-partidas::-webkit-scrollbar-thumb {
+    background-color:  rgba(225, 189, 255, 0.8);
+    border-radius: 20px;
+}
+
+.contenedor-partidas::-webkit-scrollbar-track {
+    border-radius: 10px;
 }

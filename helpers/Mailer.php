@@ -12,6 +12,7 @@ class Mailer
     public function __construct($mail, $host, $SMTPAuth, $username, $password, $port, $from, $fromName){
         $this->mail = $mail;
         $this->mail->isSMTP();
+        $this->mail->CharSet = "UTF-8";
         $this->mail->Host = $host;
         $this->mail->SMTPAuth = $SMTPAuth;
         $this->mail->Username = $username;

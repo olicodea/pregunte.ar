@@ -76,6 +76,12 @@
                 respuesta.disabled = true;
             })
         {{/respondio}}
+
+        {{#usuarioLogeado}}
+        const header = document.querySelector("header");
+        header.classList.remove("justify-center");
+        header.classList.add("justify-around");
+        {{/usuarioLogeado}}
 </script>
 
 {{#ApiGoogleMaps}}

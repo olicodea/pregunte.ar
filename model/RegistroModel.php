@@ -7,7 +7,7 @@ class RegistroModel {
         $this->database = $database;
     }
 
-    public function guardar($datosRegistro, $nombreUsuario) {
+    public function guardarYRetornarCodigoDeValidacion($datosRegistro, $nombreUsuario) {
         $this->crearUsuario($datosRegistro);
         $usuario = $this->getIdUsuarioByNombreDeUsuario($nombreUsuario);
         $this->crearCodigoValidacion($usuario["idUsuario"]);
@@ -51,5 +51,25 @@ class RegistroModel {
         $sql = "INSERT INTO `usuario` (`nombreCompleto`, `fechaDeNacimiento`, `genero`, `pais`, `ciudad`, `mail`, `nombreDeUsuario`, `contrasenia`, `fotoDePerfil`, `idRol`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $typesParams = "sssssssssi";
         $this->database->save($typesParams, $datosRegistro, $sql);
+    }
+
+    public function getMensajeErrorRegistro() {
+        return "Para registrarse es necesario completar todos los datos";
+    }
+
+    public function getPaisCiudadPorSeparado($paisCiudadJuntos) {
+        return explode(", ", $paisCiudadJuntos);
+    }
+
+    public function asegurarPassword($password) {
+        return md5($password);
+    }
+
+    public function getRolInicial() {
+        return 4; //Rol: NoValidado
+    }
+
+    public function getMensajeMailEnviado() {
+        return "El registro se realizó con éxito. Te enviamos un mail a " . $_SESSION["DatosLogin"]["Mail"] . " para validar la cuenta";
     }
 }

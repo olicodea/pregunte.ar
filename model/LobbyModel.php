@@ -24,7 +24,7 @@ class LobbyModel
                     LEFT JOIN usuario u
                     ON p.idUsuario = u.idUsuario
                     WHERE u.nombreDeUsuario = ?
-                    ORDER BY p.idPartida DESC";
+                    ORDER BY p.idPartida";
         $resultado = $this->database->queryWthParameters($query, $user);
         $partidasJugadas = $this->crearArrayPartidas($resultado);
 

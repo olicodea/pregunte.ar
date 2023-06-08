@@ -46,7 +46,11 @@ body {
     font-weight: bold;
 }
 
-.input-type-1{
+.input-type-1 {
+    height: 30px;
+}
+
+.text-area-type-1, .input-type-1 {
     padding-inline: 5px;
     outline: none;
     border: 2px solid #9248D9;
@@ -137,6 +141,7 @@ option {
 }
 
 .contenedor-partidas {
+    min-height: 250px;
     max-height: 500px;
 }
 
@@ -272,4 +277,30 @@ option {
 
 .contenedor-partidas::-webkit-scrollbar-track {
     border-radius: 10px;
+}
+
+/* Estilo personalizado para los radio buttons simulados utilizando Google Fonts Icons */
+
+
+input[type="radio"] {
+    height: 20px;
+    width: 20px;
+}
+
+/* Estilos cuando el radio button simulado está seleccionado */
+input[type="radio"]:checked + .checkbox-icon::before {
+    content: "\e145"; /* Ícono check_box de la fuente Material Symbols Rounded */
+    font-family: "Material Symbols Rounded", sans-serif; /* Fuente de Google Fonts Icons */
+    font-size: 18px;
+    color: #999; /* Color del ícono seleccionado */
+}
+
+.checkbox-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #999; /* Estilo del borde del checkbox simulado */
+    border-radius: 4px; /* Radio de borde del checkbox simulado */
 }

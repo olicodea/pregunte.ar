@@ -1,0 +1,60 @@
+{{> header}}
+
+<form id='crearPregunta' name="crearPregunta" action="/crearPregunta/guardar" method="POST" enctype="application/x-www-form-urlencoded" class='flex flex-col p-4 h-full mx-auto' style='max-width:500px' >
+    {{#errorMsgCrearPregunta}}
+        <div class="bg-red-500 text-white py-2 px-4 rounded-md my-2 w-full">
+            {{errorMsgCrearPregunta}}
+        </div>
+    {{/errorMsgCrearPregunta}}
+    <div class="flex flex-col gap-2">
+        <h4 class="text-xl mb-2">Crea tu pregunta, con sus respuestas. No te olvides de marcar la correcta</h4>
+        <div class="flex flex-col">
+            <label for="Categoria">Categoria</label>
+            <select type="text" name="Categoria" id="Categoria" class="input-type-1 bg-transparent border rounded">
+                {{#categorias}}
+                    <option value="{{categoria}}">{{categoria}}</option>
+                {{/categorias}}
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="pregunta">Pregunta</label>
+            <textarea name="pregunta" id="pregunta" class="text-area-type-1 bg-transparent border rounded">
+                {{pregunta}}
+            </textarea>
+        </div>
+        <div class="flex flex-col">
+            <label for="respuestaA">Respuesta A</label>
+            <div class="w-full flex items-center gap-4">
+                <input type="text" name="respuestaA" id="respuestaA" class="w-5/6 input-type-1 bg-transparent border rounded" value="{{respuestaA}}">
+                <input type="radio" name="respuestaCorrecta" value="respuestaA" class="w-1/6">
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <label for="respuestaB">Respuesta B</label>
+            <div class="w-full flex items-center gap-4">
+                <input type="text" name="respuestaB" id="respuestaB" class="w-5/6 input-type-1 bg-transparent border rounded" value="{{respuestaB}}">
+                <input type="radio" name="respuestaCorrecta" value="respuestaB" class="w-1/6">
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <label for="respuestaC">Respuesta C</label>
+            <div class="w-full flex items-center gap-4">
+                <input type="text" name="respuestaC" id="respuestaC" class="w-5/6 input-type-1 bg-transparent border rounded" value="{{respuestaC}}">
+                <input type="radio" name="respuestaCorrecta" value="respuestaC" class="w-1/6">
+            </div>
+
+        </div>
+        <div class="flex flex-col">
+            <label for="respuestaD">Respuesta D</label>
+            <div class="w-full flex items-center gap-4">
+                <input type="text" name="respuestaD" id="respuestaD" class="w-5/6 input-type-1 bg-transparent border rounded" value="{{respuestaD}}">
+                <input type="radio" name="respuestaCorrecta" value="respuestaD" class="w-1/6">
+            </div>
+        </div>
+        <div class="w-full mt-4">
+            <button type="submit" class="sombra-container btn-purple mx-auto py-2 rounded-md text-white text-center w-full">Guardar</button>
+        </div>
+    </div>
+</form>
+
+{{> footer}}

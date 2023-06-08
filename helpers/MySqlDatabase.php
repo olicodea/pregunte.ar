@@ -42,4 +42,8 @@ class MySqlDatabase {
         $stmt->close();
         return true;
     }
+
+    public function getLastInsertedId() {
+        return $this->connection->insert_id;
+    }
 }

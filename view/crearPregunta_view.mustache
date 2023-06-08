@@ -9,18 +9,16 @@
     <div class="flex flex-col gap-2">
         <h4 class="text-xl mb-2">Crea tu pregunta, con sus respuestas. No te olvides de marcar la correcta</h4>
         <div class="flex flex-col">
-            <label for="Categoria">Categoria</label>
-            <select type="text" name="Categoria" id="Categoria" class="input-type-1 bg-transparent border rounded">
+            <label for="categoria">Categoria</label>
+            <select type="text" name="categoria" id="categoria" class="input-type-1 bg-transparent border rounded">
                 {{#categorias}}
-                    <option value="{{categoria}}">{{categoria}}</option>
+                    <option value="{{idCategoria}}" {{selected}}>{{descripcion}}</option>
                 {{/categorias}}
             </select>
         </div>
         <div class="flex flex-col">
             <label for="pregunta">Pregunta</label>
-            <textarea name="pregunta" id="pregunta" class="text-area-type-1 bg-transparent border rounded">
-                {{pregunta}}
-            </textarea>
+            <textarea name="pregunta" id="pregunta" class="text-area-type-1 bg-transparent border rounded">{{pregunta}}</textarea>
         </div>
         <div class="flex flex-col">
             <label for="respuestaA">Respuesta A</label>

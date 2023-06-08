@@ -17,7 +17,8 @@ include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 include_once('model/LobbyModel.php');
 include_once('model/PartidaModel.php');
-include_once ('model/DatosLoginModel.php');
+include_once('model/DatosLoginModel.php');
+include_once('model/CrearPreguntaModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -85,7 +86,7 @@ class Configuration {
     }
 
     public function getCrearPreguntaController() {
-        return new CrearPreguntaController($this->getRenderer());
+        return new CrearPreguntaController(new CrearPreguntaModel($this->getDatabase()), $this->getRenderer());
     }
 
     private function getArrayConfig() {

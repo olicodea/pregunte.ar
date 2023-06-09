@@ -273,3 +273,12 @@ option {
 .contenedor-partidas::-webkit-scrollbar-track {
     border-radius: 10px;
 }
+
+.input-vacio {
+    background-color: rgba(0,0,0,0);
+}
+
+.input-vacio:active, .input-vacio:focus {
+    border: none;
+    outline: none;
+}

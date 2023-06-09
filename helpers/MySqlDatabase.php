@@ -11,6 +11,7 @@ class MySqlDatabase {
             $databaseName);
 
         if (!$this->connection) {
+            Logger::error('Error al establecer la conexion con la base de datos');
             die('Connection failed: ' . mysqli_connect_error());
         }
     }
@@ -20,11 +21,13 @@ class MySqlDatabase {
     }
 
     public function query($sql) {
+        Logger::info('Ejecutando query: ' . $sql);
         $result = mysqli_query($this->connection, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     public function queryWthParameters($query, $value) {
+        Logger::info('Ejecutando query: ' . $query . ' con parametros: '.$value);
         $stmt = mysqli_prepare($this->connection, $query);
 
         // Vincular el parámetro
@@ -36,6 +39,7 @@ class MySqlDatabase {
 
 
     public function save($types, $values, $sql) {
+        Logger::info('Guardando: '.$sql.'. tipos: ' . $types . '. valores:'.$values);
         $stmt = $this->connection->prepare($sql);
         $stmt->bind_param($types, ...$values);
         $stmt->execute();

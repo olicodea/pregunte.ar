@@ -25,7 +25,7 @@ class CrearPreguntaModel
     }
 
     public function guardar($idUsuario, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta) {
-        $datosRespuesta = [$respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta];
+        $datosRespuesta = [$respuestaA, $respuestaB, $respuestaC, $respuestaD, $$respuestaCorrecta];
         $idRespuesta = $this->guardarRespuesta($datosRespuesta);
         $idEstadoPregunta = 3; // TODO: Por ahora se hardcodea el idEstado, 3 es "PARA REVISAR", hay que hacer una consulta
         $idDificultad = 1; //TODO: Por ahora se hardcodea la dificultad, hay que ver como setearla

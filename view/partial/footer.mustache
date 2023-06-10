@@ -54,6 +54,29 @@
         }
     }
 
+    const visibilityIcon = document.getElementById("visibility");
+    const inputPassword = document.getElementById("password") ?? document.getElementById("Password");
+
+    if(visibilityIcon && inputPassword) {
+        visibilityIcon.addEventListener("click", () => cambiarVisibilidadPassword(visibilityIcon, inputPassword))
+    }
+    const inputConfirmarPassword = document.getElementById("ConfirmarPassword");
+    const visibilityIconConfirmar = document.getElementById("visibilityConfirmar");
+
+    if (visibilityIconConfirmar) {
+        visibilityIconConfirmar.addEventListener("click", () => cambiarVisibilidadPassword(visibilityIconConfirmar, inputConfirmarPassword))
+    }
+
+    function cambiarVisibilidadPassword(visibilityIcon, inputPassword) {
+            if(visibilityIcon.textContent === "visibility_off") {
+                visibilityIcon.innerText = "visibility";
+                inputPassword.type = "text";
+            } else {
+                visibilityIcon.innerText = "visibility_off";
+                inputPassword.type = "password";
+            }
+    }
+
         {{#respuestaMALMessage}}
             window.onload = () => {
                 setTimeout(() => {

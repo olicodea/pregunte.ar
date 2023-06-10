@@ -304,3 +304,11 @@ input[type="radio"]:checked + .checkbox-icon::before {
     border: 1px solid #999; /* Estilo del borde del checkbox simulado */
     border-radius: 4px; /* Radio de borde del checkbox simulado */
 }
+.input-vacio {
+    background-color: rgba(0,0,0,0);
+}
+
+.input-vacio:active, .input-vacio:focus {
+    border: none;
+    outline: none;
+}

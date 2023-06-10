@@ -1,3 +1,4 @@
 config
-public/img/*.png
+public/img/qr.png
 log/*.txt
+!log/logTest.txt

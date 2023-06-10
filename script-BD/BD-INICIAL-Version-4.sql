@@ -106,7 +106,7 @@ idEstadoPregunta int PRIMARY KEY AUTO_INCREMENT,
 descripcion varchar(50) NOT NULL
 );
 
-INSERT INTO estado_pregunta (descripcion) VALUES ("ACEPTADA"), ("RECHAZADA"), ("PARA APROBAR");
+INSERT INTO estado_pregunta (descripcion) VALUES ("ACEPTADA"), ("RECHAZADA"), ("PARA REVISAR");
 
 CREATE TABLE pregunta (
 idPregunta int PRIMARY KEY AUTO_INCREMENT,

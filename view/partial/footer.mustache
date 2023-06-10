@@ -101,11 +101,14 @@
         {{/respondio}}
 
         {{#usuarioLogeado}}
-        const header = document.querySelector("header");
-        header.classList.remove("justify-center");
-        header.classList.add("justify-around");
+            const header = document.querySelector("header");header.classList.remove("justify-center");header.classList.add("justify-around");
         {{/usuarioLogeado}}
 
+        {{#guardadoOkMessage}}
+            window.onload = () => {setTimeout(() => {
+                window.location = "/lobby";
+            }, 4000);}
+        {{/guardadoOkMessage}}
 
 </script>
 

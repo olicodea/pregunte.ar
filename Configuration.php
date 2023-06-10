@@ -8,6 +8,8 @@ include_once('helpers/Router.php');
 include_once('helpers/FileManager.php');
 include_once('helpers/GeneradorQr.php');
 include_once('helpers/Mailer.php');
+include_once ('helpers/Logger.php');
+include_once('helpers/ModuleHelper.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
@@ -17,7 +19,8 @@ include_once('model/RegistroModel.php');
 include_once('model/PerfilModel.php');
 include_once('model/LobbyModel.php');
 include_once('model/PartidaModel.php');
-include_once ('model/DatosLoginModel.php');
+include_once('model/DatosLoginModel.php');
+include_once('model/CrearPreguntaModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -28,12 +31,12 @@ include_once('controller/PerfilController.php');
 include_once('controller/HomeController.php');
 include_once('controller/LobbyController.php');
 include_once('controller/PartidaController.php');
+include_once('controller/CrearPreguntaController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
 include_once('third-party/PHPMailer-master/src/Exception.php');
 include_once('third-party/PHPMailer-master/src/SMTP.php');
-
 
 class Configuration {
     private $configFile = 'config/config.ini';
@@ -82,6 +85,10 @@ class Configuration {
 
     public function getPartidaController() {
         return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getCrearPreguntaController() {
+        return new CrearPreguntaController(new CrearPreguntaModel($this->getDatabase()), $this->getRenderer());
     }
 
     private function getArrayConfig() {
@@ -145,5 +152,10 @@ class Configuration {
             $configMail["From"],
             $configMail["FromName"]
         );
+    }
+
+    public function getModuleHelper()
+    {
+        return new ModuleHelper();
     }
 }

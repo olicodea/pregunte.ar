@@ -157,6 +157,15 @@ option {
     border-bottom: 1px solid #6D27A3;
     color: #AD5CF7;
 }
+
+.texto-titulo-pagina {
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 1px solid #6D27A3;
+    color: #fff;
+}
+
 .partidas{
     height: 80px;
 }

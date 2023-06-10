@@ -32,6 +32,7 @@ include_once('controller/HomeController.php');
 include_once('controller/LobbyController.php');
 include_once('controller/PartidaController.php');
 include_once('controller/CrearPreguntaController.php');
+include_once('controller/RankingController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -89,6 +90,10 @@ class Configuration {
 
     public function getCrearPreguntaController() {
         return new CrearPreguntaController(new CrearPreguntaModel($this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getRankingController() {
+        return new RankingController($this->getRenderer());
     }
 
     private function getArrayConfig() {

@@ -1,0 +1,34 @@
+[2023-06-10][INFO]Ejecutando query: SELECT * FROM usuario WHERE nombreDeUsuario = ? con parametros: joliva
+[2023-06-10][INFO]Ejecutando query: SELECT US.idUsuario
+                FROM usuario US inner join 
+                     rol RO on US.idRol = RO.idRol
+                where RO.descripcion = 'NoValidado'
+                and US.nombreDeUsuario = ? con parametros: joliva
+[2023-06-10][INFO]usuario logueado con exito: joliva@mail.com
+[2023-06-10][INFO]Ejecutando query: SELECT u.nombreDeUsuario, r.puntaje, r.puesto
+                  FROM usuario u
+                  LEFT JOIN ranking r ON r.idUsuario = u.idUsuario
+                  WHERE u.nombreDeUsuario = ? con parametros: joliva
+[2023-06-10][INFO]Ejecutando query: SELECT p.puntaje, p.cantidadDeRespuestasAcertadas
+                    FROM partida p
+                    LEFT JOIN usuario u
+                    ON p.idUsuario = u.idUsuario
+                    WHERE u.nombreDeUsuario = ?
+                    ORDER BY p.idPartida con parametros: joliva
+[2023-06-10][INFO]Ejecutando query: SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, r.puntaje, COUNT(p.idUsuario) as 'partidasJugadas'
+                                        FROM usuario u
+                                        LEFT JOIN ranking r
+                                        ON r.idUsuario = u.idUsuario
+                                        LEFT JOIN partida p
+                                        ON p.idUsuario = u.idUsuario
+                                        WHERE u.nombreDeUsuario = ? con parametros: joliva
+[2023-06-10][INFO]Ejecutando query: SELECT u.nombreDeUsuario, r.puntaje, r.puesto
+                  FROM usuario u
+                  LEFT JOIN ranking r ON r.idUsuario = u.idUsuario
+                  WHERE u.nombreDeUsuario = ? con parametros: joliva
+[2023-06-10][INFO]Ejecutando query: SELECT p.puntaje, p.cantidadDeRespuestasAcertadas
+                    FROM partida p
+                    LEFT JOIN usuario u
+                    ON p.idUsuario = u.idUsuario
+                    WHERE u.nombreDeUsuario = ?
+                    ORDER BY p.idPartida con parametros: joliva

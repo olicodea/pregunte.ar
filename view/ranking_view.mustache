@@ -1,16 +1,111 @@
 {{> header}}
 
-<section class="mx-auto my-10 flex flex-col justify-center items-center px-4 pb-2 card-container">
-    <div class="w-full" style="max-width: 500px;"><h4 class="texto-titulo-pagina font-bold text-2xl">Ranking</h4></div>
-    <div class="w-full caja-partidas rounded flex gap-3 justify-center items-center flex-col pb-6 shadow-lg">
-        <div class="contenedor-partidas overflow-auto w-full flex flex-col gap-[10px]">
-            {{#lobbyPartidasJugadas}}
-                <div class="partidas card-partidas flex justify-center flex-col w-full rounded-md p-2">
-                    <p class="text-white"><b>Partida nro:</b> {{nroPartida}} </p>
-                    <p class="text-white"><b>Puntaje:</b> {{puntaje}} </p>
-                    <p class="text-white"><b>Respuestas correctas:</b> {{cantidadDeRespuestasAcertadas}} </p>
-                </div>
-            {{/lobbyPartidasJugadas}}
+<section class="mx-auto my-2 md:my-5 flex flex-col justify-center items-center px-4 pb-2 card-container">
+    <div class="w-full" style="max-width: 500px;"><h4 class="texto-titulo-pagina font-bold text-2xl mb-2">Ranking</h4></div>
+    <div class="w-full caja-ranking  rounded flex gap-3 justify-center items-center flex-col py-6 shadow-lg px-3 md:px-6">
+        <div class="contenedor-ranking overflow-auto w-full flex flex-col gap-[10px]">
+            <div class="flex items-center gap-4 ">
+                <p class="text-5xl font-bold text-white">1</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">cris567</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>5555</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-4xl font-bold text-white px-1">2</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">seba325</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>3000</p>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">3</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">nahue23</p>
+                       <p class="text-white text-md md:text-lg"><b>Puntaje: </b>2543</p>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">4</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">sofi123</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>1233</p>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">5</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">juli34</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>500</p>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">6</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">maty80</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>5555</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">6</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">maty80</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>5555</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">6</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">maty80</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>5555</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4 py-2">
+                <p class="text-2xl font-bold text-white px-2 md:px-3">6</p>
+                <a href="/perfil" class="partidas card-partidas flex w-full rounded-md py-2 px-4 gap-2 md:gap-6">
+                    <img src="/public/image/perfil.jpg" class="img-perfil" alt="foto-perfil">
+                    <div>
+                        <p class="text-white text-xl md:text-2xl font-bold">maty80</p>
+                        <p class="text-white text-md md:text-lg"><b>Puntaje: </b>5555</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </section>

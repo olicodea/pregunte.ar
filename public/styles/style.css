@@ -140,9 +140,21 @@ option {
     max-width: 500px;
 }
 
+.caja-ranking {
+    background-color: #4C145D;
+    width: 40%;
+    margin: 0 auto;
+    max-width: 700px;
+}
+
 .contenedor-partidas {
     min-height: 250px;
     max-height: 500px;
+}
+
+.contenedor-ranking {
+    min-height: 350px;
+    max-height: 700px;
 }
 
 .card-partidas {
@@ -263,28 +275,28 @@ option {
     font-family: 'Permanent Marker', cursive;
 }
 
-.contenedor-partidas::-webkit-scrollbar {
+.contenedor-partidas::-webkit-scrollbar, .contenedor-ranking::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
-.contenedor-partidas::-webkit-scrollbar:vertical {
+.contenedor-partidas::-webkit-scrollbar:vertical, .contenedor-ranking::-webkit-scrollbar:vertical {
     width:6px;
 }
 
-.contenedor-partidas::-webkit-scrollbar-button:increment,.contenedor-partidas::-webkit-scrollbar-button {
+.contenedor-partidas::-webkit-scrollbar-button:increment,.contenedor-partidas::-webkit-scrollbar-button, .contenedor-ranking::-webkit-scrollbar-button:increment,.contenedor-ranking::-webkit-scrollbar-button {
     display: none;
 }
 
-.contenedor-partidas::-webkit-scrollbar:horizontal {
+.contenedor-partidas::-webkit-scrollbar:horizontal, .contenedor-ranking::-webkit-scrollbar:horizontal {
     height: 10px;
 }
 
-.contenedor-partidas::-webkit-scrollbar-thumb {
+.contenedor-partidas::-webkit-scrollbar-thumb, .contenedor-ranking::-webkit-scrollbar-thumb {
     background-color:  rgba(225, 189, 255, 0.8);
     border-radius: 20px;
 }
 
-.contenedor-partidas::-webkit-scrollbar-track {
+.contenedor-partidas::-webkit-scrollbar-track, .contenedor-ranking::-webkit-scrollbar-track {
     border-radius: 10px;
 }
 

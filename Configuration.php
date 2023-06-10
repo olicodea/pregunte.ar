@@ -8,6 +8,7 @@ include_once('helpers/Router.php');
 include_once('helpers/FileManager.php');
 include_once('helpers/GeneradorQr.php');
 include_once('helpers/Mailer.php');
+include_once ('helpers/Logger.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');

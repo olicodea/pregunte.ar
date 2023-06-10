@@ -9,6 +9,7 @@ include_once('helpers/FileManager.php');
 include_once('helpers/GeneradorQr.php');
 include_once('helpers/Mailer.php');
 include_once ('helpers/Logger.php');
+include_once('helpers/ModuleHelper.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
@@ -151,5 +152,10 @@ class Configuration {
             $configMail["From"],
             $configMail["FromName"]
         );
+    }
+
+    public function getModuleHelper()
+    {
+        return new ModuleHelper();
     }
 }

@@ -3,22 +3,11 @@ session_start();
 include_once('Configuration.php');
 $configuration = new Configuration();
 $router = $configuration->getRouter();
-
-$noLoginUserSites = ["home","login","registro","datosLogin","datosUsuario","mailValidation"];
+$moduleHelper = $configuration->getModuleHelper();
 
 $module = $_GET['module'] ?: 'home';
 $method = $_GET['action'] ?: 'list';
 
-$value = in_array($module, $noLoginUserSites);
-
-if(!isset($_SESSION["usuario"])) {
-    if(!in_array($module, $noLoginUserSites)){
-        $module = 'home';
-    }
-} else {
-    if(in_array($module, $noLoginUserSites)){
-        $module = 'lobby';
-    }
-}
+$moduleHelper->chequearModulo($module, isset($_SESSION["usuario"]));
 
 $router->route($module, $method);

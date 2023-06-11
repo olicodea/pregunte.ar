@@ -125,7 +125,12 @@ option {
     background-color: #4C145D;
     padding: 2px 15px;
 }
-.boton-crearPartida{
+
+.boton-ranking:hover {
+    background-color: #551769;
+}
+
+.boton-crearPartida {
     background-color: #AD5CF7;
     font-size: 18px;
 }
@@ -137,7 +142,7 @@ option {
     width: 40%;
     margin: 0 auto;
     padding: 5px 20px;
-    max-width: 500px;
+    max-width: 700px;
 }
 
 .caja-ranking {

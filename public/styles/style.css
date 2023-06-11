@@ -245,6 +245,7 @@ img {
     background-color: #eddbff;
     border-color: rgb(190, 78, 250);
 }
+
 .toggle-checkbox:checked + .toggle-label {
     background-color: rgb(190, 78, 250);
 }

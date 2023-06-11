@@ -21,6 +21,7 @@ include_once('model/LobbyModel.php');
 include_once('model/PartidaModel.php');
 include_once('model/DatosLoginModel.php');
 include_once('model/CrearPreguntaModel.php');
+include_once('model/RankingModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -93,7 +94,7 @@ class Configuration {
     }
 
     public function getRankingController() {
-        return new RankingController($this->getRenderer());
+        return new RankingController(new RankingModel($this->getDatabase()) ,$this->getRenderer());
     }
 
     private function getArrayConfig() {

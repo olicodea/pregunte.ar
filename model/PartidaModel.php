@@ -177,7 +177,7 @@ class PartidaModel
     {
         $nivelPreguntasUsuario = $this->definirNivelPreguntasUsuario($idUsuario);
         $preguntasFiltradas = array_filter($preguntasDisponibles, function ($pregunta) use ($nivelPreguntasUsuario){
-            return $nivelPreguntasUsuario == $pregunta["dificultad"];
+            return $nivelPreguntasUsuario == $pregunta["dificultadPregunta"];
         });
         return $preguntasFiltradas;
     }
@@ -221,16 +221,8 @@ class PartidaModel
 
     private function generarPreguntaCompleta($pregunta)
     {
-        //TODO: Ver si hay una forma mas limpia de agregar un campo o generar el array.
-        return [
-            "idPregunta" => $pregunta["idPregunta"],
-            "pregunta" => $pregunta["pregunta"],
-            "idCategoria" => $pregunta["idCategoria"],
-            "idUsuario" => $pregunta["idUsuario"],
-            "idRespuesta" => $pregunta["idRespuesta"],
-            "idEstadoPregunta" => $pregunta["idEstadoPregunta"],
-            "dificultad" => $this->definirDificultadPregunta($pregunta["idPregunta"])
-        ];
+        $pregunta["dificultadPregunta"] = $this->definirDificultadPregunta($pregunta["idPregunta"]);
+        return $pregunta;
     }
 
     private function definirDificultadPregunta($idPregunta)

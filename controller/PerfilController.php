@@ -31,4 +31,19 @@ class PerfilController {
             exit();
         }
     }
+
+    public function verPerfilDeOtroUsuario() {
+        if(isset($_GET["nombreUsuario"])) {
+            $usuarioAVer = $_GET["nombreUsuario"];
+            $data["perfil"] = $this->perfilModel->getPerfil($usuarioAVer);
+            $data["usuarioLogeado"] = $this->perfilModel->getUsuario($usuarioAVer);
+            $idUsuario = $data["usuarioLogeado"]["idUsuario"];
+
+            $this->generadorQr->getQrById("http://localhost/perfil/verPerfilDeOtroUsuario&id=$idUsuario");
+            $this->renderer->render("perfil_usuario_caracteristicas", $data);
+        } else {
+            header("location: /lobby");
+            exit();
+        }
+    }
 }

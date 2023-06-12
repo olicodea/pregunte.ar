@@ -39,7 +39,7 @@ class PartidaModel
 
     public function guardarPreguntaRespondida($idPregunta, $idusuario, $fueCorrecta) {
         $datosPreguntaRespondida = [ $idPregunta, $idusuario, $fueCorrecta ];
-        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`, `fueCorrecta`) VALUES (?,?, ?)";
+        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`, `fueCorrecta`) VALUES (?, ?, ?)";
         $typesParams = "iii";
         $this->database->save($typesParams, $datosPreguntaRespondida, $sql);
     }

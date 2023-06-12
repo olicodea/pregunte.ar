@@ -18,7 +18,7 @@ class PartidaController
         $data["respuestaOKMessage"] = $_SESSION["respuestaOKMessage"] ?? null;
         $data["respuestaMALMessage"] = $_SESSION["respuestaMALMessage"] ?? null;
         $data["respondio"] = $this->hayRespuestaEnSesion();
-
+        $data["usuarioLogeado"] = $_SESSION["usuario"];
         $this->renderer->render('partida', $data);
 
         $this->unsetVariablesSESSION();

@@ -178,11 +178,12 @@ CREATE TABLE pregunta_respondida (
     idPreguntaRespondida int PRIMARY KEY AUTO_INCREMENT,
     idPregunta int NOT NULL,
     idUsuario int NOT NULL,
+    fueCorrecta tinyint NOT NULL,
     FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
     FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
 );
 
-INSERT INTO pregunta_respondida (idPregunta, idUsuario) VALUES (2, 1);
+INSERT INTO pregunta_respondida (idPregunta, idUsuario, fueCorrecta) VALUES (2, 1, 0);
 
 CREATE TABLE validaciones (
     idValidacion int PRIMARY KEY AUTO_INCREMENT,

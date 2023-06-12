@@ -19,20 +19,12 @@ class PartidaModel
         return $categorias;
     }
 
-    private function findPreguntasDisponiblesPorIdCategoria($idCategoria) {
-        $sql = "SELECT p.* FROM pregunta p WHERE idPregunta NOT IN ( SELECT idPregunta FROM pregunta_respondida ) AND p.idCategoria = $idCategoria";
-        $resultado = $this->database->query($sql);
-        return $resultado;
-    }
-
     public function findRespuestaPorId($idRespuesta) {
         $sql = "SELECT r.respuestaA, r.respuestaB, r.respuestaC, r.respuestaD, r.respuestaCorrecta FROM respuesta r JOIN pregunta p ON p.idRespuesta = r.idRespuesta WHERE p.idRespuesta = $idRespuesta";
         $resultado = $this->database->query($sql);
 
         return $resultado;
     }
-
-    //TODO: Hay que ver de hacer el metodo findPreguntasDisponiblesPorIdCategoria teniendo en cuenta la dificultad
 
     public function guardar($datosPartida) {
         $this->guardarPartida($datosPartida);
@@ -45,10 +37,10 @@ class PartidaModel
         $this->database->save($typesParams, $datosPartida, $sql);
     }
 
-    public function guardarPreguntaRespondida($idPregunta, $idusuario) {
-        $datosPreguntaRespondida = [ $idPregunta, $idusuario ];
-        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`) VALUES (?,?)";
-        $typesParams = "ii";
+    public function guardarPreguntaRespondida($idPregunta, $idusuario, $fueCorrecta) {
+        $datosPreguntaRespondida = [ $idPregunta, $idusuario, $fueCorrecta ];
+        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`, `fueCorrecta`) VALUES (?,?, ?)";
+        $typesParams = "iii";
         $this->database->save($typesParams, $datosPreguntaRespondida, $sql);
     }
 
@@ -56,11 +48,10 @@ class PartidaModel
         return array_shift($categorias);
     }
 
-    public function getPreguntaSiguiente($idCategoria) {
-        $preguntasDisponibles = $this->findPreguntasDisponiblesPorIdCategoria($idCategoria);
-        //TODO: Hay que ver despues el tema de la dificultad
-        $indiceAleatorio = array_rand($preguntasDisponibles);
-        $preguntaSiguiente = $preguntasDisponibles[$indiceAleatorio];
+    public function getPreguntaSiguiente($idCategoria, $idUsuario) {
+        $preguntas = $this->findPreguntas($idCategoria, $idUsuario);
+        $indiceAleatorio = array_rand($preguntas);
+        $preguntaSiguiente = $preguntas[$indiceAleatorio];
         return $preguntaSiguiente;
     }
 
@@ -160,5 +151,124 @@ class PartidaModel
         }
 
         return false;
+    }
+
+    private function findPreguntas($idCategoria, $idUsuario)
+    {
+        $preguntasDisponibles = $this->findPreguntasDisponiblesPorIdCategoria($idCategoria, $idUsuario);
+        $preguntasPorNivel = $this->definirPreguntasPorNivel($preguntasDisponibles, $idUsuario);
+
+        if(count($preguntasPorNivel) > 0) {
+            return $preguntasPorNivel;
+        } else {
+            return $preguntasDisponibles;
+        }
+    }
+
+    private function findPreguntasDisponiblesPorIdCategoria($idCategoria, $idUsuario) {
+        $sql = "SELECT p.idPregunta, p.pregunta, p.idCategoria, p.idUsuario, p.idRespuesta, p.idEstadoPregunta FROM pregunta p 
+                WHERE p.idCategoria = $idCategoria
+                AND NOT EXISTS ( SELECT 1 FROM pregunta_respondida pr WHERE pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario )";
+        $resultado = $this->database->query($sql);
+        return $this->getPreguntasCompletas($resultado);
+    }
+
+    private function definirPreguntasPorNivel($preguntasDisponibles, $idUsuario)
+    {
+        $nivelPreguntasUsuario = $this->definirNivelPreguntasUsuario($idUsuario);
+        $preguntasFiltradas = array_filter($preguntasDisponibles, function ($pregunta) use ($nivelPreguntasUsuario){
+            return $nivelPreguntasUsuario == $pregunta["dificultad"];
+        });
+        return $preguntasFiltradas;
+    }
+
+    private function definirNivelPreguntasUsuario($idUsuario)
+    {
+        $totalPreguntasContestadas = $this->findPreguntasContestadasPorUsuarioId($idUsuario);
+        $totalPreguntasCorrectas = $this->findPreguntasContestadasCorrectamentePorUsuarioId($idUsuario);
+
+        if($totalPreguntasContestadas > 0) {
+            $porcentajeCorrectas = ($totalPreguntasCorrectas / $totalPreguntasContestadas) * 100;
+        } else {
+            return "MEDIA";
+        }
+
+        return $this->getDificultadPorPorcentaje($porcentajeCorrectas);
+    }
+
+    private function findPreguntasContestadasPorUsuarioId($idUsuario)
+    {
+        $sql = "SELECT COUNT(*) AS total_preguntas FROM pregunta_respondida WHERE idUsuario = ?";
+        $resultado = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idUsuario));
+        return $resultado["total_preguntas"];
+    }
+
+    private function findPreguntasContestadasCorrectamentePorUsuarioId($idUsuario)
+    {
+        $sql = "SELECT SUM(cantidadDeRespuestasAcertadas) AS total_correctas FROM partida WHERE idUsuario = ?";
+        $resultado = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idUsuario));
+        return $resultado["total_correctas"];
+    }
+
+    private function getPreguntasCompletas($preguntas)
+    {
+        $preguntasCompletas = [];
+        foreach ($preguntas as $pregunta) {
+            $preguntasCompletas[] = $this->generarPreguntaCompleta($pregunta);
+        }
+        return $preguntasCompletas;
+    }
+
+    private function generarPreguntaCompleta($pregunta)
+    {
+        return [
+            "idPregunta" => $pregunta["idPregunta"],
+            "pregunta" => $pregunta["pregunta"],
+            "idCategoria" => $pregunta["idCategoria"],
+            "idUsuario" => $pregunta["idUsuario"],
+            "idRespuesta" => $pregunta["idRespuesta"],
+            "idEstadoPregunta" => $pregunta["idEstadoPregunta"],
+            "dificultad" => $this->definirDificultadPregunta($pregunta["idPregunta"])
+        ];
+    }
+
+    private function definirDificultadPregunta($idPregunta)
+    {
+        $totalPreguntasContestadasPorIdPregunta = $this->findTotalDePreguntasContestadasPorIdPregunta($idPregunta);
+        $totalPreguntasCorrectasPorIdPregunta = $this->findTotalPreguntasContestadasCorrectamentePorIdPregunta($idPregunta);
+
+        if($totalPreguntasContestadasPorIdPregunta > 0) {
+            $porcentajeCorrectas = ($totalPreguntasCorrectasPorIdPregunta / $totalPreguntasContestadasPorIdPregunta) * 100;
+        } else {
+            return "MEDIA";
+        }
+
+        return $this->getDificultadPorPorcentaje($porcentajeCorrectas);
+    }
+
+    private function findTotalDePreguntasContestadasPorIdPregunta($idPregunta)
+    {
+        $sql = "SELECT COUNT(*) AS total_preguntas FROM pregunta_respondida WHERE idPregunta = ?";
+        $resultado = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idPregunta));
+        return $resultado["total_preguntas"];
+    }
+
+    private function findTotalPreguntasContestadasCorrectamentePorIdPregunta($idPregunta)
+    {
+        $sql = "SELECT COUNT(*) AS total_correctas FROM pregunta_respondida WHERE idPregunta = ? AND fueCorrecta = 1";
+        $resultado = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idPregunta));
+        return $resultado["total_correctas"];
+    }
+
+    private function getDificultadPorPorcentaje($porcentaje)
+    {
+        switch ($porcentaje) {
+            case $porcentaje >= 70:
+                return "DIFÍCIL";
+            case $porcentaje <= 30:
+                return "FÁCIL";
+            case $porcentaje > 30:
+                return "MEDIA";
+        }
     }
 }

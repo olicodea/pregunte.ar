@@ -28,7 +28,6 @@ class PartidaController
         $reportado = $_GET["toggleReportar"] ?? null;
         $this->partidaModel->guardarReporte($reportado, $_SESSION["pregunta"]["idPregunta"]);
 
-        $this->partidaModel->guardarPreguntaRespondida($_SESSION["pregunta"]["idPregunta"], $_SESSION["usuario"]["idUsuario"]);
         $this->verificarRespuesta($_GET["respuesta"]);
 
         if( ! $this->estaJugando() ) {
@@ -59,11 +58,15 @@ class PartidaController
 
         //TODO: Cambiar el PartidaModel para no tener que acceder a ["respuestas"][0]
         if($respuestaSeleccionada == $_SESSION["respuestas"][0]["respuestaCorrecta"]) {
+            $fueCorrecta = true;
             $this->partidaModel->updatePartidaActual($_SESSION["partida"]);
             $_SESSION["respuestaOKMessage"] = "¡CORRECTO! Puntaje de partida: " . $_SESSION["partida"]["puntaje"];
         } else {
+            $fueCorrecta = false;
             $_SESSION["respuestaMALMessage"] = "¡LA PARTIDA TERMINO! Puntaje de partida: " . $_SESSION["partida"]["puntaje"];
         }
+
+        $this->partidaModel->guardarPreguntaRespondida($_SESSION["pregunta"]["idPregunta"], $_SESSION["usuario"]["idUsuario"], $fueCorrecta);
     }
 
     private function generarPregunta()
@@ -95,7 +98,7 @@ class PartidaController
     {
         $categoriaSiguiente = $this->partidaModel->getCategoriaSiguiente($_SESSION["categorias"]);
         $_SESSION["categoria"] = $categoriaSiguiente;
-        $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"]);
+        $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"], $_SESSION["usuario"]["idUsuario"]);
 
         return $preguntaSiguiente;
     }

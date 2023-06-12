@@ -221,6 +221,7 @@ class PartidaModel
 
     private function generarPreguntaCompleta($pregunta)
     {
+        //TODO: Ver si hay una forma mas limpia de agregar un campo o generar el array.
         return [
             "idPregunta" => $pregunta["idPregunta"],
             "pregunta" => $pregunta["pregunta"],
@@ -267,7 +268,7 @@ class PartidaModel
                 return "DIFÍCIL";
             case $porcentaje <= 30:
                 return "FÁCIL";
-            case $porcentaje > 30:
+            default:
                 return "MEDIA";
         }
     }

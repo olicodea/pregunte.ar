@@ -3,11 +3,8 @@ class DatosUsuarioController
 {
     private $renderer;
     private $datosUsuarioModel;
-
     private $apiGoogleMaps;
-    private $nombreCompletoREGEX = "/^[A-Za-z\s]+$/";
-    private $sexoREGEX = "/^(Masculino|Femenino|No binario)$/";
-    private $paisCiudadREGEX = "/^[a-zA-Z\s,áéíóúÁÉÍÓÚñÑ]+$/";
+
     public function __construct($datosUsuarioModel, $renderer, $ApiGoogleMaps)
     {
         $this->renderer = $renderer;
@@ -24,34 +21,17 @@ class DatosUsuarioController
         $data["PaisCiudad"] = $_SESSION["DatosUsuario"]["PaisCiudad"] ?? "";
         $data["sexos"] = $this->datosUsuarioModel->getSexos($data["Sexo"]);
         $data["errorMsgUsuario"] = $_SESSION["errorMsgUsuario"] ?? null;
+
         $this->renderer->render("datosUsuario", $data);
+
         unset($_SESSION["errorMsgUsuario"]);
-    }
-
-    private function validarCamposREGEX(&$error) {
-        if(!preg_match($this->nombreCompletoREGEX, $_POST["NombreCompleto"])){
-            $error .= "El nombre no es válido. ";
-        }
-
-        if(!strtotime($_POST["FechaNacimiento"])) {
-            $error .= "La fecha no es válida. ";
-        }
-
-        if(!preg_match($this->sexoREGEX, $_POST["Sexo"])) {
-            $error .= "El sexo no es válido. ";
-        }
-
-        if(!preg_match($this->paisCiudadREGEX, $_POST["PaisCiudad"])) {
-            echo $_POST["PaisCiudad"];
-            $error .= "País/ciudad no es válido.";
-        }
     }
 
     private function validarCamposPOST() {
         $error = "";
 
         if(isset($_POST["NombreCompleto"]) && isset($_POST["FechaNacimiento"]) && isset($_POST["Sexo"]) && isset($_POST["PaisCiudad"])) {
-            $this->validarCamposREGEX($error);
+            $this->datosUsuarioModel->validarCamposConCriterios($error);
         }
 
         return $error;

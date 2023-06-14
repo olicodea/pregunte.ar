@@ -48,8 +48,8 @@ class RegistroModel {
     }
 
     private function crearUsuario($datosRegistro) {
-        $sql = "INSERT INTO `usuario` (`nombreCompleto`, `fechaDeNacimiento`, `genero`, `pais`, `ciudad`, `mail`, `nombreDeUsuario`, `contrasenia`, `fotoDePerfil`, `idRol`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $typesParams = "sssssssssi";
+        $sql = "INSERT INTO `usuario` (`nombreCompleto`, `fechaDeNacimiento`, `genero`, `pais`, `ciudad`, `mail`, `nombreDeUsuario`, `contrasenia`, `fotoDePerfil`, `idRol`, `latitud`, `longitud`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $typesParams = "sssssssssiss";
         $this->database->save($typesParams, $datosRegistro, $sql);
     }
 

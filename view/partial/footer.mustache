@@ -24,9 +24,6 @@
             let latitude = e.latLng.lat();
             let longitude = e.latLng.lng();
 
-            //console.log("Latitud:", latitude);
-            //console.log("Longitud:", longitude);
-
 
             marker.setPosition(e.latLng);
             let geocoder = new google.maps.Geocoder();
@@ -34,7 +31,6 @@
             let city = "";
             geocoder.geocode({ 'location': e.latLng }, function(results, status) {
                 if (status === 'OK') {
-                    console.log(results)
                     if (results[0]) {
                         for (let i = 0; i < results[0].address_components.length; i++) {
                             let addressType = results[0].address_components[i].types[0];
@@ -49,12 +45,15 @@
 
 
                         document.getElementById('PaisCiudad').value = `${country}, ${city}`;
+
                         $.ajax({
-                            url: '/DatosUsuario/guardarLatitudLongitud',
+                            url: '/datosUsuario/guardarLatitudLongitud',
                             method: 'POST',
-                            data:{
-                                latitude: latitude,
-                                longitude: longitude
+                            data: {
+                                dato: {
+                                    latitude: latitude,
+                                    longitude: longitude
+                                }
                         },
                         success: function (response){
                                 console.log(response);

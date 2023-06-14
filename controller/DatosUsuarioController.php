@@ -3,7 +3,6 @@ class DatosUsuarioController
 {
     private $renderer;
     private $datosUsuarioModel;
-
     private $apiGoogleMaps;
     private $nombreCompletoREGEX = "/^[A-Za-z\s]+$/";
     private $sexoREGEX = "/^(Masculino|Femenino|No binario)$/";
@@ -59,19 +58,11 @@ class DatosUsuarioController
         return $error;
     }
 
-    public function guardarLatitudLongitud(){
-
-        /*if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI'] === '/DatosUsuario/guardarLatitudLongitud') {
-            $latitude = $_POST['latitude'];
-            $longitude = $_POST['longitude'];
-
-            // Realiza las acciones necesarias con los datos capturados
-
-            // Envía una respuesta de éxito al cliente
-            echo json_encode(['success' => true]);
-            exit;
-        }*/
-
+    public function guardarLatitudLongitud() {
+        if (isset($_POST["dato"])) {
+            $_SESSION["latitud"] = $_POST["dato"]["latitude"];
+            $_SESSION["longitud"] = $_POST["dato"]["longitude"];
+        }
     }
 
     public function validar() {

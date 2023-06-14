@@ -41,18 +41,7 @@ class RegistroController
         $passwordHasheada = $this->registroModel->asegurarPassword($_SESSION["DatosLogin"]["Password"]);
         $rolInicial = $this->registroModel->getRolInicial();
 
-        $datosRegistro = [
-            $_SESSION["DatosUsuario"]["NombreCompleto"],
-            $_SESSION["DatosUsuario"]["FechaNacimiento"],
-            $_SESSION["DatosUsuario"]["Sexo"],
-            $pais,
-            $ciudad,
-            $_SESSION["DatosLogin"]["Mail"],
-            $_SESSION["DatosLogin"]["NombreUsuario"],
-            $passwordHasheada,
-            $_SESSION["DatosLogin"]["FotoPerfil"],
-            $rolInicial
-        ];
+        $datosRegistro = $this->getDatosRegistro($pais, $ciudad, $passwordHasheada, $rolInicial);
 
         $codigoValidacion = $this->registroModel->guardarYRetornarCodigoDeValidacion($datosRegistro, $_SESSION["DatosLogin"]["NombreUsuario"]);
 
@@ -70,5 +59,23 @@ class RegistroController
         }
         
         header("Location: /registro");
+    }
+
+    public function getDatosRegistro($pais, $ciudad, $passwordHasheada, $rolInicial)
+    {
+        return [
+            $_SESSION["DatosUsuario"]["NombreCompleto"],
+            $_SESSION["DatosUsuario"]["FechaNacimiento"],
+            $_SESSION["DatosUsuario"]["Sexo"],
+            $pais,
+            $ciudad,
+            $_SESSION["DatosLogin"]["Mail"],
+            $_SESSION["DatosLogin"]["NombreUsuario"],
+            $passwordHasheada,
+            $_SESSION["DatosLogin"]["FotoPerfil"],
+            $rolInicial,
+            $_SESSION["DatosUsuario"]["latitud"],
+            $_SESSION["DatosUsuario"]["longitud"]
+        ];
     }
 }

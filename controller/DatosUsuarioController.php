@@ -52,7 +52,6 @@ class DatosUsuarioController
         $error = "";
 
         if(isset($_POST["NombreCompleto"]) && isset($_POST["FechaNacimiento"]) && isset($_POST["Sexo"]) && isset($_POST["PaisCiudad"])) {
-
             $this->validarCamposREGEX($error);
         }
 
@@ -64,7 +63,6 @@ class DatosUsuarioController
             $_SESSION["latitud"] = $_POST["dato"]["latitude"];
             $_SESSION["longitud"] = $_POST["dato"]["longitude"];
         }
-
     }
 
     public function validar() {

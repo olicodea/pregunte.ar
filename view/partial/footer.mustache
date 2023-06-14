@@ -23,7 +23,7 @@
         {{#latLong}}
             let newLatLng = new google.maps.LatLng({{latitud}}, {{longitud}});
             map.setCenter({lat: {{latitud}}, lng: {{longitud}} });
-            map.setZoom(14);
+            map.setZoom(11);
             marker.setPosition(newLatLng);
         {{/latLong}}
 
@@ -50,7 +50,6 @@
                             }
 
                         }
-
 
                         document.getElementById('PaisCiudad').value = `${country}, ${city}`;
 

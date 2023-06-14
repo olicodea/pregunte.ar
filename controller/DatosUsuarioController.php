@@ -23,6 +23,7 @@ class DatosUsuarioController
         $data["PaisCiudad"] = $_SESSION["DatosUsuario"]["PaisCiudad"] ?? "";
         $data["sexos"] = $this->datosUsuarioModel->getSexos($data["Sexo"]);
         $data["errorMsgUsuario"] = $_SESSION["errorMsgUsuario"] ?? null;
+        $data["latLong"] = $this->getLatitudLongitudSesion();
         $this->renderer->render("datosUsuario", $data);
         unset($_SESSION["errorMsgUsuario"]);
     }
@@ -63,6 +64,7 @@ class DatosUsuarioController
             $_SESSION["latitud"] = $_POST["dato"]["latitude"];
             $_SESSION["longitud"] = $_POST["dato"]["longitude"];
         }
+
     }
 
     public function validar() {
@@ -72,7 +74,9 @@ class DatosUsuarioController
             "NombreCompleto" => $_POST["NombreCompleto"],
             "FechaNacimiento" => $_POST["FechaNacimiento"],
             "Sexo" => $_POST["Sexo"],
-            "PaisCiudad" => $_POST["PaisCiudad"]
+            "PaisCiudad" => $_POST["PaisCiudad"],
+            "latitud" => $_SESSION["latitud"],
+            "longitud" => $_SESSION["longitud"]
         ];
 
         if(strlen($error) > 0) {
@@ -83,5 +87,16 @@ class DatosUsuarioController
         $_SESSION["errorMsgUsuario"] = null;
 
         header("Location: /datosLogin");
+    }
+
+    private function getLatitudLongitudSesion()
+    {
+        if(isset($_SESSION["latitud"]) && isset($_SESSION["longitud"])){
+            return [
+                "latitud" => $_SESSION["latitud"],
+                "longitud" => $_SESSION["longitud"]
+            ];
+        }
+        return null;
     }
 }

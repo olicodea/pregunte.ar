@@ -11,14 +11,22 @@
             return;
 
         let map = new google.maps.Map(googleMap, {
-            center: { lat: 0, lng: 0 },
-            zoom: 2
+            center: { lat: -34.629261, lng: -63.432884},
+            zoom: 4
         });
 
         let marker = new google.maps.Marker({
             map: map,
             draggable: true
         });
+
+        {{#latLong}}
+            let newLatLng = new google.maps.LatLng({{latitud}}, {{longitud}});
+            map.setCenter({lat: {{latitud}}, lng: {{longitud}} });
+            map.setZoom(14);
+            marker.setPosition(newLatLng);
+        {{/latLong}}
+
 
         map.addListener('click', function(e) {
             let latitude = e.latLng.lat();
@@ -68,6 +76,8 @@
         });
     }
 
+
+
     window.onload = () => {
         let notif = document.querySelector(".notif");
         if(notif) {
@@ -75,6 +85,7 @@
                 notif.remove();
             }, 4000);
         }
+
     }
 
     const visibilityIcon = document.getElementById("visibility");

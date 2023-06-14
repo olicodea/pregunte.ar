@@ -68,7 +68,7 @@ class RegistroController
         if($codigoValidacion && $mail) {
             $_SESSION["NotifMailEnviado"] = $this->registroModel->getMensajeMailEnviado();
         }
-
+        
         header("Location: /registro");
     }
 }

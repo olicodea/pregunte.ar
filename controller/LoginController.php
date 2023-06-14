@@ -3,10 +3,11 @@ class loginController
 {
     private $render;
     private $loginModel;
+    private $moduleHelper;
 
-
-    public function __construct($loginModel, $render)
+    public function __construct($moduleHelper, $loginModel, $render)
     {
+        $this->moduleHelper = $moduleHelper;
         $this->render = $render;
         $this->loginModel = $loginModel;
     }
@@ -43,7 +44,14 @@ class loginController
         $_SESSION["usuario"]=$autenticacion;
 
         Logger::info("usuario logueado con exito: ". $_SESSION["usuario"]["mail"]);
-        header("Location: /lobby");
+
+        $this->redirectPorRol();
+    }
+
+    private function redirectPorRol()
+    {
+        $rolUsuario = $_SESSION["usuario"]["idRol"];
+        header("Location: /" . $this->moduleHelper->getLobbyPorRol($rolUsuario));
         exit();
     }
 }

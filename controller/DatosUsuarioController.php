@@ -45,16 +45,33 @@ class DatosUsuarioController
             echo $_POST["PaisCiudad"];
             $error .= "País/ciudad no es válido.";
         }
+
     }
 
     private function validarCamposPOST() {
         $error = "";
 
         if(isset($_POST["NombreCompleto"]) && isset($_POST["FechaNacimiento"]) && isset($_POST["Sexo"]) && isset($_POST["PaisCiudad"])) {
+
             $this->validarCamposREGEX($error);
         }
 
         return $error;
+    }
+
+    public function guardarLatitudLongitud(){
+
+        /*if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI'] === '/DatosUsuario/guardarLatitudLongitud') {
+            $latitude = $_POST['latitude'];
+            $longitude = $_POST['longitude'];
+
+            // Realiza las acciones necesarias con los datos capturados
+
+            // Envía una respuesta de éxito al cliente
+            echo json_encode(['success' => true]);
+            exit;
+        }*/
+
     }
 
     public function validar() {
@@ -73,6 +90,7 @@ class DatosUsuarioController
             exit();
         }
         $_SESSION["errorMsgUsuario"] = null;
+
         header("Location: /datosLogin");
     }
 }

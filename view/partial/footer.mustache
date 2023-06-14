@@ -21,6 +21,13 @@
         });
 
         map.addListener('click', function(e) {
+            let latitude = e.latLng.lat();
+            let longitude = e.latLng.lng();
+
+            //console.log("Latitud:", latitude);
+            //console.log("Longitud:", longitude);
+
+
             marker.setPosition(e.latLng);
             let geocoder = new google.maps.Geocoder();
             let country = "";
@@ -37,8 +44,25 @@
                             if (addressType === 'locality' || addressType === 'administrative_area_level_1') {
                                 city = results[0].address_components[i].long_name;
                             }
+
                         }
+
+
                         document.getElementById('PaisCiudad').value = `${country}, ${city}`;
+                        $.ajax({
+                            url: '/DatosUsuario/guardarLatitudLongitud',
+                            method: 'POST',
+                            data:{
+                                latitude: latitude,
+                                longitude: longitude
+                        },
+                        success: function (response){
+                                console.log(response);
+                        },
+                        error: function (xhr, status, error){
+                                console.log("Error al enviar los datos al servidor")
+                        }
+                        })
                     }
                 }
             });

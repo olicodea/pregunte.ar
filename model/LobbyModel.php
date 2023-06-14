@@ -9,6 +9,62 @@ class LobbyModel
         $this->database = $database;
     }
 
+    public function getLobbyDataNew($idUsuario, $nombreUsuario) {
+        $puestoUsuario = $this->getPuestoUsuario($nombreUsuario);
+        $puntajeUsuario = $this->calcularPuntajeUsuario($idUsuario);
+
+        $data = [
+            "nombreDeUsuario" => $nombreUsuario,
+            "puntaje" => $puntajeUsuario,
+            "puesto" => $puestoUsuario
+        ];
+
+        return $data;
+    }
+
+    private function getPuestoUsuario($nombreUsuario) {
+        $rankingJugadores = $this->generarRanking();
+
+        foreach ($rankingJugadores as $rankingJugador) {
+            if($rankingJugador["nombreDeUsuario"] === $nombreUsuario) {
+                return $rankingJugador["puesto"];
+            }
+        }
+
+        return "-";
+    }
+
+    private function calcularPuntajeUsuario($idUsuario) {
+        $query = "SELECT SUM(puntaje) AS puntaje FROM partida WHERE idUsuario = ?";
+        $result =  mysqli_fetch_assoc($this->database->queryWthParameters($query, $idUsuario));
+        if($result["puntaje"] == null) {
+            return 0;
+        }
+        return $result["puntaje"];
+    }
+
+    private function generarRanking()
+    {
+        $sql = "SELECT u.nombreDeUsuario, u.fotoDePerfil, SUM(p.puntaje) AS puntajeTotal, COUNT(p.idUsuario) AS cantidadPartidasJugadas
+                FROM usuario u JOIN partida p ON u.idUsuario = p.idUsuario
+                GROUP BY u.idUsuario, u.nombreDeUsuario, u.fotoDePerfil
+                ORDER BY puntajeTotal DESC, cantidadPartidasJugadas ASC";
+
+        $result = $this->database->query($sql);
+        $jugadoresConPuesto = [];
+
+        foreach ($result as $index => $item) {
+            $jugadoresConPuesto[] = [
+                "puesto" => $index + 1,
+                "nombreDeUsuario" => $item["nombreDeUsuario"],
+                "puntajeTotal" => $item["puntajeTotal"],
+                "fotoDePerfil" => $item["fotoDePerfil"]
+            ];
+        }
+
+        return $jugadoresConPuesto;
+    }
+
     public function getLobbyData($user){
         $query = "SELECT u.nombreDeUsuario, r.puntaje, r.puesto
                   FROM usuario u

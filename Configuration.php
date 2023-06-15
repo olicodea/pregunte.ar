@@ -35,6 +35,9 @@ include_once('controller/PartidaController.php');
 include_once('controller/CrearPreguntaController.php');
 include_once('controller/RankingController.php');
 include_once('controller/LobbyEditorController.php');
+include_once('controller/PreguntasSugeridasController.php');
+include_once('controller/PreguntasReportadasController.php');
+include_once('controller/PreguntasActivasController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -100,6 +103,18 @@ class Configuration {
 
     public function getLobbyEditorController() {
         return new LobbyEditorController($this->getRenderer());
+    }
+
+    public function getPreguntasSugeridasController() {
+        return new PreguntasSugeridasController(($this->getRenderer()));
+    }
+
+    public function getPreguntasReportadasController() {
+        return new PreguntasReportadasController(($this->getRenderer()));
+    }
+
+    public function getPreguntasActivasController() {
+        return new PreguntasActivasController(($this->getRenderer()));
     }
 
     private function getArrayConfig() {

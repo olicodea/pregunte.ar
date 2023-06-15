@@ -1,6 +1,6 @@
 <?php
 
-class LobbyEditorController
+class PreguntasSugeridasController
 {
     private $renderer;
 
@@ -10,6 +10,6 @@ class LobbyEditorController
     }
     public function list(){
         $data["usuarioLogeado"] = $_SESSION["usuario"];
-        $this->renderer->render('lobbyEditor', $data);
+        $this->renderer->render('preguntasSugeridas', $data);
     }
 }

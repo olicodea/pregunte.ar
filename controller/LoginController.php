@@ -18,7 +18,7 @@ class loginController
         $data["errorlogin"] = $_SESSION["errorlogin"] ?? null;
         $data["errorMsgUsuarioNoValidado"] = $_SESSION["errorMsgUsuarioNoValidado"] ?? null;
 
-        $this->render->render("login",$data);
+        $this->render->render("login", $data);
 
         unset($_SESSION["errorlogin"]);
         unset($_SESSION["errorMsgUsuarioNoValidado"]);
@@ -30,21 +30,21 @@ class loginController
 
         if(!$autenticacion){
             Logger::warning("Usuario o contraseña incorrecto");
-            $_SESSION["errorlogin"]="usuario o contraseña incorrectos";
+            $_SESSION["errorlogin"] = "usuario o contraseña incorrectos";
             header("location: /login");
             exit();
         }
 
         $validarRol = $this->loginModel->validarRolUsuario($_POST["usuario"]);
 
-        if($validarRol != null){
+        if($validarRol != null) {
             Logger::warning("Usuario no validado");
             $_SESSION["errorMsgUsuarioNoValidado"]="usuario no validado";
             header("location: /login");
             exit();
         }
 
-        $_SESSION["usuario"]=$autenticacion;
+        $_SESSION["usuario"] = $autenticacion;
 
         Logger::info("usuario logueado con exito: ". $_SESSION["usuario"]["mail"]);
 

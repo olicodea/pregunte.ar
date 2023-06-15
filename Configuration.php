@@ -38,6 +38,7 @@ include_once('controller/LobbyEditorController.php');
 include_once('controller/PreguntasSugeridasController.php');
 include_once('controller/PreguntasReportadasController.php');
 include_once('controller/PreguntasActivasController.php');
+include_once('controller/SessionController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -115,6 +116,10 @@ class Configuration {
 
     public function getPreguntasActivasController() {
         return new PreguntasActivasController(($this->getRenderer()));
+    }
+
+    public function getSessionController() {
+        return new SessionController();
     }
 
     private function getArrayConfig() {

@@ -8,7 +8,7 @@ class LobbyEditorController
     {
         $this->renderer = $renderer;
     }
-    public function list(){
+    public function list() {
         $data["usuarioLogeado"] = $_SESSION["usuario"];
         $this->renderer->render('lobbyEditor', $data);
     }

@@ -2,7 +2,6 @@
 {{#respuestaOKMessage}}
     <div id="respuestaOk" class="bg-blue-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
         {{respuestaOKMessage}}
-        <audio id="miAudio" src="ruta/al/archivo/audio.mp3"></audio>
     </div>
 {{/respuestaOKMessage}}
 
@@ -14,7 +13,7 @@
 
 {{#jugando}}
     <div class="mb-7">
-        <p id="temporizador" class="text-4xl font-bold contador-texto">Atencion!</p>
+        <p id="temporizador" class="text-4xl font-bold contador-texto">{{tiempoInicial}}</p>
     </div>
 {{/jugando}}
 
@@ -39,6 +38,7 @@
             {{/respuesta}}
         {{/respuestas}}
     {{/pregunta}}
+    <input type="hidden" name="tiempoRespuesta" id="tiempoRespuesta" value="0">
     </div>
 </div>
 <div class="flex justify-center items-center mt-9">

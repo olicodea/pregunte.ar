@@ -33,7 +33,7 @@ class PartidaModel
     private function guardarPartida($datosPartida)
     {
         $sql = "INSERT INTO partida (idUsuario, puntaje, cantidadDeRespuestasAcertadas, duracion) VALUES (?, ?, ?, ?)";
-        $typesParams = "iiis";
+        $typesParams = "iiii";
         $this->database->save($typesParams, $datosPartida, $sql);
     }
 

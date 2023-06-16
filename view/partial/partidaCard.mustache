@@ -1,12 +1,13 @@
 
 {{#respuestaOKMessage}}
-    <div class="bg-blue-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
+    <div id="respuestaOk" class="bg-blue-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
         {{respuestaOKMessage}}
+        <audio id="miAudio" src="ruta/al/archivo/audio.mp3"></audio>
     </div>
 {{/respuestaOKMessage}}
 
 {{#respuestaMALMessage}}
-    <div class="bg-red-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
+    <div id="respuestaMal" class="bg-red-500 text-white text-lg py-4 px-4 rounded-md mb-7 w-2/3 shadow-lg font-medium">
         {{respuestaMALMessage}}
     </div>
 {{/respuestaMALMessage}}
@@ -47,3 +48,6 @@
     </div>
     <label for="toggleReportar" class="text-md md:text-lg">Reportar pregunta</label>
 </div>
+
+<audio id="audio" src=""></audio>
+

@@ -1,0 +1,141 @@
+<script>
+    function initMap() {
+        let googleMap = document.getElementById('map');
+
+        if(!googleMap)
+            return;
+
+        let map = new google.maps.Map(googleMap, {
+            center: { lat: -34.629261, lng: -63.432884},
+            zoom: 4
+        });
+
+        let marker = new google.maps.Marker({
+            map: map,
+            draggable: true
+        });
+
+        {{#latLong}}
+            let newLatLng = new google.maps.LatLng({{latitud}}, {{longitud}});
+            map.setCenter({lat: {{latitud}}, lng: {{longitud}} });
+            map.setZoom(11);
+            marker.setPosition(newLatLng);
+        {{/latLong}}
+
+
+        map.addListener('click', function(e) {
+            let latitude = e.latLng.lat();
+            let longitude = e.latLng.lng();
+
+
+            marker.setPosition(e.latLng);
+            let geocoder = new google.maps.Geocoder();
+            let country = "";
+            let city = "";
+            geocoder.geocode({ 'location': e.latLng }, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        for (let i = 0; i < results[0].address_components.length; i++) {
+                            let addressType = results[0].address_components[i].types[0];
+                            if (addressType === 'country') {
+                                country = results[0].address_components[i].long_name;
+                            }
+                            if (addressType === 'locality' || addressType === 'administrative_area_level_1') {
+                                city = results[0].address_components[i].long_name;
+                            }
+
+                        }
+
+                        document.getElementById('PaisCiudad').value = `${country}, ${city}`;
+
+                        $.ajax({
+                            url: '/datosUsuario/guardarLatitudLongitud',
+                            method: 'POST',
+                            data: {
+                                dato: {
+                                    latitude: latitude,
+                                    longitude: longitude
+                                }
+                            },
+                            success: function (response){
+                                console.log(response);
+                            },
+                            error: function (xhr, status, error){
+                                console.log("Error al enviar los datos al servidor")
+                            }
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+
+
+    window.onload = () => {
+        let notif = document.querySelector(".notif");
+        if(notif) {
+            setTimeout(() => {
+                notif.remove();
+            }, 4000);
+        }
+
+    }
+
+    const visibilityIcon = document.getElementById("visibility");
+    const inputPassword = document.getElementById("password") ?? document.getElementById("Password");
+
+    if(visibilityIcon && inputPassword) {
+        visibilityIcon.addEventListener("click", () => cambiarVisibilidadPassword(visibilityIcon, inputPassword))
+    }
+    const inputConfirmarPassword = document.getElementById("ConfirmarPassword");
+    const visibilityIconConfirmar = document.getElementById("visibilityConfirmar");
+
+    if (visibilityIconConfirmar) {
+        visibilityIconConfirmar.addEventListener("click", () => cambiarVisibilidadPassword(visibilityIconConfirmar, inputConfirmarPassword))
+    }
+
+    function cambiarVisibilidadPassword(visibilityIcon, inputPassword) {
+        if(visibilityIcon.textContent === "visibility_off") {
+            visibilityIcon.innerText = "visibility";
+            inputPassword.type = "text";
+        } else {
+            visibilityIcon.innerText = "visibility_off";
+            inputPassword.type = "password";
+        }
+    }
+
+        {{#respuestaMALMessage}}
+        window.onload = () => {
+            setTimeout(() => {
+                window.location = "/lobby";
+            }, 4000);
+        }
+        {{/respuestaMALMessage}}
+
+        {{#respuestaOKMessage}}
+        window.onload = () => {
+            setTimeout(() => {
+                window.location = "/partida";
+            }, 4000);
+        }
+        {{/respuestaOKMessage}}
+
+        {{#respondio}}
+        const respuestas = document.querySelectorAll(".respuesta");
+        respuestas.forEach(respuesta => {
+            respuesta.disabled = true;
+        })
+        {{/respondio}}
+
+        {{#usuarioLogeado}}
+        const header = document.querySelector("header");header.classList.remove("justify-center");header.classList.add("justify-around");
+        {{/usuarioLogeado}}
+
+        {{#guardadoOkMessage}}
+        window.onload = () => {setTimeout(() => {
+            window.location = "/lobby";
+        }, 4000);}
+        {{/guardadoOkMessage}}
+
+</script>

@@ -8,6 +8,6 @@ $moduleHelper = $configuration->getModuleHelper();
 $module = $_GET['module'] ?: 'home';
 $method = $_GET['action'] ?: 'list';
 
-$moduleHelper->chequearModulo($module, isset($_SESSION["usuario"]));
+$moduleHelper->chequearModulo($module, $_SESSION["usuario"] ?? false);
 
 $router->route($module, $method);

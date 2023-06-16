@@ -17,10 +17,4 @@ class LobbyController
         $data["lobbyPartidasJugadas"] = $this->lobbyModel->getLobbyPartidasJugadas($usuario["nombreDeUsuario"]);
         $this->renderer->render('lobby', $data);
     }
-
-    public function cerrarSesion() {
-        session_unset();
-        header("Location: /home");
-        exit();
-    }
 }

@@ -34,6 +34,11 @@ include_once('controller/LobbyController.php');
 include_once('controller/PartidaController.php');
 include_once('controller/CrearPreguntaController.php');
 include_once('controller/RankingController.php');
+include_once('controller/LobbyEditorController.php');
+include_once('controller/PreguntasSugeridasController.php');
+include_once('controller/PreguntasReportadasController.php');
+include_once('controller/PreguntasActivasController.php');
+include_once('controller/SessionController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -49,7 +54,7 @@ class Configuration {
     }
 
     public function getLoginController() {
-        return new LoginController(new LoginModel($this->getDatabase()), $this->getRenderer());
+        return new LoginController($this->getModuleHelper(), new LoginModel($this->getDatabase()), $this->getRenderer());
     }
 
     public function getLobbyController() {
@@ -75,13 +80,13 @@ class Configuration {
         return new DatosUsuarioController(new DatosUsuarioModel(), $this->getRenderer(), $this->getApiGoogleMaps());
     }
 
-    public function getPerfilController(){
+    public function getPerfilController() {
         return new PerfilController(
             new PerfilModel($this->getDatabase()),
             $this->getRenderer(), $this->getGeneradorQr());
     }
 
-    public function getHomeController(){
+    public function getHomeController() {
         return new HomeController($this->getRenderer());
     }
 
@@ -95,6 +100,26 @@ class Configuration {
 
     public function getRankingController() {
         return new RankingController(new RankingModel($this->getDatabase()) ,$this->getRenderer());
+    }
+
+    public function getLobbyEditorController() {
+        return new LobbyEditorController($this->getRenderer());
+    }
+
+    public function getPreguntasSugeridasController() {
+        return new PreguntasSugeridasController(($this->getRenderer()));
+    }
+
+    public function getPreguntasReportadasController() {
+        return new PreguntasReportadasController(($this->getRenderer()));
+    }
+
+    public function getPreguntasActivasController() {
+        return new PreguntasActivasController(($this->getRenderer()));
+    }
+
+    public function getSessionController() {
+        return new SessionController();
     }
 
     private function getArrayConfig() {

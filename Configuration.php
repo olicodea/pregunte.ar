@@ -22,6 +22,7 @@ include_once('model/PartidaModel.php');
 include_once('model/DatosLoginModel.php');
 include_once('model/CrearPreguntaModel.php');
 include_once('model/RankingModel.php');
+include_once('model/AudioModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -34,6 +35,7 @@ include_once('controller/LobbyController.php');
 include_once('controller/PartidaController.php');
 include_once('controller/CrearPreguntaController.php');
 include_once('controller/RankingController.php');
+include_once('controller/AudioController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -50,6 +52,10 @@ class Configuration {
 
     public function getLoginController() {
         return new LoginController(new LoginModel($this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getAudioController() {
+        return new AudioController(new AudioModel());
     }
 
     public function getLobbyController() {

@@ -3,7 +3,7 @@
 class ModuleHelper
 {
     private $noLoginUserSites = ["home","login","registro","datosLogin","datosUsuario","mailValidation"];
-    private $loginUserSites = ["lobby", "perfil", "partida", "crearPregunta", "ranking", "session"];
+    private $loginUserSites = ["lobby", "perfil", "partida", "crearPregunta", "ranking", "session", "audio"];
     private $editorSites = ["lobbyEditor", "perfil", "preguntasActivas", "preguntasSugeridas", "preguntasReportadas", "crearPregunta", "session"];
     public function __construct() {
 

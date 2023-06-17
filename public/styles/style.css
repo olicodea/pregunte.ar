@@ -145,6 +145,13 @@ option {
     max-width: 700px;
 }
 
+.caja-preguntas {
+    background-color: #4C145D;
+    width: 40%;
+    margin: 0 auto;
+    max-width: 700px;
+}
+
 .caja-ranking {
     background-color: #4C145D;
     width: 40%;
@@ -155,6 +162,11 @@ option {
 .contenedor-partidas {
     min-height: 250px;
     max-height: 500px;
+}
+
+.contenedor-preguntas {
+    min-height: 350px;
+    max-height: 700px;
 }
 
 .contenedor-ranking {
@@ -186,6 +198,11 @@ option {
 .partidas{
     height: 80px;
 }
+
+.preguntas{
+    height: 70px;
+}
+
 @media (max-width: 360px) {
     .main-perfil{
         height: calc(100vh - 168px)!important;

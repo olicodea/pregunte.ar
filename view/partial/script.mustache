@@ -1,4 +1,5 @@
 <script>
+    {{#ApiGoogleMaps}}
     function initMap() {
         let googleMap = document.getElementById('map');
 
@@ -69,8 +70,34 @@
             });
         });
     }
+        {{/ApiGoogleMaps}}
+
+    // perfil mapa
+    {{#ApiGoogleMapsPerfil}}
+    function perfilMapa() {
+        let googleMap = document.getElementById('perfilMapa');
+
+        if(!googleMap)
+            return;
+
+        let map = new google.maps.Map(googleMap, {
+            center: { lat: -34.629261, lng: -63.432884},
+            zoom: 4
+        });
+
+        let marker = new google.maps.Marker({
+            map: map,
+            draggable: true
+        });
 
 
+        let newLatLng = new google.maps.LatLng({{latitud}}, {{longitud}});
+        map.setCenter({lat: {{latitud}}, lng: {{longitud}} });
+        map.setZoom(5);
+        marker.setPosition(newLatLng);
+
+    }
+    {{/ApiGoogleMapsPerfil}}
 
     window.onload = () => {
         let notif = document.querySelector(".notif");

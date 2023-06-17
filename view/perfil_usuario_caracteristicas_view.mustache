@@ -1,8 +1,8 @@
 {{> header}}
 <!-- The Band Section -->
-<main class="main-perfil-usuario mx-auto">
-    <div class="flex flex-col items-center pt-10 gap-20">
-        <section class="flex gap-16 justify-center items-center ">
+<main class='flex flex-col p-4 h-full mx-auto gap-10' style='max-width:700px'>
+    <div class="flex flex-col items-center pt-10 gap-10">
+        <section class="flex gap-16 justify-between md:justify-around items-center w-full">
             <div class="flex flex-col justify-center items-center gap-3">
             {{#perfil}}
                 <p class="texto-izq-usuario text-white font-bold text-3xl">{{nombreDeUsuario}}</p>
@@ -12,15 +12,23 @@
                     <p class="texto-izq-usuario text-white"><b>Partidas jugadas:</b> {{partidasJugadas}}</p>
                 </div>
             </div>
+
             <div class="img-container flex justify-center items-center">
                 <img src="/{{fotoDePerfil}}" class="img-perfil" alt="foto-perfil">
+
+
+
             {{/perfil}}
             </div>
+
         </section>
         <section class="codigo-qr flex justify-center items-center rounded-lg p-3 border-3">
             <img src="/public/img/qr.png" class="w-full">
         </section>
+
+
     </div>
+    <div id="perfilMapa" class="w-full  h-60 mt-3 rounded"></div>
 </main>
 <!-- End Page Content -->
 

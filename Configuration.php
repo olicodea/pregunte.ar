@@ -90,7 +90,7 @@ class Configuration {
     public function getPerfilController() {
         return new PerfilController(
             new PerfilModel($this->getDatabase()),
-            $this->getRenderer(), $this->getGeneradorQr());
+            $this->getRenderer(), $this->getGeneradorQr(), $this->getApiGoogleMaps());
     }
 
     public function getHomeController() {

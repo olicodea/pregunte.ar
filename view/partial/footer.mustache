@@ -5,9 +5,15 @@
 
 {{> script }}
 
+
+
 {{#ApiGoogleMaps}}
 <script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMaps}}&callback=initMap" async defer></script>
 {{/ApiGoogleMaps}}
+
+{{#ApiGoogleMapsPerfil}}
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMapsPerfil}}&callback=perfilMapa" async defer></script>
+{{/ApiGoogleMapsPerfil}}
 
 </body>
 </html>

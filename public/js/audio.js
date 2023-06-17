@@ -12,7 +12,6 @@ window.addEventListener("DOMContentLoaded", function() {
         ajax(url);
 
     }
-
     function ajax(url){
         var xhr = new XMLHttpRequest();
 

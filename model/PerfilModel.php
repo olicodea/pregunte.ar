@@ -9,7 +9,7 @@ class PerfilModel{
     }
 
     public function getPerfil($user) {
-        $query = "SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, SUM(p.puntaje) as puntaje, COUNT(p.idUsuario) as 'partidasJugadas'
+        $query = "SELECT u.nombreDeUsuario, u.nombreCompleto, u.fotoDePerfil, SUM(p.puntaje) as puntaje, COUNT(p.idUsuario) as 'partidasJugadas', u.latitud, u.longitud
                                         FROM usuario u
                                         LEFT JOIN partida p
                                         ON p.idUsuario = u.idUsuario

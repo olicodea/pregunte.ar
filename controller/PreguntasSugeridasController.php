@@ -12,7 +12,30 @@ class PreguntasSugeridasController
     }
     public function list(){
         $data["usuarioLogeado"] = $_SESSION["usuario"];
-        $data["preguntas"] = $this->preguntasSugeridasModel->findPreguntasSugeridas();
+        $data["preguntas"] = $this->chequearPreguntasSugeridas();
+        $data["sinPreguntas"] = $data["preguntas"] == null ? "Sin preguntas sugeridas" : false;
         $this->renderer->render('preguntasSugeridas', $data);
+    }
+
+    public function findRespuestas() {
+        $respuestas = $this->preguntasSugeridasModel->findRespuestasPorIdRespuesta($_GET["idRespuesta"]);
+        header('Content-Type: application/json');
+        echo json_encode($respuestas);
+    }
+
+    public function aprobarPregunta() {
+        $this->preguntasSugeridasModel->resolverRevisionPregunta($_POST["idPregunta"], "aprobar");
+        echo "Pregunta aprobada";
+    }
+
+    public function rechazarPregunta() {
+        $this->preguntasSugeridasModel->resolverRevisionPregunta($_POST["idPregunta"], "rechazar");
+        echo "Pregunta rechazada";
+    }
+
+    private function chequearPreguntasSugeridas()
+    {
+        $preguntas = $this->preguntasSugeridasModel->findPreguntasSugeridas();
+        return empty($preguntas) ? null : $preguntas;
     }
 }

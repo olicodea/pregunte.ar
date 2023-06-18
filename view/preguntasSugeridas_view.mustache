@@ -8,11 +8,38 @@
             {{#preguntas}}
             <div class="cursor-pointer preguntas card-partidas flex gap-1 justify-between items-center w-full rounded-md p-2 md:p-6 hover:bg-purple-700 transition duration-150">
                 <p class="text-white font-bold text-sm md:text-md w-full">{{pregunta}}</p>
-                <a href="/crearPregunta&idPregunta={{idPregunta}}" class="sombra-container btn-purple py-1 rounded-md text-white text-center w-2/5 md:w-1/5 text-sm md:text-lg">
+                <button onclick="mostrarModal({{idPregunta}}, '{{pregunta}}', '{{usuario}}', {{idRespuesta}})" class="sombra-container btn-purple py-1 rounded-md text-white text-center w-2/5 md:w-1/5 text-sm md:text-lg">
                 Revisar
-                </a>
+                </button>
             </div>
             {{/preguntas}}
+            {{#sinPreguntas}}
+                <div class="w-full flex justify-center items-center py-20">
+                    {{sinPreguntas}}
+                </div>
+            {{/sinPreguntas}}
+        </div>
+    </div>
+    <div id="modal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        <div class="flex flex-col gap-8 modal-container bg-purple-800 py-3 px-5 w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content flex flex-col gap-4">
+                <h4 id="modal-title" class="text-xl font-bold"></h4>
+                <p id="modal-question"></p>
+                <ol id="modal-answers" type="A" class="w-full flex flex-col card-oscuro gap-1 rounded-md py-2 px-6">
+                </ol>
+            </div>
+            <div class="modal-buttons flex justify-between">
+                <button class="modal-button bg-green-500 flex items-center justify-center p-2 rounded-xl hover:bg-green-600 transition duration-200" onclick="aprobarPregunta()">
+                    <span class="material-symbols-rounded cursor-pointer">thumb_up</span>
+                </button>
+                <button class="py-1 px-4 rounded-md text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 transition duration-100" onclick="cancelarModal()">
+                    Cerrar
+                </button>
+                <button class="modal-button bg-red-500 flex items-center justify-center p-2 rounded-xl hover:bg-red-600 transition duration-200" onclick="rechazarPregunta()">
+                    <span class="material-symbols-rounded cursor-pointer">thumb_down</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

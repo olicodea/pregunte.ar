@@ -39,7 +39,7 @@ class MySqlDatabase {
 
 
     public function save($types, $values, $sql) {
-        Logger::info('Guardando: '.$sql.'. tipos: ' . $types . '. valores:'.$values);
+        Logger::info('Guardando: '.$sql.'. tipos: ' . $types);
         $stmt = $this->connection->prepare($sql);
         $stmt->bind_param($types, ...$values);
         $stmt->execute();

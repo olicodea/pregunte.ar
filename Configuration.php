@@ -24,6 +24,7 @@ include_once('model/CrearPreguntaModel.php');
 include_once('model/RankingModel.php');
 include_once('model/AudioModel.php');
 include_once('model/PreguntasSugeridasModel.php');
+include_once('model/PreguntasActivasModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -122,7 +123,7 @@ class Configuration {
     }
 
     public function getPreguntasActivasController() {
-        return new PreguntasActivasController(($this->getRenderer()));
+        return new PreguntasActivasController(new PreguntasActivasModel($this->getDatabase()), $this->getRenderer());
     }
 
     public function getSessionController() {

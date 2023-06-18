@@ -6,7 +6,7 @@
         <p class="texto-izq font-bold text-xl">Lista de preguntas</p>
         <div class="contenedor-preguntas overflow-auto w-full flex flex-col gap-[14px]">
             {{#preguntas}}
-            <div class="cursor-pointer preguntas card-partidas flex gap-1 justify-between items-center w-full rounded-md p-2 md:p-6 hover:bg-purple-700 transition duration-150">
+            <div id="contenedor-{{idPregunta}}" class="cursor-pointer preguntas card-partidas flex gap-1 justify-between items-center w-full rounded-md p-2 md:p-6 hover:bg-purple-700 transition duration-150">
                 <p class="text-white font-bold text-sm md:text-md w-full">{{pregunta}}</p>
                 <button onclick="mostrarModal({{idPregunta}}, '{{pregunta}}', '{{usuario}}', {{idRespuesta}})" class="sombra-container btn-purple py-1 rounded-md text-white text-center w-2/5 md:w-1/5 text-sm md:text-lg">
                 Revisar

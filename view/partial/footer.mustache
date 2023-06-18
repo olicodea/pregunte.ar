@@ -15,6 +15,30 @@
 
 {{#preguntas}}
     <script>
+        function mostrarNotificacion(mensaje, tipo) {
+            const notificationElement = document.getElementById('notification');
+            notificationElement.classList.remove("hidden");
+
+            const notification = document.createElement('div');
+            notification.classList.add('notification', 'bg-blue-500');
+            notification.textContent = mensaje;
+
+            notification.style.opacity = '0';
+            notificationElement.append(notification);
+
+            setTimeout(function () {
+                notification.style.opacity = '1';
+            }, 10);
+
+            setTimeout(function () {
+                notification.style.opacity = '0';
+                setTimeout(function () {
+                    notification.remove();
+                    window.location.href = "/preguntasSugeridas"
+                }, 300)
+            }, 3000);
+        }
+
         async function findRespuestas(idRespuesta) {
             return new Promise(function (resolve, reject) {
                 $.ajax({
@@ -63,6 +87,7 @@
          function aprobarPregunta() {
              const inputIdHidden = document.getElementById('inputIdPreguntaHidden');
              const idPregunta = inputIdHidden.value;
+             const contenedorPregunta = document.getElementById(`contenedor-${idPregunta}`);
 
              return new Promise(function (resolve, reject) {
                  $.ajax({
@@ -72,8 +97,10 @@
                          idPregunta: idPregunta
                      },
                      success: function (response) {
-                         console.log(response)
-                         resolve(response);
+                         if(response) {
+                             contenedorPregunta.remove();
+                             mostrarNotificacion('La pregunta se ha aprobado correctamente', 'success');
+                         }
                      },
                      error: function (xhr, status, error) {
                          console.log('Error al enviar los datos al servidor');
@@ -87,6 +114,7 @@
         function rechazarPregunta() {
             const inputIdHidden = document.getElementById('inputIdPreguntaHidden');
             const idPregunta = inputIdHidden.value;
+            const contenedorPregunta = document.getElementById(`contenedor-${idPregunta}`);
 
             return new Promise(function (resolve, reject) {
                 $.ajax({
@@ -96,8 +124,10 @@
                         idPregunta: idPregunta
                     },
                     success: function (response) {
-                        console.log(response)
-                        resolve(response);
+                        if(response) {
+                            contenedorPregunta.remove();
+                            mostrarNotificacion('La pregunta se ha rechazado correctamente', 'success');
+                        }
                     },
                     error: function (xhr, status, error) {
                         console.log('Error al enviar los datos al servidor');

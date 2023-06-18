@@ -25,12 +25,12 @@ class PreguntasSugeridasController
 
     public function aprobarPregunta() {
         $this->preguntasSugeridasModel->resolverRevisionPregunta($_POST["idPregunta"], "aprobar");
-        echo "Pregunta aprobada";
+        echo true;
     }
 
     public function rechazarPregunta() {
         $this->preguntasSugeridasModel->resolverRevisionPregunta($_POST["idPregunta"], "rechazar");
-        echo "Pregunta rechazada";
+        echo true;
     }
 
     private function chequearPreguntasSugeridas()

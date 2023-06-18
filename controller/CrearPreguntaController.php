@@ -23,7 +23,7 @@ class CrearPreguntaController
     public function guardar() {
         if($this->validarPostSeteados())
         {
-            $this->crearPreguntaModel->guardar($_SESSION["usuario"]["idUsuario"],$_POST["categoria"], $_POST["pregunta"], $_POST["respuestaA"], $_POST["respuestaB"], $_POST["respuestaC"], $_POST["respuestaD"], $_POST["respuestaCorrecta"]);
+            $this->crearPreguntaModel->guardar($_SESSION["usuario"]["idUsuario"], $_SESSION["usuario"]["idRol"], $_POST["categoria"], $_POST["pregunta"], $_POST["respuestaA"], $_POST["respuestaB"], $_POST["respuestaC"], $_POST["respuestaD"], $_POST["respuestaCorrecta"]);
             $_SESSION["guardadoOkMessage"] = "La pregunta se guardo correctamente.";
             header("Location: /crearPregunta");
             exit();

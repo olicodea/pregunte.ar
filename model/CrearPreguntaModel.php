@@ -24,10 +24,10 @@ class CrearPreguntaModel
         return $categorias;
     }
 
-    public function guardar($idUsuario, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta) {
+    public function guardar($idUsuario, $idRol, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta) {
         $datosRespuesta = [$respuestaA, $respuestaB, $respuestaC, $respuestaD, $$respuestaCorrecta];
         $idRespuesta = $this->guardarRespuesta($datosRespuesta);
-        $idEstadoPregunta = 3; // TODO: Por ahora se hardcodea el idEstado, 3 es "PARA REVISAR", hay que hacer una consulta
+        $idEstadoPregunta = $this->getIdEstadoAGuardarPorIdRol($idRol);
         $idDificultad = 1; //TODO: Por ahora se hardcodea la dificultad, hay que ver como setearla
         $datosPregunta = [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
         $this->guardarPregunta($datosPregunta);
@@ -56,5 +56,32 @@ class CrearPreguntaModel
                 VALUES (?, ?, ?, ?, ?, ?)";
         $typesParams = "siiiii";
         $this->database->save($typesParams, $datosPregunta, $sql);
+    }
+
+    private function getIdEstadoAGuardarPorIdRol($idRol)
+    {
+        $sql = "SELECT r.descripcion FROM rol r WHERE r.idRol = ?";
+        $result = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idRol));
+        $estado = $this->getEstadoPorRol($result["descripcion"]);
+        $idEstadoAGuardar = $this->getIdEstadoPorDescripcion($estado);
+        return $idEstadoAGuardar;
+    }
+
+    private function getEstadoPorRol($descripcion)
+    {
+        switch ($descripcion) {
+            case "Jugador":
+                return "PARA REVISAR";
+            case "Editor":
+                return "ACEPTADA";
+        }
+        return "PARA REVISAR";
+    }
+
+    private function getIdEstadoPorDescripcion($estado)
+    {
+        $sql = "SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion like ?";
+        $result = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $estado));
+        return $result["idEstadoPregunta"];
     }
 }

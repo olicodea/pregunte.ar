@@ -1,7 +1,7 @@
 {{> header}}
 <!-- The Band Section -->
 
-<section class="mx-auto my-10 flex flex-col justify-center items-center px-4 pb-2 card-container gap-10">
+<section class="mx-auto my-10 flex flex-col justify-center items-center px-4 pb-2 card-container gap-8">
     <div class="w-full rounded-lg w-full flex justify-between items-center">
             <div class="flex flex-col justify-center gap-1">
                 <p class="texto-izq-usuario text-white font-bold text-3xl">cmedina</p>
@@ -9,17 +9,22 @@
             </div>
             <span class="text-7xl material-symbols-rounded pb-3">edit_square</span>
     </div>
+    <div class="w-full flex justify-center items-center">
+        <a href="/crearPregunta" class="text-white text-center boton-crearPartida rounded px-6 py-2 font-bold hover:bg-purple-500 hover:shadow-lg">
+            CREAR PREGUNTA
+        </a>
+    </div>
     <div class="w-full caja-partidas rounded flex gap-3 justify-center items-center flex-col pb-6">
         <p class="texto-izq font-bold text-xl">Menú de preguntas</p>
         <div class="contenedor-partidas overflow-auto w-full flex flex-col gap-[14px]">
             <a href="/preguntasActivas" class="cursor-pointer partidas card-partidas flex justify-between items-center w-full rounded-md p-6 hover:bg-purple-700 transition duration-150">
-                <p class="text-white font-bold text-xl">Preguntas Activas</p><span class="text-3xl material-symbols-rounded">arrow_forward_ios</span>
+                <p class="text-white font-bold text-lg md:text-xl">Preguntas Activas</p><span class="text-3xl material-symbols-rounded">arrow_forward_ios</span>
             </a>
             <a href="/preguntasReportadas" class="cursor-pointer partidas card-partidas flex justify-between items-center w-full rounded-md p-6 hover:bg-purple-700 transition duration-150">
-                <p class="text-white font-bold text-xl">Preguntas Reportadas</p><span class="text-3xl material-symbols-rounded">arrow_forward_ios</span>
+                <p class="text-white font-bold text-lg md:text-xl">Preguntas Reportadas</p><span class="text-3xl material-symbols-rounded">arrow_forward_ios</span>
             </a>
             <a href="/preguntasSugeridas" class="cursor-pointer partidas card-partidas flex justify-between items-center w-full rounded-md p-6 hover:bg-purple-700 transition duration-150">
-                <p class="text-white font-bold text-xl">Preguntas Sugeridas</p><span class="text-3xl material-symbols-rounded">arrow_forward_ios</span>
+                <p class="text-white font-bold text-lg md:text-xl">Preguntas Sugeridas</p><span class="text-3xl material-symbols-rounded">arrow_forward_ios</span>
             </a>
         </div>
     </div>

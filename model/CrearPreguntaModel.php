@@ -24,13 +24,13 @@ class CrearPreguntaModel
         return $categorias;
     }
 
-    public function guardar($idUsuario, $idRol, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta) {
+    public function guardar($idUsuario, $idRol, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta, $idPregunta = null) {
         $datosRespuesta = [$respuestaA, $respuestaB, $respuestaC, $respuestaD, $$respuestaCorrecta];
         $idRespuesta = $this->guardarRespuesta($datosRespuesta);
         $idEstadoPregunta = $this->getIdEstadoAGuardarPorIdRol($idRol);
         $idDificultad = 1; //TODO: Por ahora se hardcodea la dificultad, hay que ver como setearla
         $datosPregunta = [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
-        $this->guardarPregunta($datosPregunta);
+        $this->guardarPregunta($datosPregunta, $idPregunta);
     }
 
     private function chequearSelected($idCategoria, $categoriaSeleccionada)
@@ -50,11 +50,19 @@ class CrearPreguntaModel
         return $this->database->getLastInsertedId();
     }
 
-    private function guardarPregunta($datosPregunta)
+    private function guardarPregunta($datosPregunta, $idPregunta = null)
     {
-        $sql = "INSERT INTO pregunta (pregunta, idDificultad, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
+        if($idPregunta) {
+            $sql = "UPDATE pregunta SET pregunta = ?, idDificultad = ?, idCategoria = ?, idUsuario = ?, idRespuesta = ?, idEstadoPregunta = ?
+                    WHERE idPregunta = ?";
+            $datosPregunta[] = $idPregunta;
+            $typesParams = "siiiiii";
+        } else {
+            $sql = "INSERT INTO pregunta (pregunta, idDificultad, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
                 VALUES (?, ?, ?, ?, ?, ?)";
-        $typesParams = "siiiii";
+            $typesParams = "siiiii";
+        }
+
         $this->database->save($typesParams, $datosPregunta, $sql);
     }
 
@@ -83,5 +91,15 @@ class CrearPreguntaModel
         $sql = "SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion like ?";
         $result = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $estado));
         return $result["idEstadoPregunta"];
+    }
+
+    public function findPreguntaPorIdPregunta($idPregunta) {
+        $sql = "SELECT * FROM pregunta p WHERE p.idPregunta = ?";
+        return mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idPregunta));
+    }
+
+    public function findRespuestasPorIdRespuesta($idRespuesta) {
+        $sql = "SELECT * FROM respuesta r WHERE r.idRespuesta = ?";
+        return mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idRespuesta));
     }
 }

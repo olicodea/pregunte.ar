@@ -26,10 +26,6 @@ function listarPreguntas() {
     }
 }
 
-function editarPregunta(idPregunta) {
-
-}
-
 function abrirModalEliminarPregunta(idPregunta, pregunta) {
     const modal = document.getElementById('modal-eliminar');
     modal.classList.remove('hidden');
@@ -113,6 +109,12 @@ contenedorPreguntas.addEventListener("click", function(event) {
         if(target.parentElement.dataset.action === "eliminar") {
             abrirModalEliminarPregunta(target.parentElement.dataset.idPregunta, target.parentElement.dataset.pregunta);
         }
+
+        if(target.dataset.action === "editar" || target.parentElement.dataset.action === "editar") {
+            const idPregunta = target.dataset.idPregunta ?? target.parentElement.dataset.idPregunta;
+            window.location.href = "/crearPregunta/comenzarEdicion&idPregunta=" + idPregunta;
+        }
+
     } else {
         const contenedorPregunta = target.closest(".preguntas");
         if (contenedorPregunta) {

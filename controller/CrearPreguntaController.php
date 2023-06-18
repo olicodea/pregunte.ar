@@ -12,18 +12,26 @@ class CrearPreguntaController
     }
     public function list() {
         $data["categorias"] = $this->crearPreguntaModel->findCategoriasPreguntas($_SESSION["categoriaSeleccionada"] ?? null);
+        $data["pregunta"] = $_SESSION["preguntaCargada"]["pregunta"] ?? null;
+        $data["respuestaA"] = $_SESSION["respuestas"]["respuestaA"] ?? null;
+        $data["respuestaB"] = $_SESSION["respuestas"]["respuestaB"] ?? null;
+        $data["respuestaC"] = $_SESSION["respuestas"]["respuestaC"] ?? null;
+        $data["respuestaD"] = $_SESSION["respuestas"]["respuestaD"] ?? null;
+        $data["respuestaCorrectaCrear"] = $_SESSION["respuestas"]["respuestaCorrecta"] ?? null;
+
         $data["guardadoOkMessage"] = $_SESSION["guardadoOkMessage"] ?? null;
         $data["errorMsgCrearPregunta"] = $_SESSION["errorMsgCrearPregunta"] ?? null;
+
         $this->renderer->render('crearPregunta', $data);
 
         unset($_SESSION["errorMsgCrearPregunta"]);
-        unset($_SESSION["guardadoOkMessage"]);
+        $this->unsetSessionVariablesPorMessageOk();
     }
 
     public function guardar() {
         if($this->validarPostSeteados())
         {
-            $this->crearPreguntaModel->guardar($_SESSION["usuario"]["idUsuario"], $_SESSION["usuario"]["idRol"], $_POST["categoria"], $_POST["pregunta"], $_POST["respuestaA"], $_POST["respuestaB"], $_POST["respuestaC"], $_POST["respuestaD"], $_POST["respuestaCorrecta"]);
+            $this->crearPreguntaModel->guardar($_SESSION["usuario"]["idUsuario"], $_SESSION["usuario"]["idRol"], $_POST["categoria"], $_POST["pregunta"], $_POST["respuestaA"], $_POST["respuestaB"], $_POST["respuestaC"], $_POST["respuestaD"], $_POST["respuestaCorrecta"], $this->chequearIdPregunta());
             $_SESSION["guardadoOkMessage"] = "La pregunta se guardo correctamente.";
             header("Location: /crearPregunta");
             exit();
@@ -53,4 +61,30 @@ class CrearPreguntaController
         }
     }
 
+    public function comenzarEdicion() {
+        $idPregunta = $_GET["idPregunta"] ?? null;
+
+        if($idPregunta) {
+            $_SESSION["preguntaCargada"] = $this->crearPreguntaModel->findPreguntaPorIdPregunta($idPregunta);
+            $_SESSION["categoriaSeleccionada"] = $_SESSION["preguntaCargada"]["idCategoria"];
+            $_SESSION["respuestas"] = $this->crearPreguntaModel->findRespuestasPorIdRespuesta($_SESSION["preguntaCargada"]["idRespuesta"]);
+        }
+
+        header("Location: /crearPregunta");
+    }
+
+    private function chequearIdPregunta()
+    {
+        return $_SESSION["preguntaCargada"]["idPregunta"] ?? null;
+    }
+
+    private function unsetSessionVariablesPorMessageOk()
+    {
+        if(isset($_SESSION["guardadoOkMessage"])) {
+            unset($_SESSION["guardadoOkMessage"]);
+            unset($_SESSION["preguntaCargada"]);
+            unset($_SESSION["categoriaSeleccionada"]);
+            unset($_SESSION["respuestas"]);
+        }
+    }
 }

@@ -29,7 +29,7 @@ class CrearPreguntaModel
         $idRespuesta = $this->guardarRespuesta($datosRespuesta);
         $idEstadoPregunta = $this->getIdEstadoAGuardarPorIdRol($idRol);
         $idDificultad = 1; //TODO: Por ahora se hardcodea la dificultad, hay que ver como setearla
-        $datosPregunta = [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
+        $datosPregunta = $this->cargarDatosPregunta($pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta);
         $this->guardarPregunta($datosPregunta, $idPregunta);
     }
 
@@ -53,15 +53,13 @@ class CrearPreguntaModel
     private function guardarPregunta($datosPregunta, $idPregunta = null)
     {
         if($idPregunta) {
-            $sql = "UPDATE pregunta SET pregunta = ?, idDificultad = ?, idCategoria = ?, idUsuario = ?, idRespuesta = ?, idEstadoPregunta = ?
+            $sql = "UPDATE pregunta SET pregunta = ?, idDificultad = ?, idCategoria = ?, idRespuesta = ?, idEstadoPregunta = ?
                     WHERE idPregunta = ?";
-            $datosPregunta[] = $idPregunta;
-            $typesParams = "siiiiii";
         } else {
             $sql = "INSERT INTO pregunta (pregunta, idDificultad, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
                 VALUES (?, ?, ?, ?, ?, ?)";
-            $typesParams = "siiiii";
         }
+        $typesParams = "siiiii";
 
         $this->database->save($typesParams, $datosPregunta, $sql);
     }
@@ -101,5 +99,14 @@ class CrearPreguntaModel
     public function findRespuestasPorIdRespuesta($idRespuesta) {
         $sql = "SELECT * FROM respuesta r WHERE r.idRespuesta = ?";
         return mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idRespuesta));
+    }
+
+    private function cargarDatosPregunta($pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta = null)
+    {
+        if($idPregunta) {
+            return [$pregunta, $idDificultad, $idCategoria, $idRespuesta, $idEstadoPregunta, $idPregunta];
+        } else {
+            return [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
+        }
     }
 }

@@ -24,13 +24,13 @@ class CrearPreguntaModel
         return $categorias;
     }
 
-    public function guardar($idUsuario, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta) {
+    public function guardar($idUsuario, $idRol, $idCategoria, $pregunta, $respuestaA, $respuestaB, $respuestaC, $respuestaD, $respuestaCorrecta, $idPregunta = null) {
         $datosRespuesta = [$respuestaA, $respuestaB, $respuestaC, $respuestaD, $$respuestaCorrecta];
         $idRespuesta = $this->guardarRespuesta($datosRespuesta);
-        $idEstadoPregunta = 3; // TODO: Por ahora se hardcodea el idEstado, 3 es "PARA REVISAR", hay que hacer una consulta
+        $idEstadoPregunta = $this->getIdEstadoAGuardarPorIdRol($idRol);
         $idDificultad = 1; //TODO: Por ahora se hardcodea la dificultad, hay que ver como setearla
-        $datosPregunta = [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
-        $this->guardarPregunta($datosPregunta);
+        $datosPregunta = $this->cargarDatosPregunta($pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta);
+        $this->guardarPregunta($datosPregunta, $idPregunta);
     }
 
     private function chequearSelected($idCategoria, $categoriaSeleccionada)
@@ -50,11 +50,63 @@ class CrearPreguntaModel
         return $this->database->getLastInsertedId();
     }
 
-    private function guardarPregunta($datosPregunta)
+    private function guardarPregunta($datosPregunta, $idPregunta = null)
     {
-        $sql = "INSERT INTO pregunta (pregunta, idDificultad, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
+        if($idPregunta) {
+            $sql = "UPDATE pregunta SET pregunta = ?, idDificultad = ?, idCategoria = ?, idRespuesta = ?, idEstadoPregunta = ?
+                    WHERE idPregunta = ?";
+        } else {
+            $sql = "INSERT INTO pregunta (pregunta, idDificultad, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
                 VALUES (?, ?, ?, ?, ?, ?)";
+        }
         $typesParams = "siiiii";
+
         $this->database->save($typesParams, $datosPregunta, $sql);
+    }
+
+    private function getIdEstadoAGuardarPorIdRol($idRol)
+    {
+        $sql = "SELECT r.descripcion FROM rol r WHERE r.idRol = ?";
+        $result = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idRol));
+        $estado = $this->getEstadoPorRol($result["descripcion"]);
+        $idEstadoAGuardar = $this->getIdEstadoPorDescripcion($estado);
+        return $idEstadoAGuardar;
+    }
+
+    private function getEstadoPorRol($descripcion)
+    {
+        switch ($descripcion) {
+            case "Jugador":
+                return "PARA REVISAR";
+            case "Editor":
+                return "ACEPTADA";
+        }
+        return "PARA REVISAR";
+    }
+
+    private function getIdEstadoPorDescripcion($estado)
+    {
+        $sql = "SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion like ?";
+        $result = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $estado));
+        return $result["idEstadoPregunta"];
+    }
+
+    public function findPreguntaPorIdPregunta($idPregunta) {
+        $sql = "SELECT * FROM pregunta p WHERE p.idPregunta = ?";
+        return mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idPregunta));
+    }
+
+    public function findRespuestasPorIdRespuesta($idRespuesta) {
+        $sql = "SELECT * FROM respuesta r WHERE r.idRespuesta = ?";
+        return mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idRespuesta));
+    }
+
+    private function cargarDatosPregunta($pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta = null)
+    {
+        if($idPregunta) {
+            return [$pregunta, $idDificultad, $idCategoria, $idRespuesta, $idEstadoPregunta, $idPregunta];
+        } else {
+            return [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
+        }
     }
 }

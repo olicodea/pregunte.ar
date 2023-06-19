@@ -28,8 +28,8 @@ FOREIGN KEY (idRol) REFERENCES rol(idRol)
 INSERT INTO usuario (nombreCompleto, fechaDeNacimiento, genero, pais, ciudad, mail, nombreDeUsuario, contrasenia, fotoDePerfil, idRol, latitud, longitud) VALUES
 ('Juan Ignacio', '2004-06-01', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'joliva@mail.com', 'joliva', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.jpg', 1, ' -34.629261', '-63.432884'),
 ('Nicolas Villafañe', '2003-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'nvilla@mail.com', 'nvilla', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 1, ' -34.629261', '-63.432884'),
-('Mariano Soto', '2002-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'msoto@mail.com', 'msoto', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 1, ' -34.629261', '-63.432884'),
-('Cristian Medina', '2001-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'cmedina@mail.com', 'cmedina', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 1, '-34.629261', '-63.432884'),
+('Mariano Soto', '2002-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'msoto@mail.com', 'msoto', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 3, ' -34.629261', '-63.432884'),
+('Cristian Medina', '2001-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'cmedina@mail.com', 'cmedina', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 3, '-34.629261', '-63.432884'),
 ('Sebastian Tarifa', '2000-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'starifa@mail.com', 'starifa', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 1, '-34.629261', '-63.432884')
 ;
 
@@ -108,7 +108,7 @@ idEstadoPregunta int PRIMARY KEY AUTO_INCREMENT,
 descripcion varchar(50) NOT NULL
 );
 
-INSERT INTO estado_pregunta (descripcion) VALUES ("ACEPTADA"), ("RECHAZADA"), ("PARA REVISAR");
+INSERT INTO estado_pregunta (descripcion) VALUES ("ACEPTADA"), ("RECHAZADA"), ("PARA REVISAR"), ("ANULADA"), ("REPORTADA");
 
 CREATE TABLE pregunta (
 idPregunta int PRIMARY KEY AUTO_INCREMENT,

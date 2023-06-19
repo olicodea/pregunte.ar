@@ -26,11 +26,14 @@
 
     <!-- JS LIBS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/public/js/temporizador.js"></script>
-    <script src="/public/js/audio.js"></script>
+    {{#jugando}}
+    <script src="/public/js/temporizador.js" defer></script>
+    <script src="/public/js/audio.js" defer></script>
+    {{/jugando}}
 </head>
 
 <body class="h-full flex flex-col items-center">
+<div id="notification" class="hidden"></div>
 <!-- Navbar -->
 <header class="w-full flex items-center justify-center">
         <a class="text-center text-white logo-texto text-2xl md:text-3xl" href="/">

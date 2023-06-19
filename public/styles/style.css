@@ -132,8 +132,12 @@ option {
 
 .boton-crearPartida {
     background-color: #AD5CF7;
+}
+
+.boton-cancelar, .boton-crearPartida {
     font-size: 18px;
 }
+
 .contenedor-crearpartida{
     height: 100px;
 }
@@ -142,6 +146,13 @@ option {
     width: 40%;
     margin: 0 auto;
     padding: 5px 20px;
+    max-width: 700px;
+}
+
+.caja-preguntas {
+    background-color: #4C145D;
+    width: 40%;
+    margin: 0 auto;
     max-width: 700px;
 }
 
@@ -157,6 +168,11 @@ option {
     max-height: 500px;
 }
 
+.contenedor-preguntas {
+    min-height: 350px;
+    max-height: 700px;
+}
+
 .contenedor-ranking {
     min-height: 350px;
     max-height: 700px;
@@ -164,6 +180,11 @@ option {
 
 .card-partidas {
     background-color: #6D27A3;
+    box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+.card-oscuro {
+    background-color: #4C145D;
     box-shadow: 0 0 8px rgba(0,0,0,0.4);
 }
 
@@ -186,6 +207,11 @@ option {
 .partidas{
     height: 80px;
 }
+
+.preguntas{
+    height: 70px;
+}
+
 @media (max-width: 360px) {
     .main-perfil{
         height: calc(100vh - 168px)!important;
@@ -285,28 +311,28 @@ img {
     font-family: 'Permanent Marker', cursive;
 }
 
-.contenedor-partidas::-webkit-scrollbar, .contenedor-ranking::-webkit-scrollbar {
+.contenedor-partidas::-webkit-scrollbar, .contenedor-ranking::-webkit-scrollbar, .contenedor-preguntas::-webkit-scrollbar{
     -webkit-appearance: none;
 }
 
-.contenedor-partidas::-webkit-scrollbar:vertical, .contenedor-ranking::-webkit-scrollbar:vertical {
+.contenedor-partidas::-webkit-scrollbar:vertical, .contenedor-ranking::-webkit-scrollbar:vertical, .contenedor-preguntas::-webkit-scrollbar:vertical {
     width:6px;
 }
 
-.contenedor-partidas::-webkit-scrollbar-button:increment,.contenedor-partidas::-webkit-scrollbar-button, .contenedor-ranking::-webkit-scrollbar-button:increment,.contenedor-ranking::-webkit-scrollbar-button {
+.contenedor-partidas::-webkit-scrollbar-button:increment, .contenedor-partidas::-webkit-scrollbar-button, .contenedor-ranking::-webkit-scrollbar-button:increment, .contenedor-ranking::-webkit-scrollbar-button, .contenedor-preguntas::-webkit-scrollbar-button:increment, .contenedor-preguntas::-webkit-scrollbar-button {
     display: none;
 }
 
-.contenedor-partidas::-webkit-scrollbar:horizontal, .contenedor-ranking::-webkit-scrollbar:horizontal {
+.contenedor-partidas::-webkit-scrollbar:horizontal, .contenedor-ranking::-webkit-scrollbar:horizontal, .contenedor-preguntas::-webkit-scrollbar:horizontal {
     height: 10px;
 }
 
-.contenedor-partidas::-webkit-scrollbar-thumb, .contenedor-ranking::-webkit-scrollbar-thumb {
+.contenedor-partidas::-webkit-scrollbar-thumb, .contenedor-ranking::-webkit-scrollbar-thumb, .contenedor-preguntas::-webkit-scrollbar-thumb {
     background-color:  rgba(225, 189, 255, 0.8);
     border-radius: 20px;
 }
 
-.contenedor-partidas::-webkit-scrollbar-track, .contenedor-ranking::-webkit-scrollbar-track {
+.contenedor-partidas::-webkit-scrollbar-track, .contenedor-ranking::-webkit-scrollbar-track, .contenedor-preguntas::-webkit-scrollbar-track {
     border-radius: 10px;
 }
 
@@ -332,8 +358,8 @@ input[type="radio"]:checked + .checkbox-icon::before {
     left: 0;
     width: 20px;
     height: 20px;
-    border: 1px solid #999; /* Estilo del borde del checkbox simulado */
-    border-radius: 4px; /* Radio de borde del checkbox simulado */
+    border: 1px solid #999;
+    border-radius: 4px;
 }
 .input-vacio {
     background-color: rgba(0,0,0,0);
@@ -346,4 +372,18 @@ input[type="radio"]:checked + .checkbox-icon::before {
 
 .text-shadow {
     text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.notification {
+    position: fixed;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.6s ease;
 }

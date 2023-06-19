@@ -5,15 +5,38 @@
 
 {{> script }}
 
-
-
 {{#ApiGoogleMaps}}
-<script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMaps}}&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMaps}}&callback=initMap" async defer></script>
 {{/ApiGoogleMaps}}
 
 {{#ApiGoogleMapsPerfil}}
     <script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMapsPerfil}}&callback=perfilMapa" async defer></script>
 {{/ApiGoogleMapsPerfil}}
+
+    <script src="/public/js/editor.js" defer></script>
+
+{{#preguntas}}
+    <script src="/public/js/editor-sugerirpreguntas.js"></script>
+{{/preguntas}}
+
+{{#vistaPreguntasActivas}}
+    <script src="/public/js/editor-preguntasactivas.js"></script>
+{{/vistaPreguntasActivas}}
+
+{{#respuestaCorrectaCrear}}
+    <script>
+        const respuestas = document.querySelectorAll(".resp");
+        respuestas.forEach(respuesta => {
+            if(respuesta.children[0].value === '{{respuestaCorrectaCrear}}') {
+                respuesta.children[1].checked = true;
+            }
+        })
+    </script>
+{{/respuestaCorrectaCrear}}
+
+{{#vistaPreguntasReportadas}}
+    <script src="/public/js/editor-preguntasReportadas.js"></script>
+{{/vistaPreguntasReportadas}}
 
 </body>
 </html>

@@ -18,7 +18,7 @@ class PreguntasActivasController
     }
 
     public function findRespuestas() {
-        $respuestas = $this->preguntasSugeridasModel->findRespuestasPorIdRespuesta($_GET["idRespuesta"]);
+        $respuestas = $this->preguntasActivasModel->findRespuestasPorIdRespuesta($_GET["idRespuesta"]);
         header('Content-Type: application/json');
         echo json_encode($respuestas);
     }

@@ -16,4 +16,15 @@ class PreguntasReportadasController
         $data["vistaPreguntasReportadas"] = true;
         $this->renderer->render('preguntasReportadas', $data);
     }
+
+    public function comentariosReportesPorIdPregunta() {
+        $comentarios = $this->preguntasReportadasModel->findComentariosReportesPorIdPregunta($_POST["idPregunta"]);
+        header('Content-Type: application/json');
+        echo json_encode($comentarios);
+    }
+
+    public function rechazarReporte() {
+        $this->preguntasReportadasModel->rechazarReporte($_POST["idPregunta"]);
+        echo true;
+    }
 }

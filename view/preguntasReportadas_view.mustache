@@ -4,7 +4,7 @@
     <h4 class="text-2xl">Preguntas Reportadas</h4>
     <div class="w-full caja-preguntas px-3 md:px-6 rounded flex gap-3 justify-center items-center flex-col pb-6">
         <p class="texto-izq font-bold text-xl">Lista de preguntas</p>
-        <div class="contenedor-preguntas overflow-auto w-full flex flex-col gap-[14px]">
+        <div id="contenedor-preguntas" class="contenedor-preguntas overflow-auto w-full flex flex-col gap-[14px]">
             {{#preguntasReportadas}}
                 <div id="contenedor-{{idPregunta}}" class="cursor-pointer preguntas card-partidas flex gap-1 justify-between items-center w-full rounded-md p-2 md:p-6 hover:bg-purple-700 transition duration-150">
                     <p class="text-white font-bold text-sm md:text-md w-full">{{pregunta}}</p>
@@ -25,17 +25,17 @@
         <div class="flex flex-col gap-8 modal-container bg-purple-800 py-3 px-5 w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
             <div class="modal-content flex flex-col gap-4">
                 <h4 id="modal-reportadas-title" class="text-xl font-bold"></h4>
-                <div id="modal-reportadas-comments" class="w-full flex flex-col card-oscuro gap-1 rounded-md py-2 px-6">
-                </div>
+                <ul id="modal-reportadas-comments" class="w-full flex flex-col card-oscuro rounded-md gap-2 py-2 px-4">
+                </ul>
             </div>
             <div class="modal-buttons flex justify-between">
-                <button onclick="rechazarReporte()" class="py-1 px-4 rounded-md text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 transition duration-100" >
-                    Rechazar
-                </button>
                 <button onclick="cancelarModal('reportadas')" class="py-1 px-4 rounded-md text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 transition duration-100" >
                     Cerrar
                 </button>
-                <button data-action="editar" data-id-pregunta="{{idPregunta}}" class="py-1 px-4 rounded-md text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 transition duration-100">
+                <button onclick="rechazarReporte()" class="py-1 px-4 rounded-md text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 transition duration-100" >
+                    Rechazar
+                </button>
+                <button onclick="editarPreguntaReportada()" class="py-1 px-4 rounded-md text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 transition duration-100">
                     Editar
                 </button>
             </div>

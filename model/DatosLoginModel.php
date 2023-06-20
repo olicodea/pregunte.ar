@@ -5,7 +5,7 @@ class DatosLoginModel
     private $database;
     private $mailREGEX = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
     private $nombreUsuarioREGEX = '/^[a-zA-Z0-9]+$/';
-    private $passwordREGEX = '/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/';
+    private $passwordREGEX = '/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/';
 
     private $extensionImagenREGEX = '/^.*\.(png|jpg)$/i';
 

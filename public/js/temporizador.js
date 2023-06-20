@@ -4,7 +4,6 @@ function getTiempoRestante() {
             url: '/partida/tiempoRestante',
             method: 'GET',
             success: function (response) {
-                console.log(response)
                 resolve(Math.floor(response.tiempoRestante));
             },
             error: function (xhr, status, error) {

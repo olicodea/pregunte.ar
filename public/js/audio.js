@@ -3,7 +3,6 @@ window.addEventListener("DOMContentLoaded", function() {
     var incorrecto = document.getElementById("respuestaMal");
     var audio = document.getElementById("audio");
 
-    console.log("Esta andando");
     if(correcto){
         var url = "audio/correcta";
         ajax(url);

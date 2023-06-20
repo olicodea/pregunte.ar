@@ -23,8 +23,6 @@ class PerfilController {
             $data["ApiGoogleMapsPerfil"] = $this->apiGoogleMaps;
             $data["perfil"] = $this->perfilModel->getPerfil($user["nombreDeUsuario"]);
             $data["usuarioLogeado"] = $_SESSION["usuario"];
-            $data["longitud"] = $_SESSION["usuario"]["longitud"];
-            $data["latitud"] = $_SESSION["usuario"]["latitud"];
             // Se sobreescribe siempre el qr en la imagen qr.png de public
             $idUsuario = $user["idUsuario"];
 
@@ -40,6 +38,7 @@ class PerfilController {
     public function verPerfilDeOtroUsuario() {
         if(isset($_GET["nombreUsuario"])) {
             $usuarioAVer = $_GET["nombreUsuario"];
+            $data["ApiGoogleMapsPerfil"] = $this->apiGoogleMaps;
             $data["perfil"] = $this->perfilModel->getPerfil($usuarioAVer);
             $data["usuarioLogeado"] = $this->perfilModel->getUsuario($usuarioAVer);
             $idUsuario = $data["usuarioLogeado"]["idUsuario"];

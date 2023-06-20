@@ -3,6 +3,8 @@
 class PartidaModel
 {
     private $database;
+    private $ESTADO_REPORTADA = "REPORTADA";
+    private $CANTIDAD_PARA_ACEPTAR_REPORTE = 3;
 
     public function __construct($database){
         $this->database = $database;
@@ -77,6 +79,7 @@ class PartidaModel
                 "Pregunta reportada" //TODO: por ahora se hardcodea el comentario. Luego se agregara la funcionalidad de comentar un reporte
             ];
             $this->database->save($typesParams, $datosReporte, $sql);
+            $this->chequearReportes($idPregunta);
         }
     }
 
@@ -263,5 +266,27 @@ class PartidaModel
             default:
                 return "MEDIA";
         }
+    }
+
+    private function chequearReportes($idPregunta)
+    {
+        $sql = "SELECT COUNT(*) AS cantidadReportes FROM reporte WHERE idPregunta = ?";
+        $result = mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idPregunta));
+        $cantidadReportes = $result["cantidadReportes"];
+
+        if($cantidadReportes >= $this->CANTIDAD_PARA_ACEPTAR_REPORTE) {
+            $this->cambiarEstadoAReportada($idPregunta);
+        }
+    }
+
+    private function cambiarEstadoAReportada($idPregunta)
+    {
+        $sql = "UPDATE pregunta p 
+                SET p.idEstadoPregunta = (SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion = ?) 
+                WHERE p.idPregunta = ?";
+        $typesParams = "si";
+        $datosReporte = [$this->ESTADO_REPORTADA, $idPregunta];
+
+        $this->database->save($typesParams, $datosReporte, $sql);
     }
 }

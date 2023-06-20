@@ -46,6 +46,6 @@ class ModuleHelper
                 return "lobbyEditor";
         }
 
-        return null;
+        return "home";
     }
 }

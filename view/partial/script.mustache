@@ -90,12 +90,12 @@
             draggable: true
         });
 
-
+        {{#perfil}}
         let newLatLng = new google.maps.LatLng({{latitud}}, {{longitud}});
         map.setCenter({lat: {{latitud}}, lng: {{longitud}} });
         map.setZoom(5);
         marker.setPosition(newLatLng);
-
+        {{/perfil}}
     }
     {{/ApiGoogleMapsPerfil}}
 

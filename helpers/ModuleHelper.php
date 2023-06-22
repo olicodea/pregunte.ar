@@ -2,7 +2,7 @@
 
 class ModuleHelper
 {
-    private $noLoginUserSites = ["home","login","registro","datosLogin","datosUsuario","mailValidation"];
+    private $noLoginUserSites = ["home","login","registro","datosLogin","datosUsuario","mailValidation", "api"];
     private $loginUserSites = ["lobby", "perfil", "partida", "crearPregunta", "ranking", "session", "audio"];
     private $editorSites = ["lobbyEditor", "perfil", "preguntasActivas", "preguntasSugeridas", "preguntasReportadas", "crearPregunta", "session"];
     public function __construct() {
@@ -11,11 +11,6 @@ class ModuleHelper
 
     public function chequearModulo(&$module, $usuarioEnSesion) {
         if(!$usuarioEnSesion) {
-            // bypass temporario para acceder libre a la api
-            if($module === "api") {
-                return;
-            }
-
             if(!in_array($module, $this->noLoginUserSites)) {
                 $module = 'home';
             }

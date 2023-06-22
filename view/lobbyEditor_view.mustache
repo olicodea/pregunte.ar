@@ -4,7 +4,9 @@
 <section class="mx-auto my-10 flex flex-col justify-center items-center px-4 pb-2 card-container gap-8">
     <div class="w-full rounded-lg w-full flex justify-between items-center">
             <div class="flex flex-col justify-center gap-1">
-                <p class="texto-izq-usuario text-white font-bold text-3xl">cmedina</p>
+                {{#usuarioLogeado}}
+                <p class="texto-izq-usuario text-white font-bold text-3xl">{{nombreDeUsuario}}</p>
+                {{/usuarioLogeado}}
                 <p class="font-bold italic text-lg">Editor</p>
             </div>
             <span class="text-7xl material-symbols-rounded pb-3">edit_square</span>

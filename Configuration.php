@@ -26,6 +26,7 @@ include_once('model/AudioModel.php');
 include_once('model/PreguntasSugeridasModel.php');
 include_once('model/PreguntasActivasModel.php');
 include_once('model/PreguntasReportadasModel.php');
+include_once ('model/ApiModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -44,6 +45,7 @@ include_once('controller/PreguntasSugeridasController.php');
 include_once('controller/PreguntasReportadasController.php');
 include_once('controller/PreguntasActivasController.php');
 include_once('controller/SessionController.php');
+include_once('controller/ApiController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -68,6 +70,10 @@ class Configuration {
 
     public function getLobbyController() {
         return new LobbyController(new LobbyModel($this->getDatabase()),$this->getRenderer());
+    }
+
+    public function getApiController() {
+        return new ApiController(new ApiModel($this->getDatabase()));
     }
 
     public function getMailValidationController() {

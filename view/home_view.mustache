@@ -4,14 +4,44 @@
         <div class="sombra-container contenedor rounded-lg p-4 w-full pb-6">
             <div>
                 <p class="texto text-center mb-3">PON A PRUEBA TUS CONOCIMIENTOS</p>
-                <p class="text-white text-center mb-5">Elegí una categoría y comienza a jugar</p>
+                <p class="text-white text-center mb-5">Elegí una categoría y responde una pregunta de prueba</p>
             </div>
-            <div class="flex flex-col gap-3">
-                <button class="medida mx-auto py-2 rounded text-white text-lg bg-blue-500 hover:bg-blue-600 w-full">Ciencia</button>
-                <button class="medida mx-auto py-2 rounded text-white text-lg bg-green-500 hover:bg-green-600 w-full">Historia</button>
-                <button class="medida mx-auto py-2 rounded text-white text-lg bg-pink-500 hover:bg-pink-600 w-full">Deportes</button>
-                <button class="medida mx-auto py-2 rounded text-white text-lg bg-orange-500 hover:bg-orange-600 w-full">Geografía</button>
+            <div class="flex flex-col justify-around items-center gap 3">
+                <div class="flex gap-6 w-2/3 py-2">
+                    <button onclick="sendRequest(2)" class="categoria-btn medida mx-auto py-2 rounded text-white text-lg bg-blue-500 hover:bg-blue-600 w-full" data-categoria="2">Ciencia</button>
+                    <button onclick="sendRequest(3)" class="categoria-btn medida mx-auto py-2 rounded text-white text-lg bg-green-500 hover:bg-green-600 w-full" data-categoria="3">Historia</button>
+                </div>
             </div>
+            <div class="flex flex-col justify-around items-center gap 3">
+                <div class="flex gap-6 w-2/3 py-2">
+                    <button onclick="sendRequest(1)" class="categoria-btn medida mx-auto py-2 rounded text-white text-lg bg-pink-500 hover:bg-pink-600 w-full" data-categoria="1">Deportes</button>
+                    <button onclick="sendRequest(5)" class="categoria-btn medida mx-auto py-2 rounded text-white text-lg bg-orange-500 hover:bg-orange-600 w-full" data-categoria="5">Geografía</button>
+                </div>
+            </div>
+            <div class="flex justify-center" id="ajax">
+                <p class="medida text-white text-left text-lg md:text-2xl mb-5" id="pregunta">{{pregunta}}</p>
+            </div>
+                <div id="botones" class="flex flex-col gap-3" style="display: none">
+
+                    <button class="respuesta medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                    respuesta-bg hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100" type="submit" id="respuestaA">{{respuestaA}}</button>
+                    <button class="respuesta medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                    respuesta-bg hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100" id="respuestaB">{{respuestaB}}</button>
+                    <button class="respuesta medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                    respuesta-bg hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100" id="respuestaC">{{respuestaC}}</button>
+                    <button class="respuesta medida mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                    respuesta-bg hover:shadow-lg hover:scale-105 hover:font-bold transition duration-100" id="respuestaD">{{respuestaD}}</button>
+
+                    <div id="mostrarCorrecta" class="mx-auto" style="display: none">
+                        <p id="estadoRespuesta"></p>
+                        <p class="flex justify-center mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                    respuesta-correcta shadow-lg scale-105 font-bold" id="respuestaCorrecta"></p>
+                        <p class="flex justify-center mx-auto py-2 lg:py-3 rounded text-white text-lg md:text-xl w-full
+                    respuesta-incorrecta" id="respuestaIncorrecta"></p>
+                    </div>
+
+
+                </div>
         </div>
         <div class="login-registro mt-10 mx-auto flex flex-col gap-3 w-full">
             <a href="/registro" class="sombra-container btn-purple mx-auto py-2 rounded text-white text-center w-full">Registrarse</a>
@@ -19,5 +49,58 @@
         </div>
     </section>
 <!-- End Page Content -->
+
+<script>
+    let respuestaCorrecta = null;
+
+    function sendRequest(categoria) {
+        $('#mostrarCorrecta')[0].style = "display: none"
+            $.ajax({
+                url: 'http://localhost/api/preguntas?id=' + categoria,
+                method: 'GET',
+                success: function (preguntas) {
+                        var pregunta = preguntas[0];
+                        respuestaCorrecta = pregunta.respuestaCorrecta
+                        $('#botones').show()
+                        $('#pregunta').text(pregunta.pregunta);
+                        $('#respuestaA').text(pregunta.respuestaA);
+                        $('#respuestaB').text(pregunta.respuestaB);
+                        $('#respuestaC').text(pregunta.respuestaC);
+                        $('#respuestaD').text(pregunta.respuestaD);
+                        $('#respuestaCorrecta').text(pregunta.respuestaCorrecta);
+                    //por cada pregunta hago documente create element p con la respuesta
+                    // documente append child al div con ajax
+                },
+                error: function () {
+                    alert('Error al obtener pregunta');
+                }
+
+            });
+
+    };
+
+    function siEstaCorrecta(respondio){
+        return respondio === respuestaCorrecta
+    }
+
+    function mostrarRespuesta(e){
+        if(siEstaCorrecta(e.target.innerHTML)){
+            $('#estadoRespuesta').text("Respuesta Correcta ✅")
+            $('#mostrarCorrecta')[0].style = "display: block"
+            $('#respuestaCorrecta')[0].style = "display: flex"
+            $('#respuestaIncorrecta')[0].style = "display: none"
+        } else{
+            $('#estadoRespuesta').text("Respuesta Incorrecta ❌")
+            $('#respuestaCorrecta')[0].style = "display: none"
+            $('#mostrarCorrecta')[0].style = "display: block"
+            $('#respuestaIncorrecta')[0].style = "display: block"
+        }
+    }
+
+    document.querySelectorAll('.respuesta').forEach( (respuesta)=>
+            respuesta.addEventListener('click', (e) => {
+           mostrarRespuesta(e)
+    }))
+</script>
 
 {{> footer}}

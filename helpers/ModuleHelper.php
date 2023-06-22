@@ -11,6 +11,11 @@ class ModuleHelper
 
     public function chequearModulo(&$module, $usuarioEnSesion) {
         if(!$usuarioEnSesion) {
+            // bypass temporario para acceder libre a la api
+            if($module === "api") {
+                return;
+            }
+
             if(!in_array($module, $this->noLoginUserSites)) {
                 $module = 'home';
             }

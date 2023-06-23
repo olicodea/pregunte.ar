@@ -54,8 +54,11 @@ async function mostrarModalReportadas(idPregunta, cantidadReportes) {
     modalTitle.textContent = `La pregunta tiene ${cantidadReportes} reportes con estos comentarios:`;
 
     const modalComments = document.getElementById("modal-reportadas-comments");
+    modalComments.innerHTML = "";
 
     const comentarios = await getComentariosDeReportes(idPregunta);
+
+
     comentarios.forEach(item => {
         const comment = document.createElement("li");
         comment.innerHTML = `<li>- ${item.comentario}</li>`;

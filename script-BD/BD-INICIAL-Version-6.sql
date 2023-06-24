@@ -425,7 +425,7 @@ VALUES
     (2, 'Nicolas Villafañe', '2003-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'nvilla@mail.com', 'nvilla', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 1, ' -34.629261', '-63.432884'),
     (3, 'Mariano Soto', '2002-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'msoto@mail.com', 'msoto', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 1, ' -34.629261', '-63.432884'),
     (4, 'Cristian Medina', '2001-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'cmedina@mail.com', 'cmedina', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 2, '-34.629261', '-63.432884'),
-    (5, 'Sebastian Tarifa', '2000-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'starifa@mail.com', 'starifa', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 2, '-34.629261', '-63.432884'),
+    (5, 'Sebastian Tarifa', '2000-05-18', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'starifa@mail.com', 'starifa', 'efc91020c448e85a70aae9c2b9c8b8be', 'public/image/perfil.png', 3, '-34.629261', '-63.432884'),
     (6, 'Prueba Test', '2023-05-11', 'Masculino', 'Argentina', 'Provincia de Buenos Aires', 'juoliva95@gmail.com', 'juoliva95', '7d697a1fb0f9a64435a0bf60eaf2ff00', 'public/image/juoliva95.png', 1, '-36.13400074926003', '-61.41139962500001');
 
 -- --------------------------------------------------------

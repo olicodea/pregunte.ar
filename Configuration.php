@@ -10,6 +10,7 @@ include_once('helpers/GeneradorQr.php');
 include_once('helpers/Mailer.php');
 include_once ('helpers/Logger.php');
 include_once('helpers/ModuleHelper.php');
+include_once('helpers/GeneradorGrafico.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
@@ -26,7 +27,8 @@ include_once('model/AudioModel.php');
 include_once('model/PreguntasSugeridasModel.php');
 include_once('model/PreguntasActivasModel.php');
 include_once('model/PreguntasReportadasModel.php');
-include_once ('model/ApiModel.php');
+include_once('model/ApiModel.php');
+include_once('model/EstadisticasPreguntasModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -154,7 +156,7 @@ class Configuration {
     }
 
     public function getEstadisticasPreguntasController() {
-        return new EstadisticasPreguntasController($this->getRenderer());
+        return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
     }
 
     private function getArrayConfig() {
@@ -223,5 +225,9 @@ class Configuration {
     public function getModuleHelper()
     {
         return new ModuleHelper();
+    }
+
+    public function getGeneradorGrafico() {
+        return new GeneradorGrafico();
     }
 }

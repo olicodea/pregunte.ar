@@ -3,37 +3,31 @@
 class EstadisticasPreguntasController
 {
     private $renderer;
+    private $generadorGrafico;
+    private $estadisticasPreguntasModel;
+    private $TITULO_GRAFICO = "Porcentaje de aciertos";
 
-    public function __construct($renderer) {
+    public function __construct($estadisticasPreguntasModel, $generadorGrafico, $renderer) {
+        $this->generadorGrafico = $generadorGrafico;
         $this->renderer = $renderer;
+        $this->estadisticasPreguntasModel = $estadisticasPreguntasModel;
     }
     public function list() {
-        $this->renderer->render('estadisticasPreguntas');
+        $data["jugadores"] = $this->listarJugadores();
+        $this->renderer->render('estadisticasPreguntas', $data);
     }
 
-    public function generarGrafico() {
-        require_once ('third-party/jpgraph/src/jpgraph.php');
-        require_once ('third-party/jpgraph/src/jpgraph_pie.php');
-        // Some data
-        $data = [40, 70];
+    public function listarJugadores() {
+        return $this->estadisticasPreguntasModel->listarJugadores();
+    }
 
-        // Create the Pie Graph.
-        $graph = new PieGraph(350,250);
+    public function mostrarPorcentajeAciertos() {
+        $porcentajesAciertos = $this->getPorcentajeAciertos($_GET["idJugador"]);
+        return $this->generadorGrafico->generarGraficoTorta($porcentajesAciertos, $this->TITULO_GRAFICO);
+    }
 
-        $theme_class="DefaultTheme";
-        //$graph->SetTheme(new $theme_class());
-
-        // Set A title for the plot
-        $graph->title->Set("Porcentaje de respuestas correctas");
-        $graph->SetBox(true);
-
-        // Create
-        $p1 = new PiePlot($data);
-        $graph->Add($p1);
-
-        $p1->ShowBorder();
-        $p1->SetColor('black');
-        $p1->SetSliceColors(['green','red']);
-        $graph->Stroke();
+    private function getPorcentajeAciertos($idJugador)
+    {
+        return $this->estadisticasPreguntasModel->getPorcentajeAciertos($idJugador);
     }
 }

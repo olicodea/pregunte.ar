@@ -6,6 +6,8 @@
 -- Tiempo de generación: 20-06-2023 a las 17:01:00
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
+CREATE DATABASE IF NOT EXISTS preguntear;
+USE preguntear;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -572,7 +574,7 @@ ALTER TABLE `validaciones`
 --
 ALTER TABLE `partida_home`
     ADD PRIMARY KEY (`idHome`),
-  ADD KEY `idCategoria` (`idCategoria`);
+    ADD KEY `idCategoria` (`idCategoria`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas

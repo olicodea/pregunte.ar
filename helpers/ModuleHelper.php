@@ -5,6 +5,7 @@ class ModuleHelper
     private $noLoginUserSites = ["home","login","registro","datosLogin","datosUsuario","mailValidation", "api"];
     private $loginUserSites = ["lobby", "perfil", "partida", "crearPregunta", "ranking", "session", "audio"];
     private $editorSites = ["lobbyEditor", "perfil", "preguntasActivas", "preguntasSugeridas", "preguntasReportadas", "crearPregunta", "session"];
+    private $adminSites = ["lobbyAdmin", "perfil", "estadisticasGenerales", "estadisticasPreguntas", "estadisticasJugadores", "session"];
     public function __construct() {
 
     }
@@ -31,6 +32,8 @@ class ModuleHelper
                return $this->loginUserSites;
             case 2:
                 return $this->editorSites;
+            case 3:
+                return $this->adminSites;
         }
 
         return null;
@@ -44,6 +47,8 @@ class ModuleHelper
                 return "lobby";
             case 2:
                 return "lobbyEditor";
+            case 3:
+                return "lobbyAdmin";
         }
 
         return "home";

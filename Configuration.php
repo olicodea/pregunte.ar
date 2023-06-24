@@ -47,6 +47,9 @@ include_once('controller/PreguntasActivasController.php');
 include_once('controller/SessionController.php');
 include_once('controller/ApiController.php');
 include_once('controller/LobbyAdminController.php');
+include_once('controller/EstadisticasJugadoresController.php');
+include_once('controller/EstadisticasPreguntasController.php');
+include_once('controller/EstadisticasGeneralesController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -140,6 +143,18 @@ class Configuration {
 
     public function getLobbyAdminController() {
         return new LobbyAdminController($this->getRenderer());
+    }
+
+    public function getEstadisticasGeneralesController() {
+        return new EstadisticasGeneralesController($this->getRenderer());
+    }
+
+    public function getEstadisticasJugadoresController() {
+        return new EstadisticasJugadoresController($this->getRenderer());
+    }
+
+    public function getEstadisticasPreguntasController() {
+        return new EstadisticasPreguntasController($this->getRenderer());
     }
 
     private function getArrayConfig() {

@@ -185,6 +185,11 @@ option {
     max-height: 400px;
 }
 
+.contenedor-grafico-bar {
+    min-height: 250px;
+    max-height: 500px;
+}
+
 .contenedor-preguntas {
     min-height: 350px;
     max-height: 700px;

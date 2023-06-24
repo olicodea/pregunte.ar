@@ -29,6 +29,7 @@ include_once('model/PreguntasActivasModel.php');
 include_once('model/PreguntasReportadasModel.php');
 include_once('model/ApiModel.php');
 include_once('model/EstadisticasPreguntasModel.php');
+include_once('model/EstadisticasJugadoresModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -152,7 +153,7 @@ class Configuration {
     }
 
     public function getEstadisticasJugadoresController() {
-        return new EstadisticasJugadoresController($this->getRenderer());
+        return new EstadisticasJugadoresController(new EstadisticasJugadoresModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
     }
 
     public function getEstadisticasPreguntasController() {

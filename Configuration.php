@@ -10,6 +10,8 @@ include_once('helpers/GeneradorQr.php');
 include_once('helpers/Mailer.php');
 include_once ('helpers/Logger.php');
 include_once('helpers/ModuleHelper.php');
+include_once('helpers/GeneradorGrafico.php');
+include_once('helpers/GeneradorPDF.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
@@ -26,7 +28,10 @@ include_once('model/AudioModel.php');
 include_once('model/PreguntasSugeridasModel.php');
 include_once('model/PreguntasActivasModel.php');
 include_once('model/PreguntasReportadasModel.php');
-include_once ('model/ApiModel.php');
+include_once('model/ApiModel.php');
+include_once('model/EstadisticasPreguntasModel.php');
+include_once('model/EstadisticasJugadoresModel.php');
+include_once('model/EstadisticasGeneralesModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -46,6 +51,10 @@ include_once('controller/PreguntasReportadasController.php');
 include_once('controller/PreguntasActivasController.php');
 include_once('controller/SessionController.php');
 include_once('controller/ApiController.php');
+include_once('controller/LobbyAdminController.php');
+include_once('controller/EstadisticasJugadoresController.php');
+include_once('controller/EstadisticasPreguntasController.php');
+include_once('controller/EstadisticasGeneralesController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -137,6 +146,22 @@ class Configuration {
         return new SessionController();
     }
 
+    public function getLobbyAdminController() {
+        return new LobbyAdminController($this->getRenderer());
+    }
+
+    public function getEstadisticasGeneralesController() {
+        return new EstadisticasGeneralesController(new EstadisticasGeneralesModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getEstadisticasJugadoresController() {
+        return new EstadisticasJugadoresController(new EstadisticasJugadoresModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getEstadisticasPreguntasController() {
+        return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
+    }
+
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
     }
@@ -203,5 +228,13 @@ class Configuration {
     public function getModuleHelper()
     {
         return new ModuleHelper();
+    }
+
+    public function getGeneradorGrafico() {
+        return new GeneradorGrafico();
+    }
+
+    public function getGeneradorPDF() {
+        return new GeneradorPDF();
     }
 }

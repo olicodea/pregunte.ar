@@ -74,7 +74,11 @@ option {
 }
 
 .card-container{
-    max-width: 600px;
+    max-width: 700px;
+}
+
+.card-container-admin-preguntas{
+    max-width: 400px;
 }
 
 .sombra-container {
@@ -149,6 +153,14 @@ option {
     max-width: 700px;
 }
 
+.caja-grafico-torta {
+    background-color: #4C145D;
+    width: 40%;
+    margin: 0 auto;
+    padding: 5px 20px;
+    max-width: 400px;
+}
+
 .caja-preguntas {
     background-color: #4C145D;
     width: 40%;
@@ -164,6 +176,16 @@ option {
 }
 
 .contenedor-partidas {
+    min-height: 250px;
+    max-height: 500px;
+}
+
+.contenedor-grafico-torta {
+    min-height: 250px;
+    max-height: 400px;
+}
+
+.contenedor-grafico-bar {
     min-height: 250px;
     max-height: 500px;
 }

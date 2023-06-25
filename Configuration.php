@@ -11,6 +11,7 @@ include_once('helpers/Mailer.php');
 include_once ('helpers/Logger.php');
 include_once('helpers/ModuleHelper.php');
 include_once('helpers/GeneradorGrafico.php');
+include_once('helpers/GeneradorPDF.php');
 
 include_once('model/LoginModel.php');
 include_once('model/UsuarioModel.php');
@@ -30,6 +31,7 @@ include_once('model/PreguntasReportadasModel.php');
 include_once('model/ApiModel.php');
 include_once('model/EstadisticasPreguntasModel.php');
 include_once('model/EstadisticasJugadoresModel.php');
+include_once('model/EstadisticasGeneralesModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -149,7 +151,7 @@ class Configuration {
     }
 
     public function getEstadisticasGeneralesController() {
-        return new EstadisticasGeneralesController($this->getRenderer());
+        return new EstadisticasGeneralesController(new EstadisticasGeneralesModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
     }
 
     public function getEstadisticasJugadoresController() {
@@ -230,5 +232,9 @@ class Configuration {
 
     public function getGeneradorGrafico() {
         return new GeneradorGrafico();
+    }
+
+    public function getGeneradorPDF() {
+        return new GeneradorPDF();
     }
 }

@@ -1,10 +1,29 @@
 {{> header}}
-<!-- The Band Section -->
 
 <section class="mx-auto my-10 flex flex-col justify-center items-center px-4 pb-2 card-container gap-8">
-    ESTADISTICAS GENERALES
-</section>
+    <div class="w-full rounded-lg w-full flex justify-center items-center">
+        <div class="flex flex-col justify-center gap-1">
+            <h2 class="font-bold text-2xl">Estadísticas Generales</h2>
+        </div>
+    </div>
 
-<!-- End Page Content -->
+    <div class="w-full flex justify-center gap-5 flex-wrap">
+        <div class="contenedor-grafico-bar">
+            <div class="w-full">
+                <img src="estadisticasGenerales/mostrarCantidadJugadores" alt="cantidad jugadores" class="w-full">
+            </div>
+        </div>
+        <div class="contenedor-grafico-bar mt-5">
+            <div class="w-full">
+                <img src="estadisticasGenerales/mostrarCantidadPreguntas" alt="cantidad preguntas" class="w-full">
+            </div>
+        </div>
+        <div class="contenedor-grafico-bar">
+            <div class="w-full">
+                <img src="estadisticasGenerales/mostrarCantidadPartidas" alt="cantidad partidas" class="w-full">
+            </div>
+        </div>
+    </div>
+</section>
 
 {{> footer}}

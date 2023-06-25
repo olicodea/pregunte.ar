@@ -2,6 +2,7 @@
 require_once ('third-party/jpgraph/src/jpgraph.php');
 require_once ('third-party/jpgraph/src/jpgraph_pie.php');
 require_once ('third-party/jpgraph/src/jpgraph_bar.php');
+require_once ('third-party/jpgraph/src/jpgraph_line.php');
 
 class GeneradorGrafico {
 
@@ -90,6 +91,55 @@ class GeneradorGrafico {
         $b1plot->SetColor("white");
         $b1plot->SetFillGradient("#4B0082","white",GRAD_LEFT_REFLECTION);
         $b1plot->SetWidth(45);
+        $graph->title->Set($titulo);
+
+        $graph->Stroke();
+    }
+
+    public function generarGraficoCombinadoBarPlots($titulo, $labels, $valores1, $leyenda1, $valores2 = null, $leyenda2 = null) {
+        $data1y= $valores1;
+        $data2y= $valores2;
+
+        $graph = new Graph(750,320,'auto');
+        $graph->SetScale("textlin");
+        $graph->SetY2Scale("lin",0,90);
+        $graph->SetY2OrderBack(false);
+
+        $theme_class = new UniversalTheme;
+        $graph->SetTheme($theme_class);
+
+        $graph->SetMargin(40,20,46,80);
+
+        $graph->SetBox(false);
+
+        $graph->ygrid->SetFill(false);
+        $graph->yaxis->HideLine(false);
+        $graph->yaxis->HideTicks(false,false);
+        $graph->xaxis->SetTickLabels($labels);
+
+        $b1plot = new BarPlot($data1y);
+        $b2plot = $data2y != null ? new BarPlot($data2y) : null;
+
+        $gbplot = $b2plot != null ? new GroupBarPlot(array($b1plot,$b2plot)) : new GroupBarPlot(array($b1plot));
+
+        $graph->Add($gbplot);
+
+        $b1plot->SetColor("#0000CD");
+        $b1plot->SetFillColor("#0000CD");
+        $b1plot->SetLegend($leyenda1);
+
+        if($b2plot != null) {
+            $b2plot->SetColor("#B0C4DE");
+            $b2plot->SetFillColor("#B0C4DE");
+            $b2plot->SetLegend($leyenda2);
+        }
+
+        $graph->legend->SetFrameWeight(1);
+        $graph->legend->SetColumns(6);
+        $graph->legend->SetColor('#4E4E4E','#00A78A');
+
+
+
         $graph->title->Set($titulo);
 
         $graph->Stroke();

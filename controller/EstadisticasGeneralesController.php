@@ -9,7 +9,8 @@ class EstadisticasGeneralesController
         $this->estadisticasGeneralesModel = $estadisticasGeneralesModel;
     }
     public function list() {
-        $this->renderer->render('estadisticasGenerales');
+        $data["vistaEstadisticasGenerales"] = true;
+        $this->renderer->render('estadisticasGenerales', $data);
     }
 
     public function mostrarCantidadJugadores() {
@@ -22,5 +23,9 @@ class EstadisticasGeneralesController
 
     public function mostrarCantidadPartidas() {
         return $this->estadisticasGeneralesModel->getGraficoCantidadPartidas();
+    }
+
+    public function imprimirReporte() {
+        $this->estadisticasGeneralesModel->imprimirReporte($_GET["reporte"], $_POST["imagen"]);
     }
 }

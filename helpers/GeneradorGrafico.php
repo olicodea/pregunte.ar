@@ -69,7 +69,7 @@ class GeneradorGrafico {
         $datay = $valores;
 
 
-        $graph = new Graph(450,300,'auto');
+        $graph = new Graph(400,300,'auto');
         $graph->SetScale("textlin");
 
         //$theme_class="DefaultTheme";
@@ -100,7 +100,7 @@ class GeneradorGrafico {
         $data1y= $valores1;
         $data2y= $valores2;
 
-        $graph = new Graph(750,320,'auto');
+        $graph = new Graph(600,320,'auto');
         $graph->SetScale("textlin");
         $graph->SetY2Scale("lin",0,90);
         $graph->SetY2OrderBack(false);

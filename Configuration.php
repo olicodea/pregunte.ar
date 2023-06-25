@@ -151,7 +151,7 @@ class Configuration {
     }
 
     public function getEstadisticasGeneralesController() {
-        return new EstadisticasGeneralesController(new EstadisticasGeneralesModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
+        return new EstadisticasGeneralesController(new EstadisticasGeneralesModel($this->getGeneradorPDF(), $this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
     }
 
     public function getEstadisticasJugadoresController() {

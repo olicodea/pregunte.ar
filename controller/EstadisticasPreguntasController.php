@@ -30,4 +30,8 @@ class EstadisticasPreguntasController
     {
         return $this->estadisticasPreguntasModel->getPorcentajeAciertos($idJugador);
     }
+
+    public function imprimirReporte() {
+        $this->estadisticasPreguntasModel->imprimirReporte($_GET["reporte"], $_POST["imagen"], $_GET["nombreUsuario"]);
+    }
 }

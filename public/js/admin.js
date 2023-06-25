@@ -1,4 +1,4 @@
-async function imprimirReporte(idImg, modulo, reporte) {
+async function imprimirReporte(idImg, modulo, reporte, nombreUsuario = null) {
     const imgGrafico = document.getElementById(idImg);
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -11,7 +11,7 @@ async function imprimirReporte(idImg, modulo, reporte) {
     const base64 = canvas.toDataURL("image/jpg");
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `/${modulo}/imprimirReporte&reporte=${reporte}`, true);
+    xhr.open('POST', `/${modulo}/imprimirReporte&reporte=${reporte}&nombreUsuario=${nombreUsuario}`, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.responseType = 'blob';
 

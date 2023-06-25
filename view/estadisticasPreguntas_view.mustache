@@ -6,13 +6,18 @@
             <h2 class="font-bold text-2xl">Lista de jugadores y porcentajes</h2>
         </div>
     </div>
-    <div class="w-full flex gap-3 flex-wrap">
+    <div class="w-full flex gap-5 flex-wrap">
         {{#jugadores}}
             <div class="w-full caja-grafico-torta rounded flex gap-2 justify-center items-center flex-col pb-4">
-                <p class="texto-izq font-bold text-xl text-center">{{nombreUsuario}}</p>
+                <div class="w-full flex justify-between py-3" style="border-bottom: 1px solid #6D27A3;">
+                    <p class="font-bold text-xl text-center" style="color: #AD5CF7;">{{nombreUsuario}}</p>
+                    <button id="ImprimirPorcentajes" onclick="imprimirReporte('imgPorcentaje-{{idJugador}}', 'estadisticasPreguntas', 'porcentajes', '{{nombreUsuario}}')" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                        <span class="material-symbols-rounded">print</span>Imprimir
+                    </button>
+                </div>
                 <div class="contenedor-grafico-torta overflow-auto w-full flex flex-col items-center justify-center">
                     <div class="w-full py-2">
-                        <img src="estadisticasPreguntas/mostrarPorcentajeAciertos&idJugador={{idJugador}}" alt="porcentaje-jugador-{{idJugador}}" class="w-full">
+                        <img id="imgPorcentaje-{{idJugador}}" src="estadisticasPreguntas/mostrarPorcentajeAciertos&idJugador={{idJugador}}" alt="porcentaje-jugador-{{idJugador}}" class="w-full">
                     </div>
                 </div>
             </div>

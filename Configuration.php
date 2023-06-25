@@ -159,7 +159,7 @@ class Configuration {
     }
 
     public function getEstadisticasPreguntasController() {
-        return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
+        return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getGeneradorPDF(), $this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
     }
 
     private function getArrayConfig() {

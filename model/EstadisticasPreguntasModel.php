@@ -3,9 +3,11 @@
 class EstadisticasPreguntasModel
 {
     private $database;
+    private $generadorPDF;
     private $ROL_JUGADOR = "Jugador";
 
-    public function __construct($database) {
+    public function __construct($generadorPDF, $database) {
+        $this->generadorPDF = $generadorPDF;
         $this->database = $database;
     }
 
@@ -23,6 +25,11 @@ class EstadisticasPreguntasModel
         $porcentajeError = $this->calcularPorcentajeError($porcentajeAciertos);
 
         return [$porcentajeAciertos, $porcentajeError];
+    }
+
+    public function imprimirReporte($reporte, $graficoBase64, $nombreUsuario) {
+        $titulo = $this->getTituloReporte($reporte, $nombreUsuario);
+        $this->generadorPDF->generarPDF($titulo, $graficoBase64);
     }
 
     private function getCantidadPreguntasRespondidasPorIdUsuario($idJugador)
@@ -51,5 +58,12 @@ class EstadisticasPreguntasModel
     private function calcularPorcentajeError($porcentajeAciertos)
     {
         return 100 - $porcentajeAciertos;
+    }
+
+    private function getTituloReporte($reporte, $nombreUsuario)
+    {
+        if ($reporte == "porcentajes") {
+            return "Reporte de " . $nombreUsuario;
+        }
     }
 }

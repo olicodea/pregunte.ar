@@ -4,7 +4,7 @@ class EstadisticasGeneralesModel
 {
     private $database;
     private $generadorGrafico;
-
+    private $generadorPDF;
     private $tituloGraficoUsuarios = "Cantidad de usuarios totales y nuevos";
     private $leyendaJugadoresTotales = "Usuarios Totales";
     private $leyendaJugadoresNuevos = "Usuarios Nuevos";
@@ -16,7 +16,8 @@ class EstadisticasGeneralesModel
     private $tituloGraficoPartidas = "Cantidad de partidas";
     private $leyendaPartidas = "Partidas";
 
-    public function __construct($generadorGrafico, $database) {
+    public function __construct($generadorPDF, $generadorGrafico, $database) {
+        $this->generadorPDF = $generadorPDF;
         $this->generadorGrafico = $generadorGrafico;
         $this->database = $database;
     }
@@ -39,5 +40,22 @@ class EstadisticasGeneralesModel
         $partidasTotales = [23, 56, 66, 23, 80, 380, 780, 1200, 760, 280, 777, 900];
         $labels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
         return $this->generadorGrafico->generarGraficoCombinadoBarPlots($this->tituloGraficoPartidas, $labels, $partidasTotales, $this->leyendaPartidas);
+    }
+
+    public function imprimirReporte($reporte, $graficoBase64) {
+        $titulo = $this->getTituloReporte($reporte);
+        $this->generadorPDF->generarPDF($titulo, $graficoBase64);
+    }
+
+    private function getTituloReporte($reporte)
+    {
+        switch ($reporte) {
+            case "cantidadPartidas":
+                return "Reporte de usuarios";
+            case "cantidadJugadores":
+                return "Reporte de preguntas";
+            case "cantidadPreguntas":
+                return "Reporte de partidas";
+        }
     }
 }

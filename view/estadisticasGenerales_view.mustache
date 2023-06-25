@@ -8,19 +8,34 @@
     </div>
 
     <div class="w-full flex justify-center gap-5 flex-wrap">
-        <div class="contenedor-grafico-bar">
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="self-end">
+                <button id="ImprimirCantidadJugadores" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
             <div class="w-full">
-                <img src="estadisticasGenerales/mostrarCantidadJugadores" alt="cantidad jugadores" class="w-full">
+                <img id="imgCantidadJugadores" src="estadisticasGenerales/mostrarCantidadJugadores" alt="cantidad jugadores" class="w-full">
             </div>
         </div>
-        <div class="contenedor-grafico-bar mt-5">
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="self-end">
+                <button id="ImprimirCantidadPreguntas" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
             <div class="w-full">
-                <img src="estadisticasGenerales/mostrarCantidadPreguntas" alt="cantidad preguntas" class="w-full">
+                <img id="imgCantidadPreguntas" src="estadisticasGenerales/mostrarCantidadPreguntas" alt="cantidad preguntas" class="w-full">
             </div>
         </div>
-        <div class="contenedor-grafico-bar">
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="self-end">
+                <button id="ImprimirCantidadPartidas" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
             <div class="w-full">
-                <img src="estadisticasGenerales/mostrarCantidadPartidas" alt="cantidad partidas" class="w-full">
+                <img id="imgCantidadPartidas" src="estadisticasGenerales/mostrarCantidadPartidas" alt="cantidad partidas" class="w-full">
             </div>
         </div>
     </div>

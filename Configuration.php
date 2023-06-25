@@ -151,15 +151,15 @@ class Configuration {
     }
 
     public function getEstadisticasGeneralesController() {
-        return new EstadisticasGeneralesController(new EstadisticasGeneralesModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
+        return new EstadisticasGeneralesController(new EstadisticasGeneralesModel($this->getGeneradorPDF(), $this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
     }
 
     public function getEstadisticasJugadoresController() {
-        return new EstadisticasJugadoresController(new EstadisticasJugadoresModel($this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
+        return new EstadisticasJugadoresController(new EstadisticasJugadoresModel($this->getGeneradorPDF(), $this->getGeneradorGrafico(), $this->getDatabase()), $this->getRenderer());
     }
 
     public function getEstadisticasPreguntasController() {
-        return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
+        return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getGeneradorPDF(), $this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
     }
 
     private function getArrayConfig() {

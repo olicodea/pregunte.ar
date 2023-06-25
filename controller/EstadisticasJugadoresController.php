@@ -10,7 +10,8 @@ class EstadisticasJugadoresController
         $this->renderer = $renderer;
     }
     public function list() {
-        $this->renderer->render('estadisticasJugadores');
+        $data["vistaEstadisticasJugadores"] = true;
+        $this->renderer->render('estadisticasJugadores', $data);
     }
 
     public function mostrarJugadoresPorPais() {
@@ -23,5 +24,9 @@ class EstadisticasJugadoresController
 
     public function mostrarCantidadJugadoresPorGrupoDeEdad() {
         return $this->estadisticasJugadoresModel->getGraficoPorGrupoDeEdad();
+    }
+
+    public function imprimirReporte() {
+        $this->estadisticasJugadoresModel->imprimirReporte($_GET["reporte"], $_POST["imagen"]);
     }
 }

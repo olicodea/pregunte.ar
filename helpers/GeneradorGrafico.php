@@ -69,7 +69,7 @@ class GeneradorGrafico {
         $datay = $valores;
 
 
-        $graph = new Graph(350,220,'auto');
+        $graph = new Graph(450,300,'auto');
         $graph->SetScale("textlin");
 
         //$theme_class="DefaultTheme";

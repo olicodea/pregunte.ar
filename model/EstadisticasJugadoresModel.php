@@ -4,34 +4,41 @@ class EstadisticasJugadoresModel
 {
     private $database;
     private $generadorGrafico;
+    private $generadorPDF;
     private $TITULO_GRAFICO_PAIS = "Cantidad de jugadores por pais";
     private $TITULO_GRAFICO_GENERO = "Cantidad de jugadores por Genero";
     private $TITULO_GRAFICO_EDAD = "Cantidad de jugadores por Grupo de edad";
     private $GRUPOS_EDAD = ["Menores", "Jubilados", "Medio"];
 
-    public function __construct($generadorGrafico, $database) {
+    public function __construct($generadorPDF, $generadorGrafico, $database) {
+        $this->generadorPDF = $generadorPDF;
         $this->generadorGrafico = $generadorGrafico;
         $this->database = $database;
     }
 
-    public function getGraficoPorPais() {
+    public function getGraficoPorPais($graficoTemp = null) {
         $cantidadJugadoresPorPais = $this->findCantidadJugadoresPorPais();
         $valoresPorPais = $this->extraerValoresOLabels($cantidadJugadoresPorPais, "cantidadPorPais");
         $labelsPorPais = $this->extraerValoresOLabels($cantidadJugadoresPorPais, "pais");
-        return $this->generadorGrafico->generarGraficoBarPlot($valoresPorPais, $labelsPorPais, $this->TITULO_GRAFICO_PAIS);
+        return $this->generadorGrafico->generarGraficoBarPlot($valoresPorPais, $labelsPorPais, $this->TITULO_GRAFICO_PAIS, $graficoTemp);
     }
 
-    public function getGraficoPorGenero() {
+    public function getGraficoPorGenero($graficoTemp = null) {
         $cantidadJugadoresPorGenero = $this->findCantidadJugadoresPorGenero();
         $cantidadPorGenero = $this->extraerValoresOLabels($cantidadJugadoresPorGenero, "cantidadPorGenero");
         $labelsPorGenero = $this->extraerValoresOLabels($cantidadJugadoresPorGenero, "genero");
-        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadPorGenero, $labelsPorGenero, $this->TITULO_GRAFICO_GENERO);
+        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadPorGenero, $labelsPorGenero, $this->TITULO_GRAFICO_GENERO, $graficoTemp);
     }
 
-    public function getGraficoPorGrupoDeEdad() {
+    public function getGraficoPorGrupoDeEdad($graficoTemp = null) {
         $cantidadJugadoresPorGrupoEdad = $this->definirJugadoresPorGrupoDeEdad();
         $cantidadPorGenero = array_values($cantidadJugadoresPorGrupoEdad);
-        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadPorGenero, $this->GRUPOS_EDAD, $this->TITULO_GRAFICO_EDAD);
+        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadPorGenero, $this->GRUPOS_EDAD, $this->TITULO_GRAFICO_EDAD, $graficoTemp);
+    }
+
+    public function imprimirReporte($reporte, $graficoBase64) {
+        $titulo = $this->getTituloReporte($reporte);
+        $this->generadorPDF->generarPDF($titulo, $graficoBase64);
     }
 
     public function findCantidadJugadoresPorPais() {
@@ -96,5 +103,17 @@ class EstadisticasJugadoresModel
         }
 
         return $cantidadJugadoresPorFechaNacimiento;
+    }
+
+    private function getTituloReporte($reporte)
+    {
+        switch ($reporte) {
+            case "jugadoresPais":
+                return "Cantidad de jugadores por país";
+            case "jugadoresGenero":
+                return "Cantidad de jugadores por genero";
+            case "jugadoresGrupoEdad":
+                return "Cantidad de jugadores por grupo de edad";
+        }
     }
 }

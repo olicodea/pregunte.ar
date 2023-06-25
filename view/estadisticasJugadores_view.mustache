@@ -8,19 +8,34 @@
     </div>
 
     <div class="w-full flex justify-center gap-5 flex-wrap">
-        <div class="contenedor-grafico-bar">
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="self-end">
+                <button id="ImprimirJugadoresPais" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
             <div class="w-full">
-                <img src="estadisticasJugadores/mostrarJugadoresPorPais" alt="jugadores por país" class="w-full">
+                <img id="imgJugadoresPais" src="estadisticasJugadores/mostrarJugadoresPorPais" alt="jugadores por país" class="w-full">
             </div>
         </div>
-        <div class="contenedor-grafico-bar mt-5">
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="self-end">
+                <button id="ImprimirJugadoresGenero" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
             <div class="w-full">
-                <img src="estadisticasJugadores/mostrarCantidadJugadoresPorGenero" alt="jugadores por genero" class="w-full">
+                <img id="imgJugadoresGenero" src="estadisticasJugadores/mostrarCantidadJugadoresPorGenero" alt="jugadores por genero" class="w-full">
             </div>
         </div>
-        <div class="contenedor-grafico-bar">
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="self-end">
+                <button id="ImprimirJugadoresGrupoEdad" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
             <div class="w-full">
-                <img src="estadisticasJugadores/mostrarCantidadJugadoresPorGrupoDeEdad" alt="jugadores por grupo de edad" class="w-full">
+                <img id="imgJugadoresGrupoEdad" src="estadisticasJugadores/mostrarCantidadJugadoresPorGrupoDeEdad" alt="jugadores por grupo de edad" class="w-full">
             </div>
         </div>
     </div>

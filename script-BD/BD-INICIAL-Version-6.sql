@@ -73,6 +73,8 @@ CREATE TABLE `partida` (
 `duracion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE `partida` ADD `fechaPartida` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `duracion`;
+
 
 INSERT INTO `partida` (`idPartida`, `idUsuario`, `puntaje`, `cantidadDeRespuestasAcertadas`, `duracion`) VALUES
 (1, 1, 40, 15, 500),
@@ -89,6 +91,8 @@ CREATE TABLE `pregunta` (
 `idRespuesta` int(11) NOT NULL,
 `idEstadoPregunta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `pregunta` ADD `fechaPregunta` DATE NULL DEFAULT CURRENT_TIMESTAMP AFTER `idEstadoPregunta`;
 
 
 INSERT INTO `pregunta` (`idPregunta`, `pregunta`, `idDificultad`, `idCategoria`, `idUsuario`, `idRespuesta`, `idEstadoPregunta`) VALUES
@@ -312,6 +316,8 @@ CREATE TABLE `usuario` (
 `longitud` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE `usuario` ADD `fechaUsuario` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `idRol`;
+
 
 INSERT INTO `usuario` (`idUsuario`, `nombreCompleto`, `fechaDeNacimiento`, `genero`, `pais`, `ciudad`, `mail`, `nombreDeUsuario`, `contrasenia`, `fotoDePerfil`, `idRol`, `latitud`, `longitud`)
 VALUES
@@ -371,6 +377,7 @@ ALTER TABLE `partida`
     ADD PRIMARY KEY (`idPartida`),
     ADD KEY `idUsuario` (`idUsuario`);
 
+
 ALTER TABLE `pregunta`
     ADD PRIMARY KEY (`idPregunta`),
     ADD KEY `idDificultad` (`idDificultad`),
@@ -378,6 +385,8 @@ ALTER TABLE `pregunta`
     ADD KEY `idUsuario` (`idUsuario`),
     ADD KEY `idRespuesta` (`idRespuesta`),
     ADD KEY `idEstadoPregunta` (`idEstadoPregunta`);
+
+
 
 ALTER TABLE `pregunta_respondida`
     ADD PRIMARY KEY (`idPreguntaRespondida`),
@@ -503,6 +512,8 @@ ALTER TABLE `validaciones`
 ALTER TABLE `partida_home`
     ADD CONSTRAINT `partida_home_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_preguntas` (`idCategoria`);
 COMMIT;
+
+
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -15,11 +15,13 @@ class EstadisticasJugadoresController
     }
 
     public function mostrarJugadoresPorPais() {
-        return $this->estadisticasJugadoresModel->getGraficoPorPais();
+        $option = $_GET["option"] ?? "year";
+        return $this->estadisticasJugadoresModel->getGraficoPorPais($option);
     }
 
     public function mostrarCantidadJugadoresPorGenero() {
-        return $this->estadisticasJugadoresModel->getGraficoPorGenero();
+        $option = $_GET["option"] ?? "year";
+        return $this->estadisticasJugadoresModel->getGraficoPorGenero($option);
     }
 
     public function mostrarCantidadJugadoresPorGrupoDeEdad() {

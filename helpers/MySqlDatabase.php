@@ -26,6 +26,13 @@ class MySqlDatabase {
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
+    public function queryAllWithMerge($sql) {
+        Logger::info('Ejecutando query: ' . $sql);
+        $result = mysqli_query($this->connection, $sql);
+        $array = mysqli_fetch_all($result);
+        return array_reduce($array, 'array_merge', []);
+    }
+
     public function queryWthParameters($query, $value) {
         Logger::info('Ejecutando query: ' . $query . ' con parametros: '.$value);
         $stmt = mysqli_prepare($this->connection, $query);

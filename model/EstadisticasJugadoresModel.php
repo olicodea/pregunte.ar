@@ -247,7 +247,7 @@ class EstadisticasJugadoresModel
 
             $valores[] = [
                 "$criterio" => $cantidad[$criterio],
-                "data" => $resultData
+                "data" => $resultData // [5,0,0,3,0]
             ];
         }
 
@@ -274,7 +274,7 @@ class EstadisticasJugadoresModel
                 break;
             default:
                 // Separar el año y el valor
-                list($year, $value) = explode(':', $pair);
+                list($year, $value) = explode(':', $pair); //2020:5 se transforma en dos variables year=2020 y value=5
                 // Convertir el valor a entero y asignarlo al año correspondiente
                 $dateValues[$year] = intval($value);
                 break;

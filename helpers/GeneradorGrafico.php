@@ -182,7 +182,7 @@ class GeneradorGrafico {
 
             $leyenda = $valor["$criterio"];
 
-            $barplot = new BarPlot($valor["data"]);
+            $barplot = new BarPlot($valor["data"]); //[5,0,0,3,0]
             $color = "#ccc";
             $barplot->SetColor($color);
             $barplot->SetFillColor($color);

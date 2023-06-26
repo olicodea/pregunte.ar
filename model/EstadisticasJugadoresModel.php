@@ -41,8 +41,32 @@ class EstadisticasJugadoresModel
         $this->generadorPDF->generarPDF($titulo, $graficoBase64);
     }
 
-    public function findCantidadJugadoresPorPais() {
-        $sql = "SELECT u.pais, count(u.idUsuario) as cantidadPorPais FROM usuario u GROUP BY u.pais HAVING COUNT(u.idUsuario)";
+    public function findCantidadJugadoresPorPais($option) {
+        $sql = null;
+        if($option){
+            if($option == 'year'){
+                $sql = 'SELECT YEAR(u.fechaUsuario) AS anio, u.pais, COUNT(u.idUsuario) AS TotalUsuarios
+                        FROM usuario u
+                        WHERE YEAR(u.fechaUsuario) >= YEAR(CURDATE()) - 5
+                        GROUP BY YEAR(u.fechaUsuario), u.pais
+                        ORDER BY YEAR(u.fechaUsuario) DESC, u.pais';
+
+            }else if($option == 'month'){
+                $sql = "SELECT DATE_FORMAT(fechaUsuario, '%M') AS Mes,
+                        pais,
+                        COUNT(*) AS TotalUsuarios
+                        FROM Usuario
+                        WHERE YEAR(fechaUsuario) = YEAR(CURDATE())
+                        GROUP BY Mes, Pais";
+            }else if($option == 'day'){
+                $sql = "SELECT DAYNAME(fechaUsuario) AS Dia,
+                        Pais,
+                        COUNT(*) AS TotalUsuarios
+                        FROM Usuario
+                        WHERE fechaUsuario >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                        GROUP BY Dia, Pais";
+            }
+        }
         return $this->database->query($sql);
     }
 
@@ -57,9 +81,34 @@ class EstadisticasJugadoresModel
         return $valores;
     }
 
-    private function findCantidadJugadoresPorGenero()
+    private function findCantidadJugadoresPorGenero($option)
     {
-        $sql = "SELECT u.genero, count(u.idUsuario) as cantidadPorGenero FROM usuario u GROUP BY u.genero HAVING COUNT(u.idUsuario)";
+        $sql = null;
+        if($option) {
+            if ($option == 'year') {
+                $sql = 'SELECT YEAR(u.fechaUsuario) AS anio, u.genero, COUNT(u.idUsuario) AS TotalUsuarios
+                        FROM usuario u
+                        WHERE YEAR(u.fechaUsuario) >= YEAR(CURDATE()) - 5
+                        GROUP BY YEAR(u.fechaUsuario), u.genero
+                        ORDER BY YEAR(u.fechaUsuario) DESC, u.genero';
+
+            } else if ($option == 'month') {
+                $sql = "SELECT DATE_FORMAT(fechaUsuario, '%M') AS Mes,
+                        genero,
+                        COUNT(*) AS TotalUsuarios
+                        FROM Usuario
+                        WHERE YEAR(fechaUsuario) = YEAR(CURDATE())
+                        GROUP BY Mes, genero";
+            } else if ($option == 'day') {
+                $sql = "SELECT DAYNAME(fechaUsuario) AS Dia,
+                        genero,
+                        COUNT(*) AS TotalUsuarios
+                        FROM Usuario
+                        WHERE fechaUsuario >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                        GROUP BY Dia, genero";
+            }
+        }
+
         return $this->database->query($sql);
     }
 

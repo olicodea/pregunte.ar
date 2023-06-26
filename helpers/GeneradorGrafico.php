@@ -144,4 +144,53 @@ class GeneradorGrafico {
 
         $graph->Stroke();
     }
+
+    public function generarGraficoCombinadoBarPlotsVarios($valores, $labels, $titulo, $criterio) {
+        $graph = new Graph(600,320,'auto');
+        $graph->SetScale("textlin");
+        $graph->SetY2Scale("lin",0,90);
+        $graph->SetY2OrderBack(false);
+
+        $theme_class = new UniversalTheme;
+        $graph->SetTheme($theme_class);
+
+        $graph->SetMargin(40,20,46,80);
+
+        $graph->SetBox(false);
+
+        $graph->ygrid->SetFill(false);
+        $graph->yaxis->HideLine(false);
+        $graph->yaxis->HideTicks(false,false);
+        $graph->xaxis->SetTickLabels($labels);
+
+        $gbplot = $this->generarBarPlots($valores, $criterio);
+
+        $graph->Add($gbplot);
+
+        $graph->legend->SetFrameWeight(1);
+        $graph->legend->SetColumns(sizeof($valores));
+        $graph->legend->SetColor('#4E4E4E','#00A78A');
+
+        $graph->title->Set($titulo);
+
+        $graph->Stroke();
+    }
+
+    private function generarBarPlots($valores, $criterio) {
+        $plots = [];
+        foreach($valores as $valor){
+
+            $leyenda = $valor["$criterio"];
+
+            $barplot = new BarPlot($valor["data"]);
+            $color = "#ccc";
+            $barplot->SetColor($color);
+            $barplot->SetFillColor($color);
+            $barplot->SetLegend($leyenda);
+
+
+            $plots[] = $barplot;
+        }
+        return new GroupBarPlot($plots);
+    }
 }

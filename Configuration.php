@@ -55,6 +55,7 @@ include_once('controller/LobbyAdminController.php');
 include_once('controller/EstadisticasJugadoresController.php');
 include_once('controller/EstadisticasPreguntasController.php');
 include_once('controller/EstadisticasGeneralesController.php');
+include_once('controller/CategoriaController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -160,6 +161,10 @@ class Configuration {
 
     public function getEstadisticasPreguntasController() {
         return new EstadisticasPreguntasController(new EstadisticasPreguntasModel($this->getGeneradorPDF(), $this->getDatabase()), $this->getGeneradorGrafico(), $this->getRenderer());
+    }
+
+    public function getCategoriaController() {
+        return new CategoriaController($this->getRenderer());
     }
 
     private function getArrayConfig() {

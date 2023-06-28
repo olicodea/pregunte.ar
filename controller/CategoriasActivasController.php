@@ -4,11 +4,22 @@ class CategoriasActivasController
 {
     private $renderer;
 
-    public function __construct($renderer)
+    private $categoriasActivasModel;
+
+    public function __construct($categoriasActivasModel, $renderer)
     {
+        $this->categoriasActivasModel = $categoriasActivasModel;
         $this->renderer = $renderer;
     }
     public function list(){
-        $this->renderer->render('categoriasActivas');
+        $data["usuarioLogeado"] = $_SESSION["usuario"];
+        $data["vistaCategoriasActivas"] = true;
+        $data["categoriasActivas"] = $this->categoriasActivasModel->findCategoriasActivas();
+        $this->renderer->render('categoriasActivas', $data);
+    }
+
+    public function eliminarPregunta() {
+        $this->categoriasActivasModel->anularCategoria($_POST["idCategoria"], "eliminar");
+        echo true;
     }
 }

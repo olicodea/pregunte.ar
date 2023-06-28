@@ -9,7 +9,7 @@ class CrearPreguntaModel
     }
 
     public function findCategoriasPreguntas($categoriaSeleccionada = null) {
-        $sql = "SELECT * FROM `categoria_preguntas`";
+        $sql = "SELECT * FROM `categoria_preguntas` WHERE idEstado = 1";
         $resultado = $this->database->query($sql);
 
         $categorias = [];

@@ -32,6 +32,7 @@ include_once('model/ApiModel.php');
 include_once('model/EstadisticasPreguntasModel.php');
 include_once('model/EstadisticasJugadoresModel.php');
 include_once('model/EstadisticasGeneralesModel.php');
+include_once('model/CategoriaModel.php');
 
 include_once('controller/LoginController.php');
 include_once('controller/MailValidationController.php');
@@ -164,7 +165,7 @@ class Configuration {
     }
 
     public function getCategoriaController() {
-        return new CategoriaController($this->getRenderer());
+        return new CategoriaController(new CategoriaModel($this->getDatabase()), $this->getRenderer());
     }
 
     private function getArrayConfig() {

@@ -57,6 +57,7 @@ include_once('controller/EstadisticasJugadoresController.php');
 include_once('controller/EstadisticasPreguntasController.php');
 include_once('controller/EstadisticasGeneralesController.php');
 include_once('controller/CategoriaController.php');
+include_once('controller/CategoriasActivasController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 include_once('third-party/PHPMailer-master/src/PHPMailer.php');
@@ -166,6 +167,10 @@ class Configuration {
 
     public function getCategoriaController() {
         return new CategoriaController(new CategoriaModel($this->getDatabase()), $this->getRenderer());
+    }
+
+    public function getCategoriasActivasController() {
+        return new CategoriasActivasController($this->getRenderer());
     }
 
     private function getArrayConfig() {

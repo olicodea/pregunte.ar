@@ -1,5 +1,43 @@
 window.addEventListener("resize", listarPreguntas);
 
+let contenedorPreguntas = document.querySelector("#contenedor-preguntas");
+const contenedorPreguntasGuardado = contenedorPreguntas.innerHTML;
+
+window.addEventListener("load", () => {
+    listarPreguntas()
+})
+contenedorPreguntas.addEventListener("click", function(event) {
+    const target = event.target;
+    if (target.classList.contains("modal-button") || target.classList.contains("icon")) {
+        event.stopPropagation();
+
+        if (target.dataset.action === "eliminar") {
+            abrirModalEliminarPregunta(target.dataset.idPregunta, target.dataset.pregunta);
+
+        }
+
+        if(target.parentElement.dataset.action === "eliminar") {
+            abrirModalEliminarPregunta(target.parentElement.dataset.idPregunta, target.parentElement.dataset.pregunta);
+        }
+
+        if(target.dataset.action === "editar" || target.parentElement.dataset.action === "editar") {
+            const idPregunta = target.dataset.idPregunta ?? target.parentElement.dataset.idPregunta;
+            window.location.href = "/crearPregunta/comenzarEdicion&idPregunta=" + idPregunta;
+        }
+
+    } else {
+        const contenedorPregunta = target.closest(".preguntas");
+        if (contenedorPregunta) {
+            visualizarPregunta(
+                contenedorPregunta.dataset.idPregunta,
+                contenedorPregunta.dataset.pregunta,
+                contenedorPregunta.dataset.usuario,
+                contenedorPregunta.dataset.idRespuesta
+            );
+        }
+    }
+});
+
 function mostrarPregunta(pregunta) {
     if(pregunta.length > 50) {
         return pregunta.slice(0, 50) + "...";
@@ -8,12 +46,6 @@ function mostrarPregunta(pregunta) {
     }
 }
 
-let contenedorPreguntas = document.querySelector("#contenedor-preguntas");
-const contenedorPreguntasGuardado = contenedorPreguntas.innerHTML;
-
-window.addEventListener("load", () => {
-    listarPreguntas()
-})
 
 function listarPreguntas() {
     if( window.innerWidth <= 480 ) {
@@ -95,35 +127,3 @@ function eliminarPregunta() {
         cancelarModal("eliminar");
     });
 }
-
-contenedorPreguntas.addEventListener("click", function(event) {
-    const target = event.target;
-    if (target.classList.contains("modal-button") || target.classList.contains("icon")) {
-        event.stopPropagation();
-
-        if (target.dataset.action === "eliminar") {
-            abrirModalEliminarPregunta(target.dataset.idPregunta, target.dataset.pregunta);
-
-        }
-
-        if(target.parentElement.dataset.action === "eliminar") {
-            abrirModalEliminarPregunta(target.parentElement.dataset.idPregunta, target.parentElement.dataset.pregunta);
-        }
-
-        if(target.dataset.action === "editar" || target.parentElement.dataset.action === "editar") {
-            const idPregunta = target.dataset.idPregunta ?? target.parentElement.dataset.idPregunta;
-            window.location.href = "/crearPregunta/comenzarEdicion&idPregunta=" + idPregunta;
-        }
-
-    } else {
-        const contenedorPregunta = target.closest(".preguntas");
-        if (contenedorPregunta) {
-            visualizarPregunta(
-                contenedorPregunta.dataset.idPregunta,
-                contenedorPregunta.dataset.pregunta,
-                contenedorPregunta.dataset.usuario,
-                contenedorPregunta.dataset.idRespuesta
-            );
-        }
-    }
-});

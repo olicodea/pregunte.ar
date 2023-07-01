@@ -15,19 +15,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `categoria_preguntas` (
 `idCategoria` int(11) NOT NULL,
 `descripcion` varchar(50) NOT NULL,
-`color` varchar(50) NOT NULL
+`color` varchar(50) NOT NULL,
+`idEstado` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-INSERT INTO `categoria_preguntas` (`idCategoria`, `descripcion`, `color`) VALUES
-(1, 'Deportes', '#ec4899'),
-(2, 'Ciencia', '#4868D9'),
-(3, 'Historia', '#24BE87'),
-(4, 'Arte', '#C9D844'),
-(5, 'Geografia', '#D98E48'),
-(6, 'Tecnologia', '#2C39AE'),
-(7, 'Entretenimiento', '#A88755'),
-(8, 'Programacion', '#A62999');
+INSERT INTO `categoria_preguntas` (`idCategoria`, `descripcion`, `color`, `idEstado`) VALUES
+(1, 'Deportes', '#ec4899', 1),
+(2, 'Ciencia', '#4868D9', 1),
+(3, 'Historia', '#24BE87', 1),
+(4, 'Arte', '#C9D844', 1),
+(5, 'Geografia', '#D98E48', 1),
+(6, 'Tecnologia', '#2C39AE', 1),
+(7, 'Entretenimiento', '#A88755', 1),
+(8, 'Programacion', '#A62999', 1);
 
 
 CREATE TABLE `dificultad` (
@@ -480,6 +480,8 @@ ALTER TABLE `estadisticas_jugadores`
 ALTER TABLE `partida`
     ADD CONSTRAINT `partida_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
 
+ALTER TABLE `categoria_preguntas`
+    ADD CONSTRAINT `categoria_preguntas_ibfk_1` FOREIGN KEY (`idEstado`) REFERENCES `estado_pregunta` (`idEstadoPregunta`);
 
 ALTER TABLE `pregunta`
     ADD CONSTRAINT `pregunta_ibfk_1` FOREIGN KEY (`idDificultad`) REFERENCES `dificultad` (`idDificultad`),

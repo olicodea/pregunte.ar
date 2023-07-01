@@ -11,7 +11,7 @@ class CategoriasActivasController
         $this->categoriasActivasModel = $categoriasActivasModel;
         $this->renderer = $renderer;
     }
-    public function list(){
+    public function list() {
         $data["usuarioLogeado"] = $_SESSION["usuario"];
         $data["vistaCategoriasActivas"] = true;
         $data["categoriasActivas"] = $this->categoriasActivasModel->findCategoriasActivas();

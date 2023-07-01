@@ -14,7 +14,7 @@ contenedorCategorias.addEventListener("click", function(event) {
 
         if(target.dataset.action === "editar" || target.parentElement.dataset.action === "editar") {
             const idCategoria = target.dataset.idCategoria ?? target.parentElement.dataset.idCategoria;
-            window.location.href = "/categoria/comenzarEdicion&idCategoria=" + idCategoria;
+            window.location.href = "/categoria/comenzarEdicionCategoria&idCategoria=" + idCategoria;
         }
 
     }

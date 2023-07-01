@@ -15,6 +15,7 @@ class CategoriasActivasController
         $data["usuarioLogeado"] = $_SESSION["usuario"];
         $data["vistaCategoriasActivas"] = true;
         $data["categoriasActivas"] = $this->categoriasActivasModel->findCategoriasActivas();
+        $data["sinCategorias"] = $this->categoriasActivasModel->verificarSiNoHayCategorias($data["categoriasActivas"]);
         $this->renderer->render('categoriasActivas', $data);
     }
 

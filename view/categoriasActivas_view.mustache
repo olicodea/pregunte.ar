@@ -1,15 +1,15 @@
 {{> header}}
 
-<div class='flex flex-col p-3 md:p-6 h-full gap-8 justify-between mx-auto' style='max-width:700px' id='registroInicio'>
+<div class='flex flex-col p-3 md:p-6 h-full gap-8 justify-between mx-auto' style='max-width:500px' id='registroInicio'>
     <h4 class="text-2xl">Categorias Activas</h4>
     <div class="w-full caja-preguntas px-3 md:px-6 rounded flex gap-3 justify-center items-center flex-col pb-6">
         <p class="texto-izq font-bold text-xl">Lista de categorias</p>
         <div id="contenedor-categorias" class="contenedor-preguntas overflow-auto w-full flex flex-col gap-[14px]">
             {{#categoriasActivas}}
-                <div class="cursor-pointer preguntas card-partidas flex gap-1 justify-between items-center w-full rounded-md p-2 md:p-4 hover:bg-purple-700 transition duration-150">
+                <div class="cursor-pointer preguntas card-partidas flex gap-1 justify-between items-center w-full rounded-md p-4 md:p-4 hover:bg-purple-700 transition duration-150">
                     <p class="text-white font-bold text-sm md:text-md w-full">{{descripcion}}</p>
                     <div class="md:w-1/6 gap-1 md:gap-2 flex justify-around items-center">
-                        <button data-action="editar" data-id-categoria="{{idCategoria}}" class="modal-button flex items-center justify-center p-1 md:p-2 rounded-xl text-yellow-500 hover:text-white hover:bg-yellow-600 transition duration-200">
+                        <button data-action="editar" data-id-categoria="{{idCategoria}}" class="modal-button flex items-center justify-center p-2 md:p-2 rounded-xl text-yellow-500 hover:text-white hover:bg-yellow-600 transition duration-200">
                             <span class="material-symbols-rounded cursor-pointer icon">edit</span>
                         </button>
                         <button data-action="eliminar" data-id-categoria="{{idCategoria}}" data-descripcion="{{descripcion}}" class="modal-button flex items-center justify-center p-1 md:p-2 rounded-xl text-red-600 hover:text-white hover:bg-red-600 transition duration-200">

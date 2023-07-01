@@ -14,6 +14,12 @@ class CategoriaModel
         $this->guardar($datosAGuardar, $idCategoria);
     }
 
+    public function findCategoriaPorId($idCategoria) {
+        $sql = "SELECT idCategoria, descripcion, color FROM categoria_preguntas WHERE idCategoria = ?";
+        $result = $this->database->queryWthParameters($sql, $idCategoria);
+        return mysqli_fetch_assoc($result);
+    }
+
     private function getIdEstadoAGuardarPorIdRol($idRolUsuario)
     {
         $sql = "SELECT r.descripcion FROM rol r WHERE r.idRol = ?";
@@ -55,12 +61,14 @@ class CategoriaModel
         if($idCategoria) {
             $sql = "UPDATE categoria_preguntas SET descripcion = ?, color = ?, idEstado = ?
                     WHERE idCategoria = ?";
+            $typesParams = "ssii";
         } else {
             $sql = "INSERT INTO categoria_preguntas (descripcion, color, idEstado) 
                 VALUES (?, ?, ?)";
+            $typesParams = "ssi";
         }
 
-        $typesParams = "ssi";
+
 
         $this->database->save($typesParams, $datosAGuardar, $sql);
     }

@@ -4,7 +4,6 @@ class PartidaController
 {
     private $renderer;
     private $partidaModel;
-
     private $TIEMPO_INICIAL = 10000;
 
     public function __construct($partidaModel, $renderer)
@@ -102,17 +101,14 @@ class PartidaController
 
     private function generarArrayCategorias()
     {
-        $categorias = $this->partidaModel->findCategoriasAlAzar($_SESSION["usuario"]["idUsuario"]);
-        return $categorias;
+        return $this->partidaModel->findCategoriasAlAzar($_SESSION["usuario"]["idUsuario"]);
     }
 
     private function generarPreguntaPorCategoria()
     {
         $categoriaSiguiente = $this->partidaModel->getCategoriaSiguiente($_SESSION["categorias"]);
         $_SESSION["categoria"] = $categoriaSiguiente;
-        $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"], $_SESSION["usuario"]["idUsuario"]);
-
-        return $preguntaSiguiente;
+        return $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"], $_SESSION["usuario"]["idUsuario"]);
     }
 
     private function chequearArrayCategorias() {

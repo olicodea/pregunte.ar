@@ -19,8 +19,8 @@ class CrearPreguntaController
         $data["respuestaD"] = $_SESSION["respuestas"]["respuestaD"] ?? null;
         $data["respuestaCorrectaCrear"] = $_SESSION["respuestas"]["respuestaCorrecta"] ?? null;
 
-        $data["guardadoOkMessage"] = $_SESSION["guardadoOkMessage"] ?? null;
-        $data["errorMsgCrearPregunta"] = $_SESSION["errorMsgCrearPregunta"] ?? null;
+        $data["okMessage"] = $_SESSION["guardadoOkMessage"] ?? null;
+        $data["errorMessage"] = $_SESSION["errorMsgCrearPregunta"] ?? null;
 
         $this->renderer->render('crearPregunta', $data);
 

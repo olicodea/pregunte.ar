@@ -1,23 +1,11 @@
 {{> header}}
 
 <form id='crearPregunta' name="crearPregunta" action="/crearPregunta/guardar" method="POST" enctype="application/x-www-form-urlencoded" class='flex flex-col p-4 h-full mx-auto' style='max-width:500px' >
-    {{#errorMsgCrearPregunta}}
-        <div class="bg-red-500 text-white py-2 px-4 rounded-md my-2 w-full">
-            {{errorMsgCrearPregunta}}
-        </div>
-    {{/errorMsgCrearPregunta}}
-
-    {{#guardadoOkMessage}}
-        <div class="bg-blue-500 text-white text-lg py-4 px-4 rounded-md mb-7 mx-auto w-2/3 shadow-lg font-medium">
-            {{guardadoOkMessage}}
-        </div>
-    {{/guardadoOkMessage}}
-
     <div class="flex flex-col gap-2">
         <h4 class="text-xl mb-2">Crea tu pregunta, con sus respuestas. No te olvides de marcar la correcta</h4>
         <div class="flex flex-col">
             <label for="categoria">Categoria</label>
-            <select type="text" name="categoria" id="categoria" class="input-type-1 bg-transparent border rounded">
+            <select name="categoria" id="categoria" class="input-type-1 bg-transparent border rounded">
                 {{#categorias}}
                     <option value="{{idCategoria}}" {{selected}}>{{descripcion}}</option>
                 {{/categorias}}

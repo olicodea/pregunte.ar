@@ -14,19 +14,24 @@ class CategoriaController
         $data["usuarioLogeado"] = $_SESSION["usuario"];
         $data["descripcion"] = $_SESSION["categoriaCargada"]["descripcion"] ?? null;
         $data["color"] = $_SESSION["categoriaCargada"]["color"] ?? null;
+
+        $data["okMessage"] = $_SESSION["okMessageCategoria"] ?? null;
+        $data["errorMessage"] = $_SESSION["errorMessageCategoria"] ?? null;
+
         $this->renderer->render('categoria', $data);
+
+        unset($_SESSION["errorMessageCategoria"]);
+        $this->unsetSessionVariables();
     }
 
     public function guardar() {
-        if(isset($_POST["Color"]) &&  isset($_POST["NombreCategoria"]) ) {
+        if($this->verificarPostVariables()) {
             $idCategoria = $_SESSION["categoriaCargada"]["idCategoria"] ?? null;
 
             $this->categoriaModel->guardarCategoria($_POST["Color"], $_POST["NombreCategoria"], $_SESSION["usuario"]["idRol"], $idCategoria);
 
-            $_SESSION["guardadoOkMessage"] = "La categoría se guardo correctamente.";
+            $_SESSION["okMessageCategoria"] = "La categoría se guardo correctamente.";
             header("Location: /categoria");
-
-            $this->unsetSessionVariables();
 
             exit();
         }
@@ -46,15 +51,28 @@ class CategoriaController
 
     private function setErrorMessageyReload()
     {
-        $_SESSION["errorMsg"] = "Todos los campos deben estar completos";
+        $_SESSION["errorMessageCategoria"] = "Todos los campos deben estar completos";
         header("Location: /categoria");
     }
 
     private function unsetSessionVariables()
     {
-        if(isset($_SESSION["guardadoOkMessage"])) {
-            unset($_SESSION["guardadoOkMessage"]);
+        if(isset($_SESSION["okMessageCategoria"])) {
+            unset($_SESSION["okMessageCategoria"]);
             unset($_SESSION["categoriaCargada"]);
         }
+    }
+
+    private function verificarPostVariables()
+    {
+        $verificacion = false;
+
+        if(isset($_POST["Color"]) && isset($_POST["NombreCategoria"])) {
+            if(!empty($_POST["Color"]) && !empty($_POST["NombreCategoria"])) {
+                $verificacion = true;
+            }
+        }
+
+        return $verificacion;
     }
 }

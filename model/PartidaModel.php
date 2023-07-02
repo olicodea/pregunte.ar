@@ -53,8 +53,7 @@ class PartidaModel
     public function getPreguntaSiguiente($idCategoria, $idUsuario) {
         $preguntas = $this->findPreguntas($idCategoria, $idUsuario);
         $indiceAleatorio = array_rand($preguntas);
-        $preguntaSiguiente = $preguntas[$indiceAleatorio];
-        return $preguntaSiguiente;
+        return $preguntas[$indiceAleatorio];
     }
 
     public function createPartidaInicial() {

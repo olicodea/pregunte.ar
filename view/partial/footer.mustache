@@ -13,7 +13,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key={{ApiGoogleMapsPerfil}}&callback=perfilMapa" async defer></script>
 {{/ApiGoogleMapsPerfil}}
 
-    <script src="/public/js/editor.js" defer></script>
+    <script src="/public/js/editor.js"></script>
 
 {{#preguntas}}
     <script src="/public/js/editor-sugerirpreguntas.js"></script>
@@ -47,6 +47,30 @@
 {{#vistaEstadisticasGenerales}}
     <script src="/public/js/admin-estadisticasGenerales.js"></script>
 {{/vistaEstadisticasGenerales}}
+
+{{#vistaCategoria}}
+    <script src="/public/js/categoria.js"></script>
+{{/vistaCategoria}}
+
+{{#vistaCategoriasActivas}}
+<script src="/public/js/editor-categoriasActivas.js"></script>
+{{/vistaCategoriasActivas}}
+
+{{#vistaCategoriasSugeridas}}
+    <script src="/public/js/editor-categoriasSugeridas.js"></script>
+{{/vistaCategoriasSugeridas}}
+
+{{#okMessage}}
+<script>
+    mostrarNotificacion('{{okMessage}}', null)
+</script>
+{{/okMessage}}
+
+{{#errorMessage}}
+    <script>
+        mostrarNotificacionError('{{errorMessage}}', null)
+    </script>
+{{/errorMessage}}
 
 </body>
 </html>

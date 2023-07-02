@@ -30,12 +30,12 @@ function cancelarModal(tipo) {
     modal.classList.add('hidden');
 }
 
-function mostrarNotificacion(mensaje, redirect) {
+function mostrarNotificacion(mensaje, redirect = null, color = 'bg-blue-500') {
     const notificationElement = document.getElementById('notification');
     notificationElement.classList.remove("hidden");
 
     const notification = document.createElement('div');
-    notification.classList.add('notification', 'bg-blue-500');
+    notification.classList.add('notification', color);
     notification.textContent = mensaje;
 
     notification.style.opacity = '0';
@@ -49,7 +49,13 @@ function mostrarNotificacion(mensaje, redirect) {
         notification.style.opacity = '0';
         setTimeout(function () {
             notification.remove();
-            window.location.href = redirect;
+            if(redirect) {
+                window.location.href = redirect;
+            }
         }, 300)
     }, 3000);
+}
+
+function mostrarNotificacionError(mensaje, redirect = null) {
+    mostrarNotificacion(mensaje, redirect, "bg-red-500");
 }

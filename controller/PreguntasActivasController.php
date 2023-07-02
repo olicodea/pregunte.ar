@@ -10,7 +10,7 @@ class PreguntasActivasController
         $this->preguntasActivasModel = $preguntasActivasModel;
         $this->renderer = $renderer;
     }
-    public function list(){
+    public function list() {
         $data["usuarioLogeado"] = $_SESSION["usuario"];
         $data["preguntasActivas"] = $this->preguntasActivasModel->findPreguntasActivas();
         $data["vistaPreguntasActivas"] = true;
@@ -23,7 +23,7 @@ class PreguntasActivasController
         echo json_encode($respuestas);
     }
 
-    public function eliminarPregunta(){
+    public function eliminarPregunta() {
         $this->preguntasActivasModel->anularPregunta($_POST["idPregunta"], "eliminar");
         echo true;
     }

@@ -28,7 +28,8 @@ class EstadisticasGeneralesController
     }
 
     public function mostrarCantidadPartidas() {
-        return $this->estadisticasGeneralesModel->getGraficoCantidadPartidas();
+        $option = $_GET["option"] ?? "year";
+        return $this->estadisticasGeneralesModel->getGraficoCantidadPartidas($option);
     }
 
     public function imprimirReporte() {

@@ -44,10 +44,9 @@ class EstadisticasGeneralesModel
         return $this->generadorGrafico->generarGraficoCombinadoBarPlotsVarios($valoresTotales, $this->extraerLabels($option), $this->tituloGraficoPreguntas, "pregunta");
     }
 
-    public function getGraficoCantidadPartidas() {
-        $partidasTotales = [23, 56, 66, 23, 80, 380, 780, 1200, 760, 280, 777, 900];
-        $labels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-        return $this->generadorGrafico->generarGraficoCombinadoBarPlots($this->tituloGraficoPartidas, $labels, $partidasTotales, $this->leyendaPartidas);
+    public function getGraficoCantidadPartidas($option = null) {
+        $partidasTotales = $this->findPartidasTotalesPorOption($option);
+        return $this->generadorGrafico->generarGraficoCombinadoBarPlots($this->tituloGraficoPartidas, $this->extraerLabels($option), $partidasTotales, $this->leyendaPartidas);
     }
 
     public function imprimirReporte($reporte, $graficoBase64) {
@@ -191,6 +190,14 @@ class EstadisticasGeneralesModel
         $tabla = "pregunta";
         $filtroExtra = " AND u.idEstadoPregunta = (SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion = 'PARA REVISAR') ";
         return $this->getTotales($option, $id, $fecha, $tabla, $filtroExtra);
+    }
+
+    private function findPartidasTotalesPorOption($option)
+    {
+        $id = "idPartida";
+        $fecha = "fechaPartida";
+        $tabla = "partida";
+        return $this->getTotales($option, $id, $fecha, $tabla);
     }
 
     public function getTotales($option, $id, $fecha, $tabla, $filtroExtra = "")

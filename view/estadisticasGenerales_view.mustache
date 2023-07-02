@@ -30,6 +30,26 @@
         </div>
         <div class="contenedor-grafico-bar flex flex-col gap-3">
             <div class="self-end">
+                <button id="ImprimirCantidadUsuariosNuevos" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                    <span class="material-symbols-rounded">print</span>Imprimir
+                </button>
+            </div>
+            <div class="w-full">
+                <img id="imgCantidadUsuariosNuevos" src="estadisticasGenerales/mostrarCantidadUsuariosNuevos" alt="cantidad usuarios nuevos" class="w-full">
+            </div>
+        </div>
+        <div class="contenedor-grafico-bar flex flex-col gap-3">
+            <div class="w-full flex justify-end gap-4">
+                <div class="relative">
+                    <button id="dropdown-toggle-preguntas-totales" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                        <span class="material-symbols-rounded">filter_list</span>Filtrar
+                    </button>
+                    <ul id="dropdown-menu-preguntas-totales" class="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-purple-600 ring-1 ring-black ring-opacity-5 hidden flex flex-col">
+                        <li class="px-2 py-1 hover:bg-purple-500 w-full cursor-pointer" data-filter="day">Día</li>
+                        <li class="px-2 py-1 hover:bg-purple-500 w-full cursor-pointer" data-filter="month">Mes</li>
+                        <li class="px-2 py-1 hover:bg-purple-500 w-full cursor-pointer" data-filter="year">Año</li>
+                    </ul>
+                </div>
                 <button id="ImprimirCantidadPreguntas" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
                     <span class="material-symbols-rounded">print</span>Imprimir
                 </button>
@@ -39,7 +59,17 @@
             </div>
         </div>
         <div class="contenedor-grafico-bar flex flex-col gap-3">
-            <div class="self-end">
+            <div class="w-full flex justify-end gap-4">
+                <div class="relative">
+                    <button id="dropdown-toggle-partidas-totales" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
+                        <span class="material-symbols-rounded">filter_list</span>Filtrar
+                    </button>
+                    <ul id="dropdown-menu-partidas-totales" class="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-purple-600 ring-1 ring-black ring-opacity-5 hidden flex flex-col">
+                        <li class="px-2 py-1 hover:bg-purple-500 w-full cursor-pointer" data-filter="day">Día</li>
+                        <li class="px-2 py-1 hover:bg-purple-500 w-full cursor-pointer" data-filter="month">Mes</li>
+                        <li class="px-2 py-1 hover:bg-purple-500 w-full cursor-pointer" data-filter="year">Año</li>
+                    </ul>
+                </div>
                 <button id="ImprimirCantidadPartidas" class="text-white hover:bg-purple-500 hover:shadow-lg boton-crearPartida rounded flex items-center gap-1 h-8 px-3 transition duration-100">
                     <span class="material-symbols-rounded">print</span>Imprimir
                 </button>

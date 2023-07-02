@@ -18,12 +18,18 @@ class EstadisticasGeneralesController
         return $this->estadisticasGeneralesModel->getGraficoCantidadJugadores($option);
     }
 
+    public function mostrarCantidadUsuariosNuevos() {
+        return $this->estadisticasGeneralesModel->getGraficoCantidadUsuariosNuevos();
+    }
+
     public function mostrarCantidadPreguntas() {
-        return $this->estadisticasGeneralesModel->getGraficoCantidadPreguntas();
+        $option = $_GET["option"] ?? "year";
+        return $this->estadisticasGeneralesModel->getGraficoCantidadPreguntas($option);
     }
 
     public function mostrarCantidadPartidas() {
-        return $this->estadisticasGeneralesModel->getGraficoCantidadPartidas();
+        $option = $_GET["option"] ?? "year";
+        return $this->estadisticasGeneralesModel->getGraficoCantidadPartidas($option);
     }
 
     public function imprimirReporte() {

@@ -14,6 +14,10 @@ class EstadisticasGeneralesModel
 
     private $tituloGraficoPartidas = "Cantidad de partidas";
     private $leyendaPartidas = "Partidas";
+    private $LABEL_USUARIOS_NUEVOS = "Usuarios Nuevos";
+    private $TITULO_GRAFICO_USUARIO_NUEVOS = "Cantidad de usuarios nuevos";
+
+    private $CRITERIO_USUARIO_NUEVO = 5;
 
     public function __construct($generadorPDF, $generadorGrafico, $database) {
         $this->generadorPDF = $generadorPDF;
@@ -26,6 +30,11 @@ class EstadisticasGeneralesModel
         $valoresTotales = $this->extraerValores($usuariosTotales);
         $labels = $this->extraerLabels($option);
         return $this->generadorGrafico->generarGraficoCombinadoBarPlotsVarios($valoresTotales, $labels, $this->tituloGraficoUsuarios, "usuario");
+    }
+
+    public function getGraficoCantidadUsuariosNuevos() {
+        $cantidadUsuariosNuevos = array_values($this->calcularCantidadUsuariosNuevos());
+        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadUsuariosNuevos, [$this->LABEL_USUARIOS_NUEVOS], $this->TITULO_GRAFICO_USUARIO_NUEVOS);
     }
 
     public function getGraficoCantidadPreguntas() {
@@ -161,5 +170,18 @@ class EstadisticasGeneralesModel
                     GROUP BY YEAR(u.fechaUsuario)
                 ) u ON d.anio = u.anio
                 ORDER BY d.anio";
+    }
+
+    private function calcularCantidadUsuariosNuevos()
+    {
+        return $this->findUsuariosConFechaCreacionUsuario($this->CRITERIO_USUARIO_NUEVO);
+    }
+
+    private function findUsuariosConFechaCreacionUsuario($CRITERIO_USUARIO_NUEVO)
+    {
+        $sql ="SELECT COUNT(*) as cantidadUsuariosNuevos FROM usuario
+                WHERE fechaUsuario >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
+        $result = $this->database->queryWthParameters($sql, $CRITERIO_USUARIO_NUEVO);
+        return mysqli_fetch_assoc($result);
     }
 }

@@ -37,7 +37,8 @@ class EstadisticasJugadoresModel
     public function getGraficoPorGrupoDeEdad() {
         $cantidadJugadoresPorGrupoEdad = $this->definirJugadoresPorGrupoDeEdad();
         $cantidadPorGenero = array_values($cantidadJugadoresPorGrupoEdad);
-        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadPorGenero, $this->GRUPOS_EDAD, $this->TITULO_GRAFICO_EDAD);
+        $labels = $this->GRUPOS_EDAD;
+        return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadPorGenero, $labels, $this->TITULO_GRAFICO_EDAD);
     }
 
     public function imprimirReporte($reporte, $graficoBase64) {

@@ -18,6 +18,10 @@ class EstadisticasGeneralesController
         return $this->estadisticasGeneralesModel->getGraficoCantidadJugadores($option);
     }
 
+    public function mostrarCantidadUsuariosNuevos() {
+        return $this->estadisticasGeneralesModel->getGraficoCantidadUsuariosNuevos();
+    }
+
     public function mostrarCantidadPreguntas() {
         return $this->estadisticasGeneralesModel->getGraficoCantidadPreguntas();
     }

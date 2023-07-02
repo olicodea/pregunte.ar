@@ -19,8 +19,8 @@ class CategoriasActivasController
         $this->renderer->render('categoriasActivas', $data);
     }
 
-    public function eliminarPregunta() {
-        $this->categoriasActivasModel->anularCategoria($_POST["idCategoria"], "eliminar");
+    public function eliminarCategoria() {
+        $this->categoriasActivasModel->anularCategoria($_POST["idCategoria"]);
         echo true;
     }
 }

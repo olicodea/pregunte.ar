@@ -43,7 +43,7 @@ function abrirModalEliminarCategoria(idCategoria, descripcion) {
 
 function eliminarCategoria() {
     const inputIdHidden = document.getElementById('inputIdCategoriaHidden');
-    const idCategoria = inputIdHidden.value;
+    const idCategoria = Number(inputIdHidden.value);
     const contenedorCategoria = document.getElementById(`contenedor-${idCategoria}`);
 
     return new Promise(function (resolve, reject) {
@@ -57,6 +57,7 @@ function eliminarCategoria() {
                 if(response) {
                     contenedorCategoria.remove();
                     mostrarNotificacion('La categoría se ha eliminado correctamente', '/categoriasActivas');
+                    resolve(response)
                 }
             },
             error: function (xhr, status, error) {

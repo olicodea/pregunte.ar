@@ -117,6 +117,7 @@ function eliminarPregunta() {
                 if(response) {
                     contenedorPregunta.remove();
                     mostrarNotificacion('La pregunta se ha eliminado correctamente', '/preguntasActivas');
+                    resolve(response)
                 }
             },
             error: function (xhr, status, error) {

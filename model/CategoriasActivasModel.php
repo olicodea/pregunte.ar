@@ -5,6 +5,7 @@ class CategoriasActivasModel
     private $database;
     private $ESTADO_ACTIVA = "ACEPTADA";
     private $MENSAJE_SIN_CATEGORIAS = "Sin categorias";
+    private $ESTADO_ANULADA = "ANULADA";
 
     public function __construct($database){
         $this->database = $database;
@@ -24,11 +25,14 @@ class CategoriasActivasModel
         return empty($categorias) ? $this->MENSAJE_SIN_CATEGORIAS : false;
     }
 
-    public function comenzarEdicion() {
+    public function anularCategoria($idCategoria)
+    {
+        $sql = "UPDATE categoria_preguntas
+                SET idEstado = (SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion = ?)
+                WHERE idCategoria = ?";
 
-    }
-
-    public function anularCategoria() {
-        //TODO: Implementar metodo
+        $datosAnular = [$this->ESTADO_ANULADA, $idCategoria];
+        $typesParam = "si";
+        $this->database->save($typesParam, $datosAnular, $sql);
     }
 }

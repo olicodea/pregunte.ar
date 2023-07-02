@@ -12,7 +12,7 @@ class CategoriasSugeridasModel
     }
 
     public function findCategoriasSugeridas() {
-        $sql = "SELECT idCategoria, descripcion FROM categoria_preguntas 
+        $sql = "SELECT idCategoria, descripcion, color FROM categoria_preguntas 
                 WHERE idEstado = (
                     SELECT ep.idEstadoPregunta FROM estado_pregunta ep 
                     WHERE ep.descripcion = ?

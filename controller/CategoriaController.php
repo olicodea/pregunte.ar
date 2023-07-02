@@ -29,7 +29,7 @@ class CategoriaController
             $idCategoria = $_SESSION["categoriaCargada"]["idCategoria"] ?? null;
 
             $this->categoriaModel->guardarCategoria($_POST["Color"], $_POST["NombreCategoria"], $_SESSION["usuario"]["idRol"], $idCategoria);
-
+            unset($_SESSION["categoriaCargada"]);
             $_SESSION["okMessageCategoria"] = "La categoría se guardo correctamente.";
             header("Location: /categoria");
 

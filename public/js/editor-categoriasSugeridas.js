@@ -1,6 +1,9 @@
-async function mostrarModalCategoriaSugerida(idCategoria, descripcion, usuario, color) {
+async function mostrarModalCategoriaSugerida(idCategoria, descripcion, color) {
     const modal = document.getElementById('modal-categorias-sugeridas');
     modal.classList.remove('hidden');
+
+    const modalContainer = document.getElementById("modal-container-sugeridas");
+    modalContainer.style.boxShadow = `inset 0 0 10px ${color}`;
 
     const modalTitle = document.getElementById('modal-title');
     modalTitle.textContent = `Categoría sugerida`;

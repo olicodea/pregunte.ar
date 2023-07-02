@@ -184,9 +184,11 @@ class PartidaModel
     }
 
     private function findPreguntasDisponiblesPorIdCategoria($idCategoria, $idUsuario) {
-        $sql = "SELECT p.idPregunta, p.pregunta, p.idCategoria, p.idUsuario, p.idRespuesta, p.idEstadoPregunta FROM pregunta p 
+        $sql = "SELECT p.idPregunta, p.pregunta, p.idCategoria, p.idUsuario, p.idRespuesta, p.idEstadoPregunta 
+                FROM pregunta p
+                LEFT JOIN pregunta_respondida pr ON pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario
                 WHERE p.idCategoria = $idCategoria
-                AND NOT EXISTS ( SELECT 1 FROM pregunta_respondida pr WHERE pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario AND pr.reiniciada = 0 )";
+                AND (pr.idPregunta IS NULL OR pr.reiniciada = 0)";
         $resultado = $this->database->query($sql);
 
         return $this->getPreguntasCompletas($resultado);

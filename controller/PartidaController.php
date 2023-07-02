@@ -69,7 +69,6 @@ class PartidaController
             $_SESSION["partida"]["duracion"] = $duracionRespuesta;
         }
 
-        //TODO: Cambiar el PartidaModel para no tener que acceder a ["respuestas"][0]
         if($respuestaSeleccionada == $_SESSION["respuestas"][0]["respuestaCorrecta"]) {
             $fueCorrecta = true;
             $this->partidaModel->updatePartidaActual($_SESSION["partida"]);

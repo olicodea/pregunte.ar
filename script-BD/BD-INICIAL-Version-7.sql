@@ -165,7 +165,9 @@ CREATE TABLE `pregunta_respondida` (
 `idPreguntaRespondida` int(11) NOT NULL,
 `idPregunta` int(11) NOT NULL,
 `idUsuario` int(11) NOT NULL,
-`fueCorrecta` tinyint(4) NOT NULL
+`fueCorrecta` tinyint(4) NOT NULL,
+`reiniciada` tinyint(4),
+`respondida_post_reinicio` tinyint(4)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 

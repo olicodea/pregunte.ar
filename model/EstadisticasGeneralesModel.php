@@ -37,11 +37,11 @@ class EstadisticasGeneralesModel
         return $this->generadorGrafico->generarGraficoBarGradientLeftReflection($cantidadUsuariosNuevos, [$this->LABEL_USUARIOS_NUEVOS], $this->TITULO_GRAFICO_USUARIO_NUEVOS);
     }
 
-    public function getGraficoCantidadPreguntas() {
-        $preguntasTotales = [5,20,33,42,120,505,705];
-        $preguntasSugeridas = [5,15,17,23,80,380,200];
-        $labels = ["Lun", "Mar", "Mier", "Jue", "Vier", "Sab", "Dom"];
-        return $this->generadorGrafico->generarGraficoCombinadoBarPlots($this->tituloGraficoPreguntas, $labels, $preguntasTotales, $this->leyendaPreguntasTotales, $preguntasSugeridas, $this->leyendaPreguntasSugeridas);
+    public function getGraficoCantidadPreguntas($option = null) {
+        $preguntasTotales = $this->findPreguntasTotalesPorOption($option);
+        $preguntasSugeridas = $this->findPreguntasTotalesSugeridasPorOption($option);
+        $valoresTotales = $this->extraerValoresPreguntas($preguntasTotales, $preguntasSugeridas);
+        return $this->generadorGrafico->generarGraficoCombinadoBarPlotsVarios($valoresTotales, $this->extraerLabels($option), $this->tituloGraficoPreguntas, "pregunta");
     }
 
     public function getGraficoCantidadPartidas() {
@@ -68,23 +68,11 @@ class EstadisticasGeneralesModel
     }
     private function findUsuariosTotalesPorOption($option)
     {
-        switch ($option) {
-            case "month":
-                $sql = $this->getSQLMonth();
-                break;
-            case "day":
-                $sql = $this->getSQLDay();
-                break;
-            default:
-                $sql = $this->getSQLYear();
-                break;
-        }
+        $id = "idUsuario";
+        $fecha = "fechaUsuario";
+        $tabla = "usuario";
 
-        $result = $this->database->queryAllWithMerge($sql);
-        foreach ($result as &$item) {
-           $item = intval($item);
-        }
-        return $result;
+        return $this->getTotales($option, $id, $fecha, $tabla);
     }
 
     private function extraerValores($usuariosTotales)
@@ -110,9 +98,9 @@ class EstadisticasGeneralesModel
         return range(date('Y') - 4, date('Y'));
     }
 
-    private function getSQLDay()
+    private function getSQLDay($id, $fecha, $tabla, $filtroExtra)
     {
-        return "SELECT CAST(IFNULL(u.TotalUsuarios, 0) AS INT) AS TotalUsuarios
+        return "SELECT CAST(IFNULL(u.Total, 0) AS INT) AS Total
                 FROM (
                     SELECT 1 AS dia_semana UNION ALL
                     SELECT 2 UNION ALL
@@ -123,17 +111,18 @@ class EstadisticasGeneralesModel
                     SELECT 7
                 ) d
                 LEFT JOIN (
-                    SELECT COUNT(u.idUsuario) AS TotalUsuarios, DAYOFWEEK(u.fechaUsuario) AS dia_semana
-                    FROM usuario u
-                    WHERE YEAR(u.fechaUsuario) = YEAR(CURDATE()) AND WEEK(u.fechaUsuario) = WEEK(CURDATE())
-                    GROUP BY DAYOFWEEK(u.fechaUsuario)
+                    SELECT COUNT(u.$id) AS Total, DAYOFWEEK(u.$fecha) AS dia_semana
+                    FROM $tabla u
+                    WHERE YEAR(u.$fecha) = YEAR(CURDATE()) AND WEEK(u.$fecha) = WEEK(CURDATE())
+                    " . $filtroExtra . "
+                    GROUP BY DAYOFWEEK(u.$fecha)
                 ) u ON d.dia_semana = u.dia_semana
                 ORDER BY d.dia_semana";
     }
 
-    private function getSQLMonth()
+    private function getSQLMonth($id, $fecha, $tabla, $filtroExtra)
     {
-        return "SELECT COALESCE(u.TotalUsuarios, 0) AS TotalUsuarios 
+        return "SELECT COALESCE(u.Total, 0) AS Total 
                 FROM ( SELECT 1 AS mes UNION ALL 
                       SELECT 2 UNION ALL 
                       SELECT 3 UNION ALL 
@@ -146,16 +135,17 @@ class EstadisticasGeneralesModel
                       SELECT 10 UNION ALL 
                       SELECT 11 UNION ALL 
                       SELECT 12 ) d LEFT JOIN ( 
-                          SELECT COUNT(u.idUsuario) AS TotalUsuarios, MONTH(u.fechaUsuario) AS mes
-                          FROM usuario u WHERE YEAR(u.fechaUsuario) = YEAR(CURDATE()
-                      ) 
-                          GROUP BY MONTH(u.fechaUsuario) ) u ON d.mes = u.mes 
-                          ORDER BY d.mes;";
+                          SELECT COUNT(u.$id) AS Total, MONTH(u.$fecha) AS mes
+                          FROM $tabla u WHERE YEAR(u.$fecha) = YEAR(CURDATE() " .
+                        $filtroExtra
+                       . " ) 
+                          GROUP BY MONTH($fecha) ) u ON d.mes = u.mes 
+                          ORDER BY d.mes";
     }
 
-    private function getSQLYear()
+    private function getSQLYear($id, $fecha, $tabla, $filtroExtra)
     {
-        return "SELECT COALESCE(u.TotalUsuarios, 0) AS TotalUsuarios
+        return "SELECT COALESCE(u.Total, 0) AS Total
                 FROM (
                     SELECT YEAR(CURDATE()) - 4 AS anio UNION ALL
                     SELECT YEAR(CURDATE()) - 3 UNION ALL
@@ -164,10 +154,10 @@ class EstadisticasGeneralesModel
                     SELECT YEAR(CURDATE())
                 ) d
                 LEFT JOIN (
-                    SELECT COUNT(u.idUsuario) AS TotalUsuarios, YEAR(u.fechaUsuario) AS anio
-                    FROM usuario u
-                    WHERE YEAR(u.fechaUsuario) >= YEAR(CURDATE()) - 4
-                    GROUP BY YEAR(u.fechaUsuario)
+                    SELECT COUNT(u.$id) AS Total, YEAR(u.$fecha) AS anio
+                    FROM $tabla u
+                    WHERE YEAR(u.$fecha) >= YEAR(CURDATE()) - 4 " . $filtroExtra . "
+                    GROUP BY YEAR(u.$fecha)
                 ) u ON d.anio = u.anio
                 ORDER BY d.anio";
     }
@@ -183,5 +173,58 @@ class EstadisticasGeneralesModel
                 WHERE fechaUsuario >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
         $result = $this->database->queryWthParameters($sql, $CRITERIO_USUARIO_NUEVO);
         return mysqli_fetch_assoc($result);
+    }
+
+    private function findPreguntasTotalesPorOption($option)
+    {
+        $id = "idPregunta";
+        $fecha = "fechaPregunta";
+        $tabla = "pregunta";
+
+        return $this->getTotales($option, $id, $fecha, $tabla);
+    }
+
+    private function findPreguntasTotalesSugeridasPorOption($option)
+    {
+        $id = "idPregunta";
+        $fecha = "fechaPregunta";
+        $tabla = "pregunta";
+        $filtroExtra = " AND u.idEstadoPregunta = (SELECT ep.idEstadoPregunta FROM estado_pregunta ep WHERE ep.descripcion = 'PARA REVISAR') ";
+        return $this->getTotales($option, $id, $fecha, $tabla, $filtroExtra);
+    }
+
+    public function getTotales($option, $id, $fecha, $tabla, $filtroExtra = "")
+    {
+        switch ($option) {
+            case "month":
+                $sql = $this->getSQLMonth($id, $fecha, $tabla, $filtroExtra);
+                break;
+            case "day":
+                $sql = $this->getSQLDay($id, $fecha, $tabla, $filtroExtra);
+                break;
+            default:
+                $sql = $this->getSQLYear($id, $fecha, $tabla, $filtroExtra);
+                break;
+        }
+
+        $result = $this->database->queryAllWithMerge($sql);
+        foreach ($result as &$item) {
+            $item = intval($item);
+        }
+        return $result;
+    }
+
+    private function extraerValoresPreguntas($preguntasTotales, $preguntasSugeridas)
+    {
+        return [
+            [
+                "pregunta" => "Preguntas Totales",
+                "data" => $preguntasTotales
+            ],
+            [
+                "pregunta" => "Preguntas Sugeridas",
+                "data" => $preguntasSugeridas
+            ]
+        ];
     }
 }

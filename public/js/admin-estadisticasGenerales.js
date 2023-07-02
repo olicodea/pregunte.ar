@@ -13,6 +13,10 @@ document.getElementById('dropdown-toggle-usuarios-totales').addEventListener('cl
     document.getElementById('dropdown-menu-usuarios-totales').classList.toggle('hidden');
 });
 
+document.getElementById('dropdown-toggle-preguntas-totales').addEventListener('click', function() {
+    document.getElementById('dropdown-menu-preguntas-totales').classList.toggle('hidden');
+});
+
 document.querySelectorAll('#dropdown-menu-usuarios-totales li').forEach(function(item) {
     item.addEventListener('click', function(event) {
         event.preventDefault();
@@ -20,5 +24,15 @@ document.querySelectorAll('#dropdown-menu-usuarios-totales li').forEach(function
 
         const img = document.getElementById("imgCantidadJugadores");
         img.src = "estadisticasGenerales/mostrarCantidadJugadores&option=" + filter;
+    });
+});
+
+document.querySelectorAll('#dropdown-menu-preguntas-totales li').forEach(function(item) {
+    item.addEventListener('click', function(event) {
+        event.preventDefault();
+        const filter = event.target.dataset.filter;
+
+        const img = document.getElementById("imgCantidadPreguntas");
+        img.src = "estadisticasGenerales/mostrarCantidadPreguntas&option=" + filter;
     });
 });

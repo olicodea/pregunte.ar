@@ -166,19 +166,18 @@ CREATE TABLE `pregunta_respondida` (
 `idPregunta` int(11) NOT NULL,
 `idUsuario` int(11) NOT NULL,
 `fueCorrecta` tinyint(4) NOT NULL,
-`reiniciada` tinyint(4),
-`respondida_post_reinicio` tinyint(4)
+`reiniciada` tinyint(4)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-INSERT INTO `pregunta_respondida` (`idPreguntaRespondida`, `idPregunta`, `idUsuario`, `fueCorrecta`) VALUES
-(1, 2, 1, 0),
-(2, 15, 6, 1),
-(3, 12, 6, 1),
-(4, 18, 6, 1),
-(5, 8, 6, 0),
-(6, 23, 6, 1),
-(7, 19, 6, 0);
+INSERT INTO `pregunta_respondida` (`idPreguntaRespondida`, `idPregunta`, `idUsuario`, `fueCorrecta`, `reiniciada`) VALUES
+(1, 2, 1, 0, 0),
+(2, 15, 6, 1, 0),
+(3, 12, 6, 1, 0),
+(4, 18, 6, 1, 0),
+(5, 8, 6, 0, 0),
+(6, 23, 6, 1, 0),
+(7, 19, 6, 0, 0);
 
 
 CREATE TABLE `ranking` (

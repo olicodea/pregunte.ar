@@ -102,7 +102,7 @@ class PartidaController
 
     private function generarArrayCategorias()
     {
-        $categorias = $this->partidaModel->findCategoriasAlAzar();
+        $categorias = $this->partidaModel->findCategoriasAlAzar($_SESSION["usuario"]["idUsuario"]);
         return $categorias;
     }
 

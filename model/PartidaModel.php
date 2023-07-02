@@ -10,23 +10,37 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function findCategoriasAlAzar() {
-        $categorias = $this->findCategorias();
-        // Esta linea mezcla al azar el array categorias
-        shuffle($categorias);
-        return $categorias;
+    public function findCategoriasAlAzar($idUsuario) {
+        $categorias = $this->findCategorias($idUsuario);
+
+        if(empty($categorias)) {
+            $this->reiniciarPreguntasUsuario($idUsuario);
+            $categorias = $this->findCategorias($idUsuario);
+        }
+
+        // Esta linea mezcla al azar el array categorias y lo retorna
+        return shuffle($categorias);
     }
 
-    public function findCategorias() {
+    public function findCategorias($idUsuario) {
         return $this->database->query("
-                                        SELECT idCategoria, descripcion, color 
-                                        FROM categoria_preguntas 
+                                        SELECT c.idCategoria, c.descripcion, c.color 
+                                        FROM categoria_preguntas c
                                         WHERE EXISTS (SELECT 1 FROM pregunta p WHERE p.idCategoria = c.idCategoria)
+                                        AND c.idCategoria NOT IN (
+                                                SELECT p.idCategoria
+                                                FROM pregunta p
+                                                INNER JOIN pregunta_respondida pr ON pr.idPregunta = p.idPregunta
+                                                WHERE pr.idUsuario = $idUsuario AND pr.reiniciada = 0
+                                            )
                                       ");
     }
 
     public function findRespuestaPorId($idRespuesta) {
-        $sql = "SELECT r.respuestaA, r.respuestaB, r.respuestaC, r.respuestaD, r.respuestaCorrecta FROM respuesta r JOIN pregunta p ON p.idRespuesta = r.idRespuesta WHERE p.idRespuesta = $idRespuesta";
+        $sql = "SELECT r.respuestaA, r.respuestaB, r.respuestaC, r.respuestaD, r.respuestaCorrecta 
+                FROM respuesta r 
+                JOIN pregunta p ON p.idRespuesta = r.idRespuesta 
+                WHERE p.idRespuesta = $idRespuesta";
         $resultado = $this->database->query($sql);
 
         return $resultado;
@@ -45,7 +59,8 @@ class PartidaModel
 
     public function guardarPreguntaRespondida($idPregunta, $idusuario, $fueCorrecta) {
         $datosPreguntaRespondida = [ $idPregunta, $idusuario, $fueCorrecta ];
-        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`, `fueCorrecta`) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO `pregunta_respondida`(`idPregunta`, `idUsuario`, `fueCorrecta`, `reiniciada`) 
+                VALUES (?, ?, ?, 0)";
         $typesParams = "iii";
         $this->database->save($typesParams, $datosPreguntaRespondida, $sql);
     }
@@ -79,7 +94,7 @@ class PartidaModel
             $typesParams = "is";
             $datosReporte = [
                 $idPregunta,
-                "Pregunta reportada" //TODO: por ahora se hardcodea el comentario. Luego se agregara la funcionalidad de comentar un reporte
+                "Pregunta reportada"
             ];
             $this->database->save($typesParams, $datosReporte, $sql);
             $this->chequearReportes($idPregunta);
@@ -174,8 +189,9 @@ class PartidaModel
     private function findPreguntasDisponiblesPorIdCategoria($idCategoria, $idUsuario) {
         $sql = "SELECT p.idPregunta, p.pregunta, p.idCategoria, p.idUsuario, p.idRespuesta, p.idEstadoPregunta FROM pregunta p 
                 WHERE p.idCategoria = $idCategoria
-                AND NOT EXISTS ( SELECT 1 FROM pregunta_respondida pr WHERE pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario )";
+                AND NOT EXISTS ( SELECT 1 FROM pregunta_respondida pr WHERE pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario AND pr.reiniciada = 0 )";
         $resultado = $this->database->query($sql);
+
         return $this->getPreguntasCompletas($resultado);
     }
 
@@ -261,14 +277,18 @@ class PartidaModel
 
     private function getDificultadPorPorcentaje($porcentaje)
     {
+        $dificultad = "MEDIA";
+
         switch ($porcentaje) {
             case $porcentaje >= 70:
-                return "DIFÍCIL";
+                $dificultad = "DIFÍCIL";
+                break;
             case $porcentaje <= 30:
-                return "FÁCIL";
-            default:
-                return "MEDIA";
+                $dificultad = "FÁCIL";
+                break;
         }
+
+        return $dificultad;
     }
 
     private function chequearReportes($idPregunta)
@@ -291,5 +311,11 @@ class PartidaModel
         $datosReporte = [$this->ESTADO_REPORTADA, $idPregunta];
 
         $this->database->save($typesParams, $datosReporte, $sql);
+    }
+
+    private function reiniciarPreguntasUsuario($idUsuario)
+    {
+        $sql = "UPDATE pregunta_respondida pr SET pr.reiniciada = 1 WHERE idUsuario = ?";
+        $this->database->queryWthParameters($sql, $idUsuario);
     }
 }

@@ -10,15 +10,19 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function findCategorias() {
-        return $this->database->query("SELECT idCategoria, descripcion, color FROM categoria_preguntas");
-    }
-
     public function findCategoriasAlAzar() {
         $categorias = $this->findCategorias();
         // Esta linea mezcla al azar el array categorias
         shuffle($categorias);
         return $categorias;
+    }
+
+    public function findCategorias() {
+        return $this->database->query("
+                                        SELECT idCategoria, descripcion, color 
+                                        FROM categoria_preguntas 
+                                        WHERE EXISTS (SELECT 1 FROM pregunta p WHERE p.idCategoria = c.idCategoria)
+                                      ");
     }
 
     public function findRespuestaPorId($idRespuesta) {

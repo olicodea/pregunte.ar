@@ -28,8 +28,7 @@ class CrearPreguntaModel
         $datosRespuesta = [$respuestaA, $respuestaB, $respuestaC, $respuestaD, $$respuestaCorrecta];
         $idRespuesta = $this->guardarRespuesta($datosRespuesta);
         $idEstadoPregunta = $this->getIdEstadoAGuardarPorIdRol($idRol);
-        $idDificultad = 1; //TODO: Por ahora se hardcodea la dificultad, hay que ver como setearla
-        $datosPregunta = $this->cargarDatosPregunta($pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta);
+        $datosPregunta = $this->cargarDatosPregunta($pregunta, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta);
         $this->guardarPregunta($datosPregunta, $idPregunta);
     }
 
@@ -53,13 +52,13 @@ class CrearPreguntaModel
     private function guardarPregunta($datosPregunta, $idPregunta = null)
     {
         if($idPregunta) {
-            $sql = "UPDATE pregunta SET pregunta = ?, idDificultad = ?, idCategoria = ?, idRespuesta = ?, idEstadoPregunta = ?
+            $sql = "UPDATE pregunta SET pregunta = ?, idCategoria = ?, idRespuesta = ?, idEstadoPregunta = ?
                     WHERE idPregunta = ?";
         } else {
-            $sql = "INSERT INTO pregunta (pregunta, idDificultad, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO pregunta (pregunta, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
+                VALUES (?, ?, ?, ?, ?)";
         }
-        $typesParams = "siiiii";
+        $typesParams = "siiii";
 
         $this->database->save($typesParams, $datosPregunta, $sql);
     }
@@ -101,12 +100,12 @@ class CrearPreguntaModel
         return mysqli_fetch_assoc($this->database->queryWthParameters($sql, $idRespuesta));
     }
 
-    private function cargarDatosPregunta($pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta = null)
+    private function cargarDatosPregunta($pregunta, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta, $idPregunta = null)
     {
         if($idPregunta) {
-            return [$pregunta, $idDificultad, $idCategoria, $idRespuesta, $idEstadoPregunta, $idPregunta];
+            return [$pregunta, $idCategoria, $idRespuesta, $idEstadoPregunta, $idPregunta];
         } else {
-            return [$pregunta, $idDificultad, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
+            return [$pregunta, $idCategoria, $idUsuario, $idRespuesta, $idEstadoPregunta];
         }
     }
 }

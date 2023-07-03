@@ -4,7 +4,6 @@ class PartidaController
 {
     private $renderer;
     private $partidaModel;
-
     private $TIEMPO_INICIAL = 10000;
 
     public function __construct($partidaModel, $renderer)
@@ -69,7 +68,6 @@ class PartidaController
             $_SESSION["partida"]["duracion"] = $duracionRespuesta;
         }
 
-        //TODO: Cambiar el PartidaModel para no tener que acceder a ["respuestas"][0]
         if($respuestaSeleccionada == $_SESSION["respuestas"][0]["respuestaCorrecta"]) {
             $fueCorrecta = true;
             $this->partidaModel->updatePartidaActual($_SESSION["partida"]);
@@ -103,17 +101,14 @@ class PartidaController
 
     private function generarArrayCategorias()
     {
-        $categorias = $this->partidaModel->findCategoriasAlAzar();
-        return $categorias;
+        return $this->partidaModel->findCategoriasAlAzar($_SESSION["usuario"]["idUsuario"]);
     }
 
     private function generarPreguntaPorCategoria()
     {
         $categoriaSiguiente = $this->partidaModel->getCategoriaSiguiente($_SESSION["categorias"]);
         $_SESSION["categoria"] = $categoriaSiguiente;
-        $preguntaSiguiente = $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"], $_SESSION["usuario"]["idUsuario"]);
-
-        return $preguntaSiguiente;
+        return $this->partidaModel->getPreguntaSiguiente($categoriaSiguiente["idCategoria"], $_SESSION["usuario"]["idUsuario"]);
     }
 
     private function chequearArrayCategorias() {

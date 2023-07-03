@@ -58,7 +58,7 @@ class CrearPreguntaModel
             $sql = "INSERT INTO pregunta (pregunta, idCategoria, idUsuario, idRespuesta, idEstadoPregunta) 
                 VALUES (?, ?, ?, ?, ?)";
         }
-        $typesParams = "siiiii";
+        $typesParams = "siiii";
 
         $this->database->save($typesParams, $datosPregunta, $sql);
     }

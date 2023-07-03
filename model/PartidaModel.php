@@ -25,10 +25,16 @@ class PartidaModel
 
     public function findCategorias($idUsuario) {
         return $this->database->query("
-                                            SELECT c.idCategoria, c.descripcion, c.color FROM categoria_preguntas c 
-                                             WHERE NOT EXISTS ( SELECT 1 FROM pregunta p 
+                                            SELECT c.idCategoria, c.descripcion, c.color FROM categoria_preguntas c
+                                            WHERE EXISTS (
+                                                SELECT 1
+                                                FROM pregunta p
+                                                WHERE p.idCategoria = c.idCategoria
+                                            )
+                                            AND NOT EXISTS ( SELECT 1 FROM pregunta p 
                                                  LEFT JOIN pregunta_respondida pr ON pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario AND pr.reiniciada =  0 
                                              WHERE p.idCategoria = c.idCategoria GROUP BY p.idCategoria HAVING COUNT(*) = COUNT(pr.idPregunta) )
+                                            AND c.idEstado = 1
                                       ");
     }
 

@@ -17,7 +17,6 @@ class PartidaModel
             $this->reiniciarPreguntasUsuario($idUsuario);
             $categorias = $this->findCategorias($idUsuario);
         }
-
         // Esta linea mezcla al azar el array categorias y lo retorna
         shuffle($categorias);
 
@@ -28,7 +27,7 @@ class PartidaModel
         return $this->database->query("
                                             SELECT c.idCategoria, c.descripcion, c.color FROM categoria_preguntas c 
                                              WHERE NOT EXISTS ( SELECT 1 FROM pregunta p 
-                                                 LEFT JOIN pregunta_respondida pr ON pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario
+                                                 LEFT JOIN pregunta_respondida pr ON pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario AND pr.reiniciada =  0 
                                              WHERE p.idCategoria = c.idCategoria GROUP BY p.idCategoria HAVING COUNT(*) = COUNT(pr.idPregunta) )
                                       ");
     }
@@ -184,11 +183,9 @@ class PartidaModel
     }
 
     private function findPreguntasDisponiblesPorIdCategoria($idCategoria, $idUsuario) {
-        $sql = "SELECT p.idPregunta, p.pregunta, p.idCategoria, p.idUsuario, p.idRespuesta, p.idEstadoPregunta 
-                FROM pregunta p
-                LEFT JOIN pregunta_respondida pr ON pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario
-                WHERE p.idCategoria = $idCategoria
-                AND (pr.idPregunta IS NULL OR pr.reiniciada = 0)";
+        $sql = "SELECT p.idPregunta, p.pregunta, p.idCategoria, p.idUsuario, p.idRespuesta, p.idEstadoPregunta FROM pregunta p 
+                WHERE p.idCategoria = $idCategoria 
+                AND NOT EXISTS( SELECT pr.idPregunta FROM pregunta_respondida pr WHERE pr.idPregunta = p.idPregunta AND pr.idUsuario = $idUsuario AND pr.reiniciada = 0)";
         $resultado = $this->database->query($sql);
 
         return $this->getPreguntasCompletas($resultado);
